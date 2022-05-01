@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Japonais" representedClassName="Japonais" syncable="YES">
+        <attribute name="joinedMetaDatasAtb" optional="YES" attributeType="String"/>
+        <attribute name="kanaAtb" optional="YES" attributeType="String"/>
+        <attribute name="kanjiAtb" optional="YES" attributeType="String"/>
+        <attribute name="ordre" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mot" inverseName="japonaisAtb" inverseEntity="Mot"/>
+    </entity>
+    <entity name="JaponaisJMdict" representedClassName="JaponaisJMdict" parentEntity="Japonais" syncable="YES">
+        <relationship name="parentJMdict" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MotJMdict" inverseName="japonaisJMdictAtb" inverseEntity="MotJMdict"/>
+    </entity>
+    <entity name="Liste" representedClassName="Liste" syncable="YES">
+        <attribute name="motsObjIDURIAtb" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[URL]"/>
+        <attribute name="nameAtb" optional="YES" attributeType="String"/>
+        <attribute name="ordreInParentAtb" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="timestampAtb" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Liste" inverseName="souListAtb" inverseEntity="Liste"/>
+        <relationship name="souListAtb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Liste" inverseName="parent" inverseEntity="Liste"/>
+    </entity>
+    <entity name="Mot" representedClassName="Mot" syncable="YES">
+        <attribute name="notesAtb" optional="YES" attributeType="String"/>
+        <attribute name="ordreAtb" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="timestampAtb" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="uuidAtb" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="japonaisAtb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Japonais" inverseName="parent" inverseEntity="Japonais"/>
+        <relationship name="noSenseTradAtb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Traduction" inverseName="motParent" inverseEntity="Traduction"/>
+        <relationship name="sensesAtb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Sense" inverseName="parent" inverseEntity="Sense"/>
+    </entity>
+    <entity name="MotJMdict" representedClassName="MotJMdict" parentEntity="Mot" syncable="YES">
+        <attribute name="jmDictIDAtb" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="japonaisJMdictAtb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="JaponaisJMdict" inverseName="parentJMdict" inverseEntity="JaponaisJMdict"/>
+        <relationship name="noSenseTradJMdictAtb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TraductionJMdict" inverseName="motParentJMdict" inverseEntity="TraductionJMdict"/>
+        <relationship name="sensesJMdictAtb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SenseJMdict" inverseName="parentJMdict" inverseEntity="SenseJMdict"/>
+    </entity>
+    <entity name="MotModifier" representedClassName="MotModifier" parentEntity="Mot" syncable="YES">
+        <attribute name="modifiedMotObjIDURi" optional="YES" attributeType="URI"/>
+        <attribute name="modifiedMotUUIDAtb" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="SearchTableHolderMotJMdict" representedClassName="SearchTableHolderMotJMdict" syncable="YES">
+        <attribute name="idAtb" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="searchTableAtb" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[String:Set&lt;URL&gt;]"/>
+    </entity>
+    <entity name="Sense" representedClassName="Sense" syncable="YES">
+        <attribute name="joinedMetaDatasAtb" optional="YES" attributeType="String"/>
+        <attribute name="ordre" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mot" inverseName="sensesAtb" inverseEntity="Mot"/>
+        <relationship name="traductionsAtb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Traduction" inverseName="senseParent" inverseEntity="Traduction"/>
+    </entity>
+    <entity name="SenseJMdict" representedClassName="SenseJMdict" parentEntity="Sense" syncable="YES">
+        <relationship name="parentJMdict" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MotJMdict" inverseName="sensesJMdictAtb" inverseEntity="MotJMdict"/>
+        <relationship name="traductionsJMdictAtb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TraductionJMdict" inverseName="senseParentJMdict" inverseEntity="TraductionJMdict"/>
+    </entity>
+    <entity name="Traduction" representedClassName="Traduction" syncable="YES">
+        <attribute name="joinedTradutionsAtb" optional="YES" attributeType="String"/>
+        <attribute name="langueStringAtb" optional="YES" attributeType="String"/>
+        <attribute name="ordre" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="motParent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mot" inverseName="noSenseTradAtb" inverseEntity="Mot"/>
+        <relationship name="senseParent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sense" inverseName="traductionsAtb" inverseEntity="Sense"/>
+    </entity>
+    <entity name="TraductionJMdict" representedClassName="TraductionJMdict" parentEntity="Traduction" syncable="YES">
+        <relationship name="motParentJMdict" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MotJMdict" inverseName="noSenseTradJMdictAtb" inverseEntity="MotJMdict"/>
+        <relationship name="senseParentJMdict" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SenseJMdict" inverseName="traductionsJMdictAtb" inverseEntity="SenseJMdict"/>
+    </entity>
+    <configuration name="Cloud" usedWithCloudKit="YES">
+        <memberEntity name="Japonais"/>
+        <memberEntity name="Mot"/>
+        <memberEntity name="MotModifier"/>
+        <memberEntity name="Sense"/>
+        <memberEntity name="Traduction"/>
+        <memberEntity name="Liste"/>
+    </configuration>
+    <configuration name="Local">
+        <memberEntity name="JaponaisJMdict"/>
+        <memberEntity name="MotJMdict"/>
+        <memberEntity name="SenseJMdict"/>
+        <memberEntity name="TraductionJMdict"/>
+        <memberEntity name="SearchTableHolderMotJMdict"/>
+    </configuration>
+    <elements>
+        <element name="Japonais" positionX="-3630.682739257812" positionY="-3220.710632324218" width="108.262451171875" height="118"/>
+        <element name="JaponaisJMdict" positionX="-3635.746337890625" positionY="-2912.529876708985" width="128" height="58"/>
+        <element name="Liste" positionX="-4180.718994140625" positionY="-3255.559265136719" width="128" height="119"/>
+        <element name="Mot" positionX="-3942.545227050782" positionY="-3174.75651550293" width="128" height="148"/>
+        <element name="MotJMdict" positionX="-3939.607971191407" positionY="-2919.775329589844" width="128" height="103"/>
+        <element name="MotModifier" positionX="-4089.815246582031" positionY="-2921.917083740234" width="128" height="73"/>
+        <element name="Sense" positionX="-3753.518432617187" positionY="-3023.492401123047" width="128" height="103"/>
+        <element name="SenseJMdict" positionX="-3752.47052001953" positionY="-2777.777954101563" width="128" height="73"/>
+        <element name="Traduction" positionX="-3485.655090332032" positionY="-3159.925247192382" width="128" height="118"/>
+        <element name="TraductionJMdict" positionX="-3479.679321289063" positionY="-2858.268554687501" width="128" height="73"/>
+        <element name="SearchTableHolderMotJMdict" positionX="-4164.906433105469" positionY="-3041.770355224609" width="128" height="73"/>
+    </elements>
+</model>
