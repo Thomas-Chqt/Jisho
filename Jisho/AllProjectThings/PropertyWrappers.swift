@@ -8,8 +8,10 @@
 import SwiftUI
 import Combine
 
-/*
-@propertyWrapper public class CloudStorage<ValueType>/*: DynamicProperty*/ {
+// MARK: PublishedCloudStorage
+
+
+@propertyWrapper public class PublishedCloudStorage<ValueType> {
         
     private var value: ValueType
     
@@ -48,7 +50,6 @@ import Combine
     
     private init(readValue: @escaping () throws -> ValueType, saveValue : @escaping (ValueType) throws -> Void) {
         do {
-//            _value = State(wrappedValue: try readValue())
             value = try readValue()
             
             let keyValStore = NSUbiquitousKeyValueStore.default
@@ -70,8 +71,80 @@ import Combine
     } // unused
     
 }
-*/
 
+// MARK: PublishedCloudStorage Extended Inits
+
+extension PublishedCloudStorage where ValueType == [MetaData:String?] {
+    public convenience init(wrappedValue: ValueType, _ key: String) {
+        self.init(
+            readValue: {
+                let keyValStore = NSUbiquitousKeyValueStore.default
+                let data = keyValStore.data(forKey: key)
+                guard let data = data else { return wrappedValue }
+                return try decodeFromCloudStorage(data)
+            },
+            saveValue: {
+                let keyValStore = NSUbiquitousKeyValueStore.default
+                let data = try encodeForCloudStorage($0)
+                keyValStore.set(data, forKey: key)
+            })
+    }
+}
+
+extension PublishedCloudStorage where ValueType == [Langue] {
+    public convenience init(wrappedValue: ValueType, _ key: String) {
+        self.init(
+            readValue: {
+                let keyValStore = NSUbiquitousKeyValueStore.default
+                let data = keyValStore.data(forKey: key)
+                guard let data = data else { return wrappedValue }
+                return try decodeFromCloudStorage(data)
+            },
+            saveValue: {
+                let keyValStore = NSUbiquitousKeyValueStore.default
+                let data = try encodeForCloudStorage($0)
+                keyValStore.set(data, forKey: key)
+            })
+    }
+}
+
+extension PublishedCloudStorage where ValueType == Set<Langue> {
+    public convenience init(wrappedValue: ValueType, _ key: String) {
+        self.init(
+            readValue: {
+                let keyValStore = NSUbiquitousKeyValueStore.default
+                let data = keyValStore.data(forKey: key)
+                guard let data = data else { return wrappedValue }
+                return try decodeFromCloudStorage(data)
+            },
+            saveValue: {
+                let keyValStore = NSUbiquitousKeyValueStore.default
+                let data = try encodeForCloudStorage($0)
+                keyValStore.set(data, forKey: key)
+            })
+    }
+}
+
+extension PublishedCloudStorage where ValueType == [String] {
+    public convenience init(wrappedValue: ValueType, _ key: String) {
+        self.init(
+            readValue: {
+                let keyValStore = NSUbiquitousKeyValueStore.default
+                let data = keyValStore.data(forKey: key)
+                guard let data = data else { return wrappedValue }
+                return try decodeFromCloudStorage(data)
+            },
+            saveValue: {
+                let keyValStore = NSUbiquitousKeyValueStore.default
+                let data = try encodeForCloudStorage($0)
+                keyValStore.set(data, forKey: key)
+            })
+    }
+}
+
+
+
+// MARK: CloudStorage
 
 @propertyWrapper public struct CloudStorage<ValueType>: DynamicProperty {
         
@@ -127,6 +200,9 @@ import Combine
     }
     
 }
+
+
+// MARK: CloudStorage Extended Inits
 
 extension CloudStorage where ValueType == [MetaData:String?] {
     public init(wrappedValue: ValueType, _ key: String) {
@@ -197,6 +273,8 @@ extension CloudStorage where ValueType == [String] {
 }
 
 
+
+// MARK: Encode / Decode Functions
 
 // Meta datas
 fileprivate func encodeForCloudStorage(_ dict:[MetaData:String?]) throws -> Data {

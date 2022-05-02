@@ -7,21 +7,32 @@
 
 import SwiftUI
 
+fileprivate class DebugCloudStorageViewModel: ObservableObject {
+    
+    @PublishedCloudStorage("searchHistory") var searchHistory:[String] = []
+    
+    init() {
+        _searchHistory.objectWillChange = self.objectWillChange.send
+    }
+
+}
+
 struct DebugCloudStorage: View {
         
     @Environment(\.languesPref) var languesPref
     
+    @StateObject private var vm = DebugCloudStorageViewModel()
     
     var body: some View
     {
         List {
-            ForEach(languesPref.wrappedValue, id:\.self) { langue in
-                Text(langue.fullName)
+            ForEach(vm.searchHistory, id:\.self) { keyword in
+                Text(keyword)
             }
-            Button {
-                languesPref.wrappedValue = languesPref.wrappedValue.shuffled()
-            } label: {
-                Text("Shuffle")
+            .onDelete { indexs in
+                indexs.forEach { index in
+                    vm.searchHistory.remove(at: index)
+                }
             }
         }
     }

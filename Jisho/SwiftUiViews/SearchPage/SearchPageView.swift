@@ -8,8 +8,76 @@
 import SwiftUI
 import CoreData
 
+@MainActor
 fileprivate class SearchPageViewModel: ObservableObject {
     
+    @PublishedCloudStorage("searchHistory") var searchHistory:[String] = []
+    
+    @Published private var searchResultObjID: (exactMatch: [NSManagedObjectID], nonExactMatch: [NSManagedObjectID])?
+                                                = (exactMatch: [], nonExactMatch: [])
+    @Published var showSuggestions = true
+    @Published var textFieldText:String = ""
+
+    
+    
+    init() {
+        _searchHistory.objectWillChange = self.objectWillChange.send
+    }
+    
+    
+    
+    var searchResult: (exactMatch: [Mot], nonExactMatch: [Mot])? {
+        guard let searchResultObjID = searchResultObjID else { return nil }
+
+        return (exactMatch: searchResultObjID.exactMatch.map { DataController.shared.mainQueueManagedObjectContext.object(with: $0) as! Mot },
+                nonExactMatch: searchResultObjID.nonExactMatch.map { DataController.shared.mainQueueManagedObjectContext.object(with: $0) as! Mot })
+    }
+    
+    var suggestions: some View {
+        ForEach(searchHistory) { keyword in
+            Text(keyword)
+                .searchCompletion(keyword)
+                .foregroundColor(.primary)
+                .transition(.opacity.animation(.default))
+        }
+    }
+    
+    var exactMatchResultsList: some View {
+        Section(searchResult?.exactMatch.count ?? 0 > 1 ? "Exact Matchs" : "Exact Match") {
+            ForEach(searchResult?.exactMatch ?? []) { mot in
+                NavigationLink(destination: MotDetailsView(mot)) {
+                    MotRowView(mot: mot)
+                }
+            }
+        }
+    }
+    
+    var nonExactMatchResultsList: some View {
+        Section(searchResult?.nonExactMatch.count ?? 0 > 1 ? "Autres" : "Autre") {
+            ForEach(searchResult?.nonExactMatch ?? []) { mot in
+                NavigationLink(destination: MotDetailsView(mot)) {
+                    MotRowView(mot: mot)
+                }
+            }
+        }
+    }
+    
+    
+    func submitSearch() {
+        
+        if let existingIndex = searchHistory.firstIndex(of: textFieldText) { searchHistory.remove(at: existingIndex) }
+        searchHistory.insert(textFieldText, at: 0)
+        if searchHistory.count > 100 { searchHistory.remove(at: searchHistory.endIndex - 1 )}
+        
+        searchResultObjID = nil
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        
+        Task {
+            searchResultObjID = try await quickSearch(textFieldText)
+        }
+    }
+    
+    /*
     func realSearch(_ recherche:String) async throws -> [NSManagedObjectID] {
 
         try await DataController.shared.privateQueueManagedObjectContext.perform {
@@ -64,6 +132,7 @@ fileprivate class SearchPageViewModel: ObservableObject {
             return findedMotPerso + findedMotJMdict
         }
     }
+    */
     
     func quickSearch(_ recherche:String) async throws -> (exactMatch: [NSManagedObjectID], nonExactMatch: [NSManagedObjectID]) {
         
@@ -129,105 +198,60 @@ struct SearchPageView: View
 {
     @Environment(\.toggleSideMenu) var showSideMenu
 
-    @StateObject private var vm = SearchPageViewModel()
-    
-    @CloudStorage("searchHistory") var searchHistory:[String] = []
-    @State private var showSuggestions = true
-    
-    @State var textFieldText:String = ""
-    
-    @State var searchResult: (exactMatch: [Mot], nonExactMatch: [Mot])? = (exactMatch: [], nonExactMatch: [])
-    
+    @StateObject private var vm:SearchPageViewModel
+        
+    init() {
+        _vm = StateObject(wrappedValue: SearchPageViewModel())
+    }
     
     var body: some View
     {
         Group {
-            if let searchResult = searchResult {
+            if let searchResult = vm.searchResult {
                 List {
                     if !searchResult.exactMatch.isEmpty {
-                        Section(searchResult.exactMatch.count > 1 ? "Exact Matchs" : "Exact Match") {
-                            ForEach(searchResult.exactMatch) { mot in
-                                NavigationLink(destination: MotDetailsView(mot)) {
-                                    MotRowView(mot: mot)
-                                }
-                            }
-                        }
+                        vm.exactMatchResultsList
+                            .onAppear{vm.showSuggestions = false}
                     }
                     if !searchResult.nonExactMatch.isEmpty {
-                        Section("Autres") {
-                            ForEach(searchResult.nonExactMatch) { mot in
-                                NavigationLink(destination: MotDetailsView(mot)) {
-                                    MotRowView(mot: mot)
-                                }
-                            }
-                        }
+                        vm.nonExactMatchResultsList
+                            .onAppear{vm.showSuggestions = false}
                     }
                 }
-                .transition(.opacity.animation(.default))
             }
             else {
                 ProgressView()
-                    .transition(.opacity.animation(.default))
+                    .onAppear{vm.showSuggestions = false}
             }
         }
-        .searchable(text: $textFieldText,placement: .navigationBarDrawer(displayMode: .always), suggestions: {
-            if showSuggestions {
-                ForEach(searchHistory.reversed()) { keyword in
-                    withAnimation {
-                        Text(keyword)
-                            .searchCompletion(keyword)
-                            .foregroundColor(.primary)
-                            .transition(.opacity.animation(.default))
-                    }
-                }
-            }
-        })
-        .onSubmit(of: .search) {
-            
-            if let existingIndex = searchHistory.firstIndex(of: textFieldText) {
-                searchHistory.remove(at: existingIndex)
-            }
-            
-            self.searchHistory.append(textFieldText)
-            
-            if searchHistory.count >= 100 { searchHistory.remove(at: 0) }
-            
-            
-            Task {
-                withAnimation {
-                    self.searchResult = nil
-                    self.showSuggestions = false
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                }
-                
-                let motsObjectIDs = try await vm.quickSearch(textFieldText)
-                
-                withAnimation {
-                    self.searchResult =
-                    (exactMatch: motsObjectIDs.exactMatch.map { DataController.shared.mainQueueManagedObjectContext.object(with: $0) as! Mot },
-                    nonExactMatch: motsObjectIDs.nonExactMatch.map { DataController.shared.mainQueueManagedObjectContext.object(with: $0) as! Mot })
-                }
-            }
+        .searchable(text: $vm.textFieldText, placement: .navigationBarDrawer(displayMode: .always)) {
+            if vm.showSuggestions { vm.suggestions }
         }
-        .onChange(of: textFieldText) { _ in
-            withAnimation{
-                showSuggestions = true
-            }
-        }
+        
+        .onSubmit(of: .search) { vm.submitSearch() }
+    
+        .onChange(of: vm.textFieldText) { _ in vm.showSuggestions = true }
         
         .navigationTitle("Recherche")
         .listStyle(.inset)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    showSideMenu()
-                } label: {
-                    Image(systemName: "list.bullet")
-                }
+                showSideMenuButton
             }
         }
     }
+    
+    
+    var showSideMenuButton: some View {
+        Button {
+            showSideMenu()
+        } label: {
+            Image(systemName: "list.bullet")
+        }
+    }
 }
+
+
 
 /*
 fileprivate struct SearchResultView: View {
