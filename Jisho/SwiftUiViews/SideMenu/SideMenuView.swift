@@ -8,9 +8,9 @@
 import SwiftUI
 import CoreData
 
+
 struct SideMenuView: View
 {
-    @Environment(\.managedObjectContext) var moc
     @Environment(\.switchPage) var switchPage
     @Environment(\.toggleSideMenu) var dismiss
 
@@ -20,29 +20,25 @@ struct SideMenuView: View
         
         VStack(alignment: .leading, spacing: 0) {
             
-            SideMenuButtonView(icone: Image(systemName: "magnifyingglass"),
-                               text: "Recherche") {
+            SideMenuButtonView(icone: Image(systemName: "magnifyingglass"), text: "Recherche") {
                 switchPage(.search)
             }
             
             Divider().frame(width: 250)
             
-            SideMenuButtonView(icone: Image(systemName: "list.bullet.rectangle.portrait"),
-                               text: "Listes") {
+            SideMenuButtonView(icone: Image(systemName: "list.bullet.rectangle.portrait"), text: "Listes") {
                 switchPage(.listes)
             }
             
             Divider().frame(width: 250)
             
-            SideMenuButtonView(icone: Image(systemName: "gearshape"),
-                               text: "Paramètres") {
+            SideMenuButtonView(icone: Image(systemName: "gearshape"), text: "Paramètres") {
                 switchPage(.settings)
             }
             
             Divider().frame(width: 250)
             
-            SideMenuButtonView(icone: Image(systemName: "wrench"),
-                               text: "Debug") {
+            SideMenuButtonView(icone: Image(systemName: "wrench"), text: "Debug") {
                 switchPage(.debug)
             }
             
@@ -69,6 +65,9 @@ struct SideMenuView: View
     }
 }
 
+
+
+/*
 struct SideMenuView_Previews: PreviewProvider
 {
     static var previews: some View
@@ -82,3 +81,4 @@ struct SideMenuView_Previews: PreviewProvider
         }
     }
 }
+*/

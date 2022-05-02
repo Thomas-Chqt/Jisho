@@ -33,6 +33,13 @@ extension Array where Element == TraductionStruct {
     }
 }
 
+extension Array {
+    
+    func separated(by separator: Element) -> [Element] {
+        return (0 ..< 2 * self.count - 1).map { $0 % 2 == 0 ? self[$0/2] : separator }
+    }
+    
+}
 
 extension View {
     func sideMenu(isPresented: Binding<Bool>, currentPage: Binding<Page>) -> some View {
