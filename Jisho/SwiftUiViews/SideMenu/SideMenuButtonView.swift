@@ -17,10 +17,9 @@ struct SideMenuButtonView: View {
     var body: some View {
         
         Button {
-            
             action()
-            
-        } label: {
+        }
+        label: {
             HStack {
                 icone.padding(.leading).scaleEffect(1.5)
                 Text(text).font(.title).padding(.leading, 10)
@@ -34,6 +33,7 @@ struct SideMenuButtonView: View {
     }
 }
 
+/*
 struct SideMenuButtonView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack(alignment: .topLeading) {
@@ -59,3 +59,4 @@ struct SideMenuButtonView_Previews: PreviewProvider {
         .previewDevice("iPhone X")
     }
 }
+*/
