@@ -7,17 +7,65 @@
 
 import SwiftUI
 
+fileprivate class ContentViewModel: ObservableObject {
+    
+    // MARK: Publisher
+    
+    @Published var sideMenuIsShow = false
+    @Published var currentPage:Page = .search
+    
+    
+    // MARK: Computed Variables
+    
+    var searchPage: some View {
+        NavigationView {
+            SearchPageView()
+            EmptyView()
+        }
+    }
+    
+    var listePage: some View {
+        NavigationView {
+            ListePageView()
+            EmptyView()
+        }
+    }
+    
+    var settingsPage: some View {
+        NavigationView {
+            SettingsPageView()
+            EmptyView()
+        }
+    }
+    
+    var debugPage: some View {
+        NavigationView {
+            DebugMenu()
+            EmptyView()
+        }
+    }
+    
+    
+    // MARK: Functions
+    
+    func toggleSideMenu() {
+        withAnimation {
+            sideMenuIsShow.toggle()
+        }
+    }
+    
+}
 
 struct ContentView: View
 {
+    // Les property wrapper ne son pas dans la vm car ils ne fonctionnent pas comme des @Publised ( a modifer a term )
     
-    @CloudStorage("languesPrefData") var languesPref:[Langue] = languesPrefOriginal
-    @CloudStorage("metaDataDictData") var metaDataDict:[MetaData : String?] = metaDataDictOriginal
-    @CloudStorage("languesAfficheesData") var languesAffichées:Set<Langue> = languesAffichéesOriginal
+    @CloudStorage("languesPrefData") private var languesPref:[Langue] = languesPrefOriginal
+    @CloudStorage("metaDataDictData") private var metaDataDict:[MetaData : String?] = metaDataDictOriginal
+    @CloudStorage("languesAfficheesData") private var languesAffichées:Set<Langue> = languesAffichéesOriginal
     
     
-    @State var sideMenuIsShow = false
-    @State var currentPage:Page = .search
+    @StateObject private var vm = ContentViewModel()
     
     
     init() {
@@ -26,34 +74,22 @@ struct ContentView: View
     
     var body: some View
     {
-        TabView(selection: $currentPage) {
+        TabView(selection: $vm.currentPage) {
             
-            NavigationView {
-                SearchPageView()
-                EmptyView()
-            }
-            .tag(Page.search)
+            vm.searchPage
+                .tag(Page.search)
             
-            NavigationView {
-                ListePageView()
-                EmptyView()
-            }
-            .tag(Page.listes)
+            vm.listePage
+                .tag(Page.listes)
             
-            NavigationView {
-                SettingsPageView()
-                EmptyView()
-            }
-            .tag(Page.settings)
+            vm.settingsPage
+                .tag(Page.settings)
             
-            NavigationView {
-                DebugMenu()
-                EmptyView()
-            }
-            .tag(Page.debug)
+            vm.debugPage
+                .tag(Page.debug)
         }
-        .sideMenu(isPresented: $sideMenuIsShow, currentPage: $currentPage)
-        .environment(\.toggleSideMenu, { withAnimation { sideMenuIsShow.toggle() } })
+        .sideMenu(isPresented: $vm.sideMenuIsShow, currentPage: $vm.currentPage)
+        .environment(\.toggleSideMenu, vm.toggleSideMenu)
         .environment(\.languesPref, _languesPref)
         .environment(\.languesAffichées, _languesAffichées)
         .environment(\.metaDataDict, _metaDataDict)
