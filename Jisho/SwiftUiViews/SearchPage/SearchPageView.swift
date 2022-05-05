@@ -45,7 +45,7 @@ fileprivate class SearchPageViewModel: ObservableObject {
     var exactMatchResultsList: some View {
         Section(searchResult?.exactMatch.count ?? 0 > 1 ? "Exact Matchs" : "Exact Match") {
             ForEach(searchResult?.exactMatch ?? []) { mot in
-                NavigationLink(destination: MotDetailsView(mot)) {
+                NavigationLink(destination: MotDetailsView(mot: mot)) {
                     MotRowView(mot: mot)
                 }
             }
@@ -55,7 +55,7 @@ fileprivate class SearchPageViewModel: ObservableObject {
     var nonExactMatchResultsList: some View {
         Section(searchResult?.nonExactMatch.count ?? 0 > 1 ? "Autres" : "Autre") {
             ForEach(searchResult?.nonExactMatch ?? []) { mot in
-                NavigationLink(destination: MotDetailsView(mot)) {
+                NavigationLink(destination: MotDetailsView(mot: mot)) {
                     MotRowView(mot: mot)
                 }
             }

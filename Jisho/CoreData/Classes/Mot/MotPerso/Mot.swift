@@ -79,10 +79,11 @@ public class Mot: NSManagedObject, Identifiable {
     }
     
     
-
+    //MARK: NSManaged attributes
+    
     @NSManaged private var uuidAtb: UUID?
-    @NSManaged public var ordreAtb: Int64
-    @NSManaged public var timestampAtb: Date?
+    @NSManaged private var ordreAtb: Int64
+    @NSManaged private var timestampAtb: Date?
 
     @NSManaged private var japonaisAtb: NSSet?
     @NSManaged private var sensesAtb: NSSet?
@@ -91,6 +92,8 @@ public class Mot: NSManagedObject, Identifiable {
     @NSManaged private var notesAtb: String?
     
     
+    //MARK: Not override in children
+
     var context: NSManagedObjectContext {
         guard let context = self.managedObjectContext else { fatalError() }
         return context
@@ -127,25 +130,35 @@ public class Mot: NSManagedObject, Identifiable {
     }
         
     
+    
+    //MARK: Override in children
+
     var japonais: [Japonais]? {
         get {
             if japonaisAtb == nil { return nil }
             if japonaisAtb!.allObjects.isEmpty { return nil }
             
             let set = japonaisAtb as! Set<Japonais>
-            return set.sorted
-            {
+            return set.sorted {
                 $0.ordre < $1.ordre
             }
         }
         set {
-            for japonai in japonais ?? [] {
-                removeFromJaponaisAtb(japonai)
-                self.managedObjectContext!.delete(japonai)
-            }
-                        
+            objectWillChangeSend()
+            
             for japonai in newValue ?? [] {
-                addToJaponaisAtb(japonai)
+                if !(japonais ?? []).contains(japonai) {
+                    addToJaponaisAtb(japonai)
+                }
+            }
+            for japonai in japonais ?? [] {
+                if !(newValue ?? []).contains(japonai) {
+                    removeFromJaponaisAtb(japonai)
+                    self.context.delete(japonai)
+                }
+            }
+            for (i, japonai) in (japonais ?? []).enumerated() {
+                japonai.ordre = Int64(i)
             }
         }
     }
@@ -156,18 +169,26 @@ public class Mot: NSManagedObject, Identifiable {
             if sensesAtb!.allObjects.isEmpty { return nil }
             
             let set = sensesAtb as! Set<Sense>
-            return set.sorted
-            {
+            return set.sorted {
                 $0.ordre < $1.ordre
             }
         }
         set{
-            for sense in senses ?? [] {
-                removeFromSensesAtb(sense)
-                self.managedObjectContext!.delete(sense)
-            }
+            objectWillChangeSend()
+
             for sense in newValue ?? [] {
-                addToSensesAtb(sense)
+                if !(senses ?? []).contains(sense) {
+                    addToSensesAtb(sense)
+                }
+            }
+            for sense in senses ?? [] {
+                if !(newValue ?? []).contains(sense) {
+                    removeFromSensesAtb(sense)
+                    self.context.delete(sense)
+                }
+            }
+            for (i, sense) in (senses ?? []).enumerated() {
+                sense.ordre = Int64(i)
             }
         }
     }
@@ -178,16 +199,26 @@ public class Mot: NSManagedObject, Identifiable {
             if noSenseTradAtb!.allObjects.isEmpty { return nil }
             
             let set = noSenseTradAtb as! Set<Traduction>
-            let array = Array(set)
-            return array//.sorted(savedLanguesPref)
+            return set.sorted {
+                $0.ordre < $1.ordre
+            }
         }
         set{
-            for trad in noSenseTradsArray ?? [] {
-                removeFromNoSenseTradAtb(trad)
-                self.managedObjectContext!.delete(trad)
-            }
+            objectWillChangeSend()
+
             for trad in newValue ?? [] {
-                addToNoSenseTradAtb(trad)
+                if !(noSenseTradsArray ?? []).contains(trad) {
+                    addToNoSenseTradAtb(trad)
+                }
+            }
+            for trad in noSenseTradsArray ?? [] {
+                if !(newValue ?? []).contains(trad) {
+                    removeFromNoSenseTradAtb(trad)
+                    self.context.delete(trad)
+                }
+            }
+            for (i, trad) in (noSenseTradsArray ?? []).enumerated() {
+                trad.ordre = Int64(i)
             }
         }
     }
@@ -197,80 +228,15 @@ public class Mot: NSManagedObject, Identifiable {
             return notesAtb
         }
         set {
+            objectWillChangeSend()
             notesAtb = newValue
         }
     }
     
     
     
-    func modify(_ motStruc:MotStruct) {
-        objectWillChange.send()
-        
-        var newJaponais:[Japonais]? = nil
-        var newSenses:[Sense]? = nil
-        var newNoSenseTradsArray:[Traduction]? = nil
+    //MARK: Functions
 
-        
-        for (i, japonai) in (motStruc.japonais).enumerated() {
-            
-            if newJaponais == nil { newJaponais = [] }
-            
-            newJaponais!.append(Japonais(ordre: Int64(i),
-                                     kanji: japonai.kanji != "" ? japonai.kanji : nil,
-                                     kana: japonai.kana != "" ? japonai.kana : nil,
-                                     context: self.managedObjectContext!))
-        }
-
-        for (i, sense) in (motStruc.senses).enumerated() {
-            
-            var newTraductions:[Traduction]? = nil
-            for (i, trad) in (sense.traductionsArray).enumerated() {
-                
-                if newTraductions == nil { newTraductions = [] }
-                
-                newTraductions!.append(Traduction(ordre: Int64(i),
-                                                  langue: trad.langue,
-                                                  traductions: trad.traductions != "" ? trad.traductions.components(separatedBy: ", ") : nil,
-                                                  context: self.managedObjectContext!))
-            }
-            
-            if newSenses == nil { newSenses = [] }
-            
-            newSenses!.append(Sense(ordre: Int64(i),
-                                    metaDatas: sense.metaDatas.isEmpty ? nil : sense.metaDatas,
-                                    traductions: newTraductions,
-                                    context: self.managedObjectContext!))
-        }
-        
-        for (i, trad) in (motStruc.noLangueTrads).enumerated() {
-            
-            if newNoSenseTradsArray == nil { newNoSenseTradsArray = [] }
-            
-            newNoSenseTradsArray!.append(Traduction(ordre: Int64(i),
-                                                    langue: trad.langue,
-                                                    traductions: trad.traductions != "" ? trad.traductions.components(separatedBy: ", ") : nil,
-                                                    context: self.managedObjectContext!))
-        }
-
-        
-        self.japonais = newJaponais
-        self.senses = newSenses
-        self.noSenseTradsArray = newNoSenseTradsArray
-        
-        if motStruc.notes != "" { self.notes = motStruc.notes } else { self.notes = nil }
-        
-        self.timestamp = Date()
-        
-        Task {
-            do {
-                try await DataController.shared.save()
-            }
-            catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-    }
-    
     func delete() {
         self.managedObjectContext?.delete(self)
         
@@ -283,9 +249,9 @@ public class Mot: NSManagedObject, Identifiable {
             }
         }
     }
-    
-    func reset() {
-        fatalError("Cannot reset mot perso")
+        
+    func objectWillChangeSend() {
+        self.objectWillChange.send()
     }
             
     func getExactMatchKeyWords() -> Set<String> {
@@ -338,7 +304,30 @@ public class Mot: NSManagedObject, Identifiable {
     }
     
     
-    convenience init(odre:Int64,
+    func moveNoSenseTradToTrad(noSenseTradToMove:Traduction, senseToMoveIn:Sense) {
+        // les object envoyé peuvent etres des mot jmdict donc non modifiable il faut les recup dans le modifier
+        
+        if let noSenseTradToMove = self.noSenseTradsArray?.first(where: { $0 == noSenseTradToMove }) {
+            if let senseToMoveIn = self.senses?.first(where: {$0 == senseToMoveIn }) {
+                noSenseTradToMove.ordre = (senseToMoveIn.traductionsArray?.last?.ordre ?? -1) + 1
+                
+                self.removeFromNoSenseTradAtb(noSenseTradToMove)
+                senseToMoveIn.traductionsArray = (senseToMoveIn.traductionsArray ?? []) + [noSenseTradToMove]
+            }
+            else {
+                fatalError()
+            }
+        }
+        else {
+            fatalError()
+        }
+    }
+    
+    
+    
+    //MARK: Inits
+
+    convenience init(ordre:Int64,
                      japonais:[Japonais]? = nil,
                      senses:[Sense]? = nil,
                      noSenseTrads:[Traduction]? = nil,
@@ -355,6 +344,15 @@ public class Mot: NSManagedObject, Identifiable {
         self.senses = senses
         self.noSenseTradsArray = noSenseTrads
         self.notes = notes
+    }
+    
+    
+    static func == (lhs: Mot, rhs: Mot) -> Bool {
+        
+        return  lhs.japonais == rhs.japonais &&
+                lhs.senses == rhs.senses &&
+                lhs.noSenseTradsArray == rhs.noSenseTradsArray &&
+                lhs.notes == rhs.notes
     }
     
 }

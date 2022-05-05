@@ -120,7 +120,7 @@ struct DebugMenu: View {
                     MotRowView(mot: item)
                         .contextMenu {
                             Button("reset") {
-                                item.reset()
+                                item.deleteModifier()
                                 Task {
                                     try await DataController.shared.save()
                                 }

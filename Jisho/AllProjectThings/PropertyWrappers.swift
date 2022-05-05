@@ -274,6 +274,53 @@ extension CloudStorage where ValueType == [String] {
 
 
 
+// MARK: MotWrapper
+
+
+@propertyWrapper public struct MotWrapper: DynamicProperty {
+        
+    @ObservedObject private var value: Mot
+    
+    private var isMotJMdict: Bool
+        
+    public var wrappedValue: Mot {
+        get {
+            return value
+        }
+    }
+    
+    public var projectedValue: Mot {
+        get {
+            if isMotJMdict {
+                do {
+                    return try (value as! MotJMdict).getOrCreateModifier()
+                }
+                catch {
+                    fatalError(error.localizedDescription)
+                }
+            }
+            else {
+                return value
+            }
+        }
+    }
+    
+    
+    public init(wrappedValue: Mot) {
+        self.value = wrappedValue
+        
+        if (wrappedValue as? MotJMdict) != nil {
+            self.isMotJMdict = true
+        }
+        else {
+            self.isMotJMdict = false
+        }
+    }
+    
+}
+
+
+
 // MARK: Encode / Decode Functions
 
 // Meta datas

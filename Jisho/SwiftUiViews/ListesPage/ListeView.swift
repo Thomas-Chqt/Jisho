@@ -47,7 +47,7 @@ struct ListeView: View {
             
             if let mots = liste.mots {
                 ForEach(mots) { mot in
-                    NavigationLink(destination: MotDetailsView(mot)) {
+                    NavigationLink(destination: MotDetailsView(mot: mot)) {
                         MotRowView(mot: mot)
                     }
                 }

@@ -17,14 +17,35 @@ public class Sense: NSManagedObject, Identifiable {
     }
 
     
+    //MARK: NSManaged attributes
     
-    @NSManaged public var joinedMetaDatasAtb: String?
-    @NSManaged public var parent: Mot?
-    @NSManaged public var traductionsAtb: NSSet?
-    @NSManaged public var ordre: Int64
+    @NSManaged private var joinedMetaDatasAtb: String?
+    @NSManaged private var parent: Mot?
+    @NSManaged private var traductionsAtb: NSSet?
+    @NSManaged private var ordreAtb: Int64
     
     
     
+    //MARK: Not override in children
+
+    var ordre: Int64 {
+        get {
+            return ordreAtb
+        }
+        set {
+            ordreAtb = newValue
+        }
+    }
+    
+    var context: NSManagedObjectContext {
+        guard let context = self.managedObjectContext else { fatalError() }
+        return context
+    }
+
+    
+    
+    //MARK: Override in children
+
     var metaDatas: [MetaData]? {
         get {
             do {
@@ -41,6 +62,8 @@ public class Sense: NSManagedObject, Identifiable {
         }
         
         set {
+            objectWillChangeSend()
+            
             if let newValue = newValue {
                 let metaDatasStr:[String] = newValue.map {
                     let metaStrc = MetaDataStruct($0)
@@ -58,20 +81,42 @@ public class Sense: NSManagedObject, Identifiable {
             if traductionsAtb!.allObjects.isEmpty { return nil }
 
             let set = traductionsAtb as! Set<Traduction>
-            let array = Array(set)
-            return array//.sorted(savedLanguesPref)
+            return set.sorted {
+                $0.ordre < $1.ordre
+            }
         }
         set {
-            for trad in traductionsArray ?? [] {
-                removeFromTraductionsAtb(trad)
-                self.managedObjectContext!.delete(trad)
-            }
+            objectWillChangeSend()
+            
             for trad in newValue ?? [] {
-                addToTraductionsAtb(trad)
+                if !(traductionsArray ?? []).contains(trad) {
+                    addToTraductionsAtb(trad)
+                }
+            }
+            for trad in traductionsArray ?? [] {
+                if !(newValue ?? []).contains(trad) {
+                    removeFromTraductionsAtb(trad)
+                    self.context.delete(trad)
+                }
+            }
+            for (i, trad) in (traductionsArray ?? []).enumerated() {
+                trad.ordre = Int64(i)
             }
         }
     }
+    
+    
+    
+    //MARK: Functions
+
+    func objectWillChangeSend() {
+        self.objectWillChange.send()
+        parent?.objectWillChangeSend()
+    }
         
+    
+    
+    //MARK: Inits
     
     convenience init(ordre:Int64, metaDatas:[MetaData]? = nil, traductions:[Traduction]? = nil, context:NSManagedObjectContext) {
         self.init(context: context)
@@ -80,6 +125,12 @@ public class Sense: NSManagedObject, Identifiable {
         
         self.metaDatas = metaDatas
         self.traductionsArray = traductions
+    }
+    
+    static func == (lhs: Sense, rhs: Sense) -> Bool {
+        return lhs.metaDatas == rhs.metaDatas && lhs.traductionsArray == rhs.traductionsArray
+//               lhs.traductionsArray?.map{$0.traductions} == rhs.traductionsArray?.map{$0.traductions} &&
+//               lhs.traductionsArray?.map{$0.langue} == rhs.traductionsArray?.map{$0.langue}
     }
 }
 

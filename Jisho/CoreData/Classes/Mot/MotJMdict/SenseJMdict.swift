@@ -14,13 +14,52 @@ public class SenseJMdict: Sense {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<SenseJMdict> {
         return NSFetchRequest<SenseJMdict>(entityName: "SenseJMdict")
     }
-
     
+    
+    //MARK: NSManaged attributes
+
     @NSManaged public var traductionsJMdictAtb: NSSet?
     @NSManaged public var parentJMdict: MotJMdict?
     
     
     
+    //MARK: Modifiable Values (Only used in Init)
+
+    private var modifiableMetaDatas: [MetaData]? {
+        get {
+            super.metaDatas
+        }
+
+        set {
+            super.metaDatas = newValue
+        }
+    }
+    
+    private var modifiableTraductionsArray: [TraductionJMdict]?{
+        get {
+            if traductionsJMdictAtb == nil { return nil }
+            if traductionsJMdictAtb!.allObjects.isEmpty { return nil }
+
+            let set = traductionsJMdictAtb as! Set<TraductionJMdict>
+            return set.sorted {
+                $0.ordre < $1.ordre
+            }
+        }
+        set {
+            for trad in modifiableTraductionsArray ?? [] {
+                removeFromTraductionsJMdictAtb(trad)
+                self.managedObjectContext!.delete(trad)
+            }
+            for trad in newValue ?? [] {
+                addToTraductionsJMdictAtb(trad)
+            }
+        }
+    }
+    
+    
+    
+    //MARK: Used Values
+
     override var metaDatas: [MetaData]? {
         get {
             super.metaDatas
@@ -30,15 +69,16 @@ public class SenseJMdict: Sense {
             fatalError("Cannot modify")
         }
     }
-    
+        
     override var traductionsArray: [Traduction]?{
         get {
             if traductionsJMdictAtb == nil { return nil }
             if traductionsJMdictAtb!.allObjects.isEmpty { return nil }
 
             let set = traductionsJMdictAtb as! Set<TraductionJMdict>
-            let array = Array(set)
-            return array//.sorted(savedLanguesPref)
+            return set.sorted {
+                $0.ordre < $1.ordre
+            }
         }
         set {
             fatalError("cannot modify")
@@ -51,20 +91,17 @@ public class SenseJMdict: Sense {
         self.init(context: context)
         self.ordre = ordre
         
-        if let newValue = metaDatas {
-            let metaDatasStr:[String] = newValue.map {
-                let metaStrc = MetaDataStruct($0)
-                return "\(metaStrc.type)␞\(metaStrc.key)"
-            }
-            
-            joinedMetaDatasAtb = metaDatasStr.joined(separator: "␀")
-        } else { joinedMetaDatasAtb = nil }
-        
-        for trad in traductions ?? [] {
-            addToTraductionsJMdictAtb(trad)
-        }
+        modifiableMetaDatas = metaDatas
+        modifiableTraductionsArray = traductions
     }
 
+    
+//    static func == (lhs: SenseJMdict, rhs: Sense) -> Bool {
+//        print("sense equal func unsed")
+//        return lhs.metaDatas == rhs.metaDatas && //lhs.traductionsArray == rhs.traductionsArray
+//               lhs.traductionsArray?.map{$0.traductions} == rhs.traductionsArray?.map{$0.traductions} &&
+//               lhs.traductionsArray?.map{$0.langue} == rhs.traductionsArray?.map{$0.langue}
+//    }
 }
 
 // MARK: Generated accessors for traductionsJMdictAtb

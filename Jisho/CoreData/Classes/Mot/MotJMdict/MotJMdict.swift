@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
 @objc(MotJMdict)
 public class MotJMdict: Mot {
@@ -63,21 +64,12 @@ public class MotJMdict: Mot {
         return fetchRequest
     }
     
-      
-    
-//    @nonobjc public class func fetchRequest(recherche:String,
-//                                            allModifiedMotUUIDs:[UUID],
-//                                            searchedModifiedMotUUIDs:[UUID]) -> NSFetchRequest<NSManagedObjectID> {
+    /*
     @nonobjc public class func fetchRequest(recherche:String,
                                             allModifiedMotObjIDs:[NSManagedObjectID],
                                             searchedModifiedMotObjIDs:[NSManagedObjectID]) -> NSFetchRequest<NSManagedObjectID> {
         
         let fetchRequest:NSFetchRequest<NSManagedObjectID> = MotJMdict.fetchRequest()
-        
-//        fetchRequest.sortDescriptors = [
-//            NSSortDescriptor(key: "timestampAtb", ascending: false),
-//            NSSortDescriptor(key: "ordreAtb", ascending: true)
-//        ]
         
 
         let sousPredicateRechercheA = NSPredicate(format: "ANY japonaisJMdictAtb.kanjiAtb CONTAINS[cd] %@", recherche)
@@ -108,16 +100,20 @@ public class MotJMdict: Mot {
         fetchRequest.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [predicate1, predicate2])
         
         return fetchRequest
-    }
+    }*/
     
     
-    
+    //MARK: NSManaged attributes
+
     @NSManaged private var jmDictIDAtb: Int64
     
     @NSManaged private var japonaisJMdictAtb: NSSet?
     @NSManaged private var noSenseTradJMdictAtb: NSSet?
     @NSManaged private var sensesJMdictAtb: NSSet?
     
+    
+    
+    //MARK: Specifique to MotJMdict
     
     var jmDictID: Int64 {
         get {
@@ -128,18 +124,23 @@ public class MotJMdict: Mot {
         }
     }
     
-  
     
-    var japonaisReel: [JaponaisJMdict]? {
+    
+    //MARK: Real Values
+    
+    private var japonaisReel: [JaponaisJMdict]? {
         get {
             if japonaisJMdictAtb == nil { return nil }
             if japonaisJMdictAtb!.allObjects.isEmpty { return nil }
             
             let set = japonaisJMdictAtb as! Set<JaponaisJMdict>
-            return set.sorted
-            {
-                $0.ordre < $1.ordre
+            //return set.sorted { $0.ordre < $1.ordre }
+            //bug lors de l'importation a retirer plus tard
+            let sorted = set.sorted { $0.ordre < $1.ordre }
+            for (i, obj) in sorted.enumerated() {
+                obj.ordre = Int64(i)
             }
+            return sorted
         }
         set {
             for japonai in japonaisReel ?? [] {
@@ -152,16 +153,19 @@ public class MotJMdict: Mot {
         }
     }
     
-    var sensesReel: [SenseJMdict]? {
+    private var sensesReel: [SenseJMdict]? {
         get{
             if sensesJMdictAtb == nil { return nil }
             if sensesJMdictAtb!.allObjects.isEmpty { return nil }
             
             let set = sensesJMdictAtb as! Set<SenseJMdict>
-            return set.sorted
-            {
-                $0.ordre < $1.ordre
+            //return set.sorted { $0.ordre < $1.ordre }
+            //bug lors de l'importation a retirer plus tard
+            let sorted = set.sorted { $0.ordre < $1.ordre }
+            for (i, obj) in sorted.enumerated() {
+                obj.ordre = Int64(i)
             }
+            return sorted
         }
         set{
             for sense in sensesReel ?? [] {
@@ -174,14 +178,19 @@ public class MotJMdict: Mot {
         }
     }
         
-    var noSenseTradsArrayReel: [TraductionJMdict]? {
+    private var noSenseTradsArrayReel: [TraductionJMdict]? {
         get{
             if noSenseTradJMdictAtb == nil { return nil }
             if noSenseTradJMdictAtb!.allObjects.isEmpty { return nil }
             
             let set = noSenseTradJMdictAtb as! Set<TraductionJMdict>
-            let array = Array(set)
-            return array//.sorted(savedLanguesPref)
+            //return set.sorted { $0.ordre < $1.ordre }
+            //bug lors de l'importation a retirer plus tard
+            let sorted = set.sorted { $0.ordre < $1.ordre }
+            for (i, obj) in sorted.enumerated() {
+                obj.ordre = Int64(i)
+            }
+            return sorted
         }
         set{
             for trad in noSenseTradsArrayReel ?? [] {
@@ -194,8 +203,7 @@ public class MotJMdict: Mot {
         }
     }
 
-    
-    var notesReel: String? {
+    private var notesReel: String? {
         get {
             return super.notes
         }
@@ -205,6 +213,8 @@ public class MotJMdict: Mot {
     }
     
     
+    
+    //MARK: Used Values
     
     override var japonais: [Japonais]? {
         get{
@@ -220,7 +230,6 @@ public class MotJMdict: Mot {
                 fatalError(error.localizedDescription)
             }
         }
-        
         set {
             fatalError("Cannot modify directly")
         }
@@ -266,7 +275,6 @@ public class MotJMdict: Mot {
         }
     }
     
-    
     override var notes: String? {
         get{
             do {
@@ -290,18 +298,15 @@ public class MotJMdict: Mot {
 
     
     func getModifier() throws -> MotModifier? {
-        /*
-        if let cachedVersion = cacheMotModifier.object(forKey: self.uuid as NSUUID) {
-            
-            let findedObj = self.context.object(with: cachedVersion)
-            if !findedObj.isFault {
-                return (findedObj as! MotModifier)
-            }
-        }
-         */
         
-        
-//        let fetchRequest = MotModifier.fetchRequest(modifiedMotUUID: self.uuid)
+//        if let cachedVersion = cacheMotModifier.object(forKey: self.uuid as NSUUID) {
+//
+//            let findedObj = self.context.object(with: cachedVersion)
+//            if !findedObj.isFault {
+//                return (findedObj as! MotModifier)
+//            }
+//        }
+         
         let fetchRequest = MotModifier.fetchRequest(modifiedMotObjID: self.objectID)
         
         
@@ -324,6 +329,42 @@ public class MotJMdict: Mot {
           
     }
     
+    func creatModifier() -> MotModifier {
+        
+        var japonais:[Japonais]? = nil
+        var senses:[Sense]? = nil
+        var noSenseTrads:[Traduction]? = nil
+        
+        japonais = self.japonaisReel?.map { Japonais(ordre: $0.ordre, kanji: $0.kanji, kana: $0.kana, context: self.context) }
+        
+        senses = self.sensesReel?.map { sense in
+            Sense(ordre: sense.ordre,
+                  metaDatas: sense.metaDatas,
+                  traductions: sense.traductionsArray?.map { Traduction(ordre: $0.ordre,
+                                                                        langue: $0.langue,
+                                                                        traductions: $0.traductions,
+                                                                        context: self.context) },
+                  context: self.context)
+        }
+        
+        noSenseTrads = self.noSenseTradsArrayReel?.map { Traduction(ordre: $0.ordre,
+                                                                    langue: $0.langue,
+                                                                    traductions: $0.traductions,
+                                                                    context: self.context) }
+        
+        let modifier =  MotModifier(ordre: self.ordre,
+                                    japonais: (japonais?.isEmpty) == true ? nil : japonais,
+                                    senses: (senses?.isEmpty) == true ? nil : senses,
+                                    noSenseTrads: (noSenseTrads?.isEmpty) == true ? nil : noSenseTrads,
+                                    notes: self.notes,
+                                    copiedMot: self,
+                                    context: self.context)
+        
+//        cacheMotModifier.setObject(modifier.objectID, forKey: self.uuid as NSUUID)
+        
+        return modifier
+    }
+    
     func getOrCreateModifier() throws -> MotModifier {
         
         if let modifier = try getModifier() {
@@ -331,34 +372,41 @@ public class MotJMdict: Mot {
         }
         else {
             self.timestamp = Date()
-            return MotModifier(self)
+            return creatModifier()
         }
     }
     
-    
-    override func modify(_ motStruc:MotStruct) {
-        objectWillChange.send()
-        
+    func isEqualToModifier() -> Bool {
         do {
-            let modifier = try getOrCreateModifier()
-            modifier.modify(motStruc)
+            guard let modifier = try getModifier() else { return true }
+            
+            return  self.japonaisReel == modifier.japonais &&
+                    self.sensesReel == modifier.senses &&
+                    self.noSenseTradsArrayReel == modifier.noSenseTradsArray &&
+                    self.notesReel == modifier.notes
         }
         catch {
             fatalError(error.localizedDescription)
         }
     }
     
-    override func delete() {
-        fatalError("Cannot delete JMdict mot")
-    }
-    
-    override func reset() {
+    func deleteModifier(save: Bool = true) {
         objectWillChange.send()
         
         do {
             if let modifier = try getModifier() {
                 modifier.delete()
-                cacheMotModifier.removeObject(forKey: self.uuid as NSUUID)
+//                cacheMotModifier.removeObject(forKey: self.uuid as NSUUID)
+                if save {
+                    Task {
+                        do {
+                            try await DataController.shared.save()
+                        }
+                        catch {
+                            fatalError(error.localizedDescription)
+                        }
+                    }
+                }
             }
             else {
                 fatalError("Unable to find the modifier, should check before try to reset")
@@ -368,10 +416,15 @@ public class MotJMdict: Mot {
             fatalError(error.localizedDescription)
         }
     }
+
+    
+        
+    override func delete() {
+        fatalError("Cannot delete JMdict mot")
+    }
     
     
-            
-    
+
     convenience init(odre:Int64,
                      jmDictID:Int64,
                      uuid:UUID,
@@ -380,6 +433,7 @@ public class MotJMdict: Mot {
                      noSenseTrads:[TraductionJMdict]? = nil,
                      notes:String? = nil,
                      context:NSManagedObjectContext) {
+        
         self.init(context: context)
 
         self.uuid = uuid
@@ -394,7 +448,7 @@ public class MotJMdict: Mot {
         self.notesReel = notes
     }
     
-    
+    /*
     convenience init(ordre: Int64, strct:MotImporter, context:NSManagedObjectContext) {
         var japonais:[JaponaisJMdict] = []
         var senses:[SenseJMdict] = []
@@ -450,7 +504,8 @@ public class MotJMdict: Mot {
                   noSenseTrads: noSenseTrads.isEmpty ? nil : noSenseTrads,
                   notes: nil,
                   context: context)
-    }    
+    }
+     */
 }
 
 

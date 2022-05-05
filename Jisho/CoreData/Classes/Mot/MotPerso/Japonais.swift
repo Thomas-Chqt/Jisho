@@ -17,46 +17,41 @@ public class Japonais: NSManagedObject, Identifiable {
     }
 
     
+    //MARK: NSManaged attributes
     
-    @NSManaged public var joinedMetaDatasAtb: String?
-    @NSManaged public var kanaAtb: String?
-    @NSManaged public var kanjiAtb: String?
-    @NSManaged public var parent: Mot?
-    @NSManaged public var ordre: Int64
+    @NSManaged private var kanaAtb: String?
+    @NSManaged private var kanjiAtb: String?
+    @NSManaged private var parent: Mot?
+    @NSManaged private var ordreAtb: Int64
     
     
     
-    var metaDatas: [MetaData]? {
+    //MARK: Not override in children
+    
+    var ordre: Int64 {
         get {
-            do {
-                guard let joinedMetaDatas = joinedMetaDatasAtb else {return nil}
-                let metaDatasStr:[String] = joinedMetaDatas.components(separatedBy: "␀")
-                let metaDatasArray:[MetaData] = try metaDatasStr.map {
-                    try MetaDataStruct( type: $0.components(separatedBy: "␞")[0],
-                                        key: $0.components(separatedBy: "␞")[1] ).getEnumFormat()
-                }
-                
-                return metaDatasArray
-            }
-            catch { fatalError() }
+            return ordreAtb
         }
-        
         set {
-            guard let newValue = newValue else { joinedMetaDatasAtb = nil ; return}
-            let metaDatasStr:[String] = newValue.map {
-                let metaStrc = MetaDataStruct($0)
-                return "\(metaStrc.type)␞\(metaStrc.key)"
-            }
-            
-            joinedMetaDatasAtb = metaDatasStr.joined(separator: "␀")
+            ordreAtb = newValue
         }
     }
+    
+    var context: NSManagedObjectContext {
+        guard let context = self.managedObjectContext else { fatalError() }
+        return context
+    }
+
+       
+    
+    //MARK: Override in children
     
     var kanji: String? {
         get {
             return kanjiAtb
         }
         set {
+            objectWillChangeSend()
             kanjiAtb = newValue
         }
     }
@@ -66,11 +61,24 @@ public class Japonais: NSManagedObject, Identifiable {
             return kanaAtb
         }
         set {
+            objectWillChangeSend()
             kanaAtb = newValue
         }
     }
     
     
+    
+    //MARK: Functions
+
+    func objectWillChangeSend() {
+        self.objectWillChange.send()
+        parent?.objectWillChangeSend()
+    }
+    
+    
+    
+    
+    //MARK: Inits
     
     convenience init(ordre:Int64, kanji:String? = nil, kana:String? = nil, context:NSManagedObjectContext) {
         self.init(context: context)
@@ -79,6 +87,10 @@ public class Japonais: NSManagedObject, Identifiable {
         
         self.kanji = kanji
         self.kana = kana
+    }
+    
+    static func == (lhs: Japonais, rhs: Japonais) -> Bool {
+        return lhs.kanji == rhs.kanji && lhs.kana == rhs.kana
     }
 }
 

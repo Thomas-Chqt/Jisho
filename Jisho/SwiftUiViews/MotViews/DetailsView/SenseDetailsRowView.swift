@@ -13,7 +13,7 @@ struct SenseDetailsRowView: View
     @Environment(\.languesPref) var languesPref
     @Environment(\.languesAffichées) var languesAffichées
     
-    var sense:Sense
+    @ObservedObject var sense:Sense
     
     var body: some View
     {
@@ -51,7 +51,7 @@ struct SenseDetailsRowView: View
                             Divider()
                         }
                         
-                        TradDetailsRowView(trad: trad)
+                        TradDetailsRowView<AnyView>(trad: trad)
                     }
                 }
             }

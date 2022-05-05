@@ -49,7 +49,7 @@ struct MotListView: View {
     
     var exactMatchs: some View {
         ForEach(mots.exactMatch) { mot in
-            NavigationLink(destination: MotDetailsView(mot)) {
+            NavigationLink(destination: MotDetailsView(mot: mot)) {
                 MotRowView(mot: mot)
             }
         }
@@ -58,7 +58,7 @@ struct MotListView: View {
     
     var autresMatchs: some View {
         ForEach(mots.nonExactMatch) { mot in
-            NavigationLink(destination: MotDetailsView(mot)) {
+            NavigationLink(destination: MotDetailsView(mot: mot)) {
                 MotRowView(mot: mot)
             }
         }

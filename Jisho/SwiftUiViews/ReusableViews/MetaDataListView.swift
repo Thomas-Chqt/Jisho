@@ -139,7 +139,7 @@ struct MetaDataListView<Content: View>: View
                 }
             }
         }
-        .searchable(text: $search)
+        .searchable(text: $search, placement: .navigationBarDrawer(displayMode: .always))
         .onChange(of: search, perform: { search in
             self.metaDataDictKeysVisible = metaDataDict.wrappedValue.compactMap { (key: MetaData, value: String?) -> MetaData? in
                 if search == "" { return key }

@@ -16,32 +16,44 @@ public class Traduction: NSManagedObject, Identifiable {
         return NSFetchRequest<Traduction>(entityName: "Traduction")
     }
 
+    //MARK: NSManaged attributes
+    
+    @NSManaged private var joinedTradutionsAtb: String?
+    @NSManaged private var langueStringAtb: String?
+    @NSManaged private var ordreAtb: Int64
+    
+    @NSManaged private var motParent: Mot?
+    @NSManaged private var senseParent: Sense?
     
     
-    @NSManaged public var joinedTradutionsAtb: String?
-    @NSManaged public var langueStringAtb: String?
-    @NSManaged public var ordre: Int64
     
-    @NSManaged public var motParent: Mot?
-    @NSManaged public var senseParent: Sense?
-    
-    
-    
-    var langueString: String? {
-        get{
-            return langueStringAtb
+    //MARK: Not override in children
+
+    var ordre: Int64 {
+        get {
+            return ordreAtb
         }
-        set{
-            langueStringAtb = newValue
+        set {
+            ordreAtb = newValue
         }
     }
     
+    var context: NSManagedObjectContext {
+        guard let context = self.managedObjectContext else { fatalError() }
+        return context
+    }
+    
+    
+    
+    //MARK: Override in children
+    
     var langue: Langue {
         get{
-            return Langue.init_(langueString)
+            return Langue.init_(langueStringAtb)
         }
         set {
-            langueString = newValue.rawValue
+            objectWillChangeSend()
+            langueStringAtb = newValue.rawValue
         }
     }
     
@@ -52,11 +64,23 @@ public class Traduction: NSManagedObject, Identifiable {
         }
         set
         {
+            objectWillChangeSend()
             joinedTradutionsAtb = newValue?.joined(separator: "␀")
         }
     }
     
     
+    
+    //MARK: Functions
+    
+    func objectWillChangeSend() {
+        self.objectWillChange.send()
+        motParent?.objectWillChangeSend()
+        senseParent?.objectWillChangeSend()
+    }
+    
+    
+    //MARK: Inits
     
     convenience init(ordre:Int64, langue:Langue = .none, traductions:[String]? = nil, context:NSManagedObjectContext) {
         self.init(context: context)
@@ -65,5 +89,10 @@ public class Traduction: NSManagedObject, Identifiable {
         
         self.langue = langue
         self.traductions = traductions
+    }
+    
+    
+    static func == (lhs: Traduction, rhs: Traduction) -> Bool {
+        return (lhs.langue == rhs.langue) && (lhs.traductions == rhs.traductions)
     }
 }

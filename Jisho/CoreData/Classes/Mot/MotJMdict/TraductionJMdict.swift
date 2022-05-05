@@ -17,21 +17,37 @@ public class TraductionJMdict: Traduction {
     }
 
     
-    
+    //MARK: NSManaged attributes
+
     @NSManaged public var motParentJMdict: MotJMdict?
     @NSManaged public var senseParentJMdict: SenseJMdict?
 
     
     
-    override var langueString: String? {
-        get{
-            return super.langueString
+    //MARK: Modifiable Values (Only used in Init)
+
+    private var modifiableLangue: Langue {
+        get {
+            super.langue
         }
-        set{
-            fatalError("Cannot modify")
+        set {
+            super.langue = newValue
         }
     }
     
+    private var modifiableTraductions: [String]? {
+        get {
+            return super.traductions
+        }
+        set {
+            super.traductions = newValue
+        }
+    }
+    
+    
+    
+    //MARK: Used Values
+
     override var langue: Langue {
         get {
             super.langue
@@ -57,8 +73,14 @@ public class TraductionJMdict: Traduction {
         
         self.ordre = ordre
         
-        self.langueStringAtb = langue.rawValue
+        self.modifiableLangue = langue
         
-        self.joinedTradutionsAtb = traductions?.joined(separator: "␀")
+        self.modifiableTraductions = traductions
     }
+    
+    
+//    static func == (lhs: TraductionJMdict, rhs: Traduction) -> Bool {
+//        print("trad equal func unsed")
+//        return (lhs.langue == rhs.langue) && (lhs.traductions == rhs.traductions)
+//    }
 }

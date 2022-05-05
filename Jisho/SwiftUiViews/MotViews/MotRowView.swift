@@ -14,8 +14,9 @@ struct MotRowView: View
     
     @StateObject var mot:Mot
     
+    
     var body: some View
-    {
+    {        
         let firstJap = mot.japonais?.first(where: { ($0.kanji != nil) || ($0.kana != nil) })
         let firstSense = mot.senses?.first
         

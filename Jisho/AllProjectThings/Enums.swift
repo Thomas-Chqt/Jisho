@@ -131,12 +131,6 @@ enum ErrorPerso: Error {
     }
 }
 
-enum ModifyOption {
-    case all
-    case japonais(Int)
-    case sense(Int)
-    case notes
-}
 
 enum Page {
     case search
@@ -150,21 +144,21 @@ enum MetaData: Equatable, Hashable, Identifiable
     
     var id: Self { self }
     
-indirect case pos(MetaDataKey)
-/*indirect*/ case ke_pri(String)// -> special
-/*indirect*/ case re_pri(String)// -> special
-indirect case misc(MetaDataKey)
-indirect case ke_inf(MetaDataKey)
-indirect case dial(MetaDataKey)
-indirect case re_inf(MetaDataKey)
-indirect case field(MetaDataKey)
-    
-case s_inf(String)
-case stagk(String)
-case stagr(String)
-case xref(String)
-case ant(String)
-case perso(String)
+    indirect case pos(MetaDataKey)
+    /*indirect*/ case ke_pri(String)// -> special
+    /*indirect*/ case re_pri(String)// -> special
+    indirect case misc(MetaDataKey)
+    indirect case ke_inf(MetaDataKey)
+    indirect case dial(MetaDataKey)
+    indirect case re_inf(MetaDataKey)
+    indirect case field(MetaDataKey)
+        
+    case s_inf(String)
+    case stagk(String)
+    case stagr(String)
+    case xref(String)
+    case ant(String)
+    case perso(String)
     
     /*
     var description: String {

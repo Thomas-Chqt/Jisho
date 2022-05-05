@@ -19,14 +19,11 @@
 		E914E99C27CF9D6700FA4B68 /* MotRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E98B27CF9D6700FA4B68 /* MotRowView.swift */; };
 		E914E99D27CF9D6700FA4B68 /* SenseDetailsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E98D27CF9D6700FA4B68 /* SenseDetailsRowView.swift */; };
 		E914E99E27CF9D6700FA4B68 /* MotDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E98E27CF9D6700FA4B68 /* MotDetailsView.swift */; };
-		E914E99F27CF9D6700FA4B68 /* ModifyJaponaisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E99027CF9D6700FA4B68 /* ModifyJaponaisView.swift */; };
-		E914E9A027CF9D6700FA4B68 /* ModifySheatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E99127CF9D6700FA4B68 /* ModifySheatView.swift */; };
 		E914E9A327CF9D6700FA4B68 /* SettingsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E99627CF9D6700FA4B68 /* SettingsPageView.swift */; };
 		E914E9A427CF9D6700FA4B68 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E99827CF9D6700FA4B68 /* SideMenuView.swift */; };
 		E914E9A527CF9D6700FA4B68 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E99927CF9D6700FA4B68 /* ContentView.swift */; };
 		E914E9C027CF9DC600FA4B68 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E9B227CF9DC600FA4B68 /* DataController.swift */; };
 		E914E9C127CF9DC600FA4B68 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E914E9B327CF9DC600FA4B68 /* DataModel.xcdatamodeld */; };
-		E914E9C227CF9DC600FA4B68 /* StructsForModify.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E9B627CF9DC600FA4B68 /* StructsForModify.swift */; };
 		E914E9C627CF9E6200FA4B68 /* MotStrcImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E9C427CF9E6200FA4B68 /* MotStrcImporter.swift */; };
 		E914E9CA27CF9E7200FA4B68 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E9C927CF9E7200FA4B68 /* Functions.swift */; };
 		E914E9D327CF9EB500FA4B68 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E914E9D227CF9EB500FA4B68 /* CloudKit.framework */; };
@@ -35,7 +32,6 @@
 		E914EA0C27CFB5D900FA4B68 /* Sense.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914EA0327CFB5D900FA4B68 /* Sense.swift */; };
 		E914EA1627CFC5C800FA4B68 /* SenseJMdict.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914EA0E27CFC5C800FA4B68 /* SenseJMdict.swift */; };
 		E914EA1A27CFC5C800FA4B68 /* JaponaisJMdict.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914EA1227CFC5C800FA4B68 /* JaponaisJMdict.swift */; };
-		E914EA2027D11F8500FA4B68 /* ModifySenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914EA1F27D11F8500FA4B68 /* ModifySenseView.swift */; };
 		E914EA2227D1D4F600FA4B68 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914EA2127D1D4F600FA4B68 /* Enums.swift */; };
 		E914EA2827D1F50900FA4B68 /* MetaDatasEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914EA2727D1F50900FA4B68 /* MetaDatasEditorView.swift */; };
 		E914EA3227D36C9B00FA4B68 /* Constantes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914EA3127D36C9B00FA4B68 /* Constantes.swift */; };
@@ -47,7 +43,6 @@
 		E95C7E5427D507C400AB3F71 /* MotJMdict.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95C7E4C27D507C400AB3F71 /* MotJMdict.swift */; };
 		E95C7E5727D5297400AB3F71 /* LanguesAffichéView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95C7E5627D5297400AB3F71 /* LanguesAffichéView.swift */; };
 		E96262D727EAD9490007594C /* MetaDataListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96262D627EAD9490007594C /* MetaDataListView.swift */; };
-		E96E874627F0657100BD4B2A /* ModifyNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96E874527F0657100BD4B2A /* ModifyNotesView.swift */; };
 		E973CF7727EDC60A00916178 /* MotListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E973CF7627EDC60A00916178 /* MotListView.swift */; };
 		E973CF7A27EDCBEF00916178 /* Liste.swift in Sources */ = {isa = PBXBuildFile; fileRef = E973CF7827EDCBEF00916178 /* Liste.swift */; };
 		E973CF7D27EDE36A00916178 /* DebugMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E973CF7C27EDE36A00916178 /* DebugMenu.swift */; };
@@ -64,6 +59,11 @@
 		E990343A27FF31E000D97CD5 /* ImiwaSaveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990343927FF31E000D97CD5 /* ImiwaSaveController.swift */; };
 		E990343C27FFF92700D97CD5 /* ImportationSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990343B27FFF92700D97CD5 /* ImportationSheetView.swift */; };
 		E9966E91281F041E009AD4FD /* local.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = E9966E90281F041E009AD4FD /* local.sqlite */; };
+		E9A18033282079ED00173C35 /* ModifyMotSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A18032282079ED00173C35 /* ModifyMotSheetView.swift */; };
+		E9A180362821346400173C35 /* ModifyJapSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A180352821346400173C35 /* ModifyJapSheetView.swift */; };
+		E9C5D8E128228164009C5EE1 /* ModifySenseSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C5D8E028228164009C5EE1 /* ModifySenseSheetView.swift */; };
+		E9C5D8E32822957E009C5EE1 /* MetaDataPickerSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C5D8E22822957E009C5EE1 /* MetaDataPickerSheetView.swift */; };
+		E9C5D8E52822B9C4009C5EE1 /* ModifyNotesSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C5D8E42822B9C4009C5EE1 /* ModifyNotesSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,14 +80,11 @@
 		E914E98B27CF9D6700FA4B68 /* MotRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotRowView.swift; sourceTree = "<group>"; };
 		E914E98D27CF9D6700FA4B68 /* SenseDetailsRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenseDetailsRowView.swift; sourceTree = "<group>"; };
 		E914E98E27CF9D6700FA4B68 /* MotDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotDetailsView.swift; sourceTree = "<group>"; };
-		E914E99027CF9D6700FA4B68 /* ModifyJaponaisView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyJaponaisView.swift; sourceTree = "<group>"; };
-		E914E99127CF9D6700FA4B68 /* ModifySheatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifySheatView.swift; sourceTree = "<group>"; };
 		E914E99627CF9D6700FA4B68 /* SettingsPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPageView.swift; sourceTree = "<group>"; };
 		E914E99827CF9D6700FA4B68 /* SideMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		E914E99927CF9D6700FA4B68 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E914E9B227CF9DC600FA4B68 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		E914E9B427CF9DC600FA4B68 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		E914E9B627CF9DC600FA4B68 /* StructsForModify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StructsForModify.swift; sourceTree = "<group>"; };
 		E914E9C427CF9E6200FA4B68 /* MotStrcImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotStrcImporter.swift; sourceTree = "<group>"; };
 		E914E9C927CF9E7200FA4B68 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		E914E9D027CF9EB200FA4B68 /* Jisho.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Jisho.entitlements; sourceTree = "<group>"; };
@@ -98,7 +95,6 @@
 		E914EA0327CFB5D900FA4B68 /* Sense.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sense.swift; sourceTree = "<group>"; };
 		E914EA0E27CFC5C800FA4B68 /* SenseJMdict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenseJMdict.swift; sourceTree = "<group>"; };
 		E914EA1227CFC5C800FA4B68 /* JaponaisJMdict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaponaisJMdict.swift; sourceTree = "<group>"; };
-		E914EA1F27D11F8500FA4B68 /* ModifySenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifySenseView.swift; sourceTree = "<group>"; };
 		E914EA2127D1D4F600FA4B68 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		E914EA2727D1F50900FA4B68 /* MetaDatasEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDatasEditorView.swift; sourceTree = "<group>"; };
 		E914EA3127D36C9B00FA4B68 /* Constantes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constantes.swift; sourceTree = "<group>"; };
@@ -110,7 +106,6 @@
 		E95C7E4C27D507C400AB3F71 /* MotJMdict.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = MotJMdict.swift; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
 		E95C7E5627D5297400AB3F71 /* LanguesAffichéView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguesAffichéView.swift"; sourceTree = "<group>"; };
 		E96262D627EAD9490007594C /* MetaDataListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataListView.swift; sourceTree = "<group>"; };
-		E96E874527F0657100BD4B2A /* ModifyNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyNotesView.swift; sourceTree = "<group>"; };
 		E973CF7627EDC60A00916178 /* MotListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotListView.swift; sourceTree = "<group>"; };
 		E973CF7827EDCBEF00916178 /* Liste.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Liste.swift; sourceTree = "<group>"; };
 		E973CF7C27EDE36A00916178 /* DebugMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenu.swift; sourceTree = "<group>"; };
@@ -127,6 +122,11 @@
 		E990343927FF31E000D97CD5 /* ImiwaSaveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImiwaSaveController.swift; sourceTree = "<group>"; };
 		E990343B27FFF92700D97CD5 /* ImportationSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportationSheetView.swift; sourceTree = "<group>"; };
 		E9966E90281F041E009AD4FD /* local.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = local.sqlite; sourceTree = "<group>"; };
+		E9A18032282079ED00173C35 /* ModifyMotSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyMotSheetView.swift; sourceTree = "<group>"; };
+		E9A180352821346400173C35 /* ModifyJapSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyJapSheetView.swift; sourceTree = "<group>"; };
+		E9C5D8E028228164009C5EE1 /* ModifySenseSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifySenseSheetView.swift; sourceTree = "<group>"; };
+		E9C5D8E22822957E009C5EE1 /* MetaDataPickerSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataPickerSheetView.swift; sourceTree = "<group>"; };
+		E9C5D8E42822B9C4009C5EE1 /* ModifyNotesSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyNotesSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,7 +220,7 @@
 			children = (
 				E914E98B27CF9D6700FA4B68 /* MotRowView.swift */,
 				E914E98C27CF9D6700FA4B68 /* DetailsView */,
-				E914E98F27CF9D6700FA4B68 /* ModifyViews */,
+				E9A18034282079F700173C35 /* ModifyViews */,
 			);
 			path = MotViews;
 			sourceTree = "<group>";
@@ -234,17 +234,6 @@
 				E943B37627DE1A9200E0C86B /* TradDetailsRowView.swift */,
 			);
 			path = DetailsView;
-			sourceTree = "<group>";
-		};
-		E914E98F27CF9D6700FA4B68 /* ModifyViews */ = {
-			isa = PBXGroup;
-			children = (
-				E914E99127CF9D6700FA4B68 /* ModifySheatView.swift */,
-				E914E99027CF9D6700FA4B68 /* ModifyJaponaisView.swift */,
-				E914EA1F27D11F8500FA4B68 /* ModifySenseView.swift */,
-				E96E874527F0657100BD4B2A /* ModifyNotesView.swift */,
-			);
-			path = ModifyViews;
 			sourceTree = "<group>";
 		};
 		E914E99227CF9D6700FA4B68 /* DebugViews */ = {
@@ -282,18 +271,9 @@
 			children = (
 				E914E9B227CF9DC600FA4B68 /* DataController.swift */,
 				E914E9FA27CFB5D900FA4B68 /* Classes */,
-				E914E9B527CF9DC600FA4B68 /* Structs */,
 				E914E9B327CF9DC600FA4B68 /* DataModel.xcdatamodeld */,
 			);
 			path = CoreData;
-			sourceTree = "<group>";
-		};
-		E914E9B527CF9DC600FA4B68 /* Structs */ = {
-			isa = PBXGroup;
-			children = (
-				E914E9B627CF9DC600FA4B68 /* StructsForModify.swift */,
-			);
-			path = Structs;
 			sourceTree = "<group>";
 		};
 		E914E9C827CF9E7200FA4B68 /* AllProjectThings */ = {
@@ -385,6 +365,18 @@
 				E990343927FF31E000D97CD5 /* ImiwaSaveController.swift */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		E9A18034282079F700173C35 /* ModifyViews */ = {
+			isa = PBXGroup;
+			children = (
+				E9A18032282079ED00173C35 /* ModifyMotSheetView.swift */,
+				E9A180352821346400173C35 /* ModifyJapSheetView.swift */,
+				E9C5D8E028228164009C5EE1 /* ModifySenseSheetView.swift */,
+				E9C5D8E22822957E009C5EE1 /* MetaDataPickerSheetView.swift */,
+				E9C5D8E42822B9C4009C5EE1 /* ModifyNotesSheetView.swift */,
+			);
+			path = ModifyViews;
 			sourceTree = "<group>";
 		};
 		E9B42CD527F318D3003BF69D /* Mot */ = {
@@ -489,15 +481,14 @@
 				E96262D727EAD9490007594C /* MetaDataListView.swift in Sources */,
 				E973CF7F27EDE8B800916178 /* DebugPage.swift in Sources */,
 				E914E9A527CF9D6700FA4B68 /* ContentView.swift in Sources */,
+				E9C5D8E52822B9C4009C5EE1 /* ModifyNotesSheetView.swift in Sources */,
 				E95C7E5227D507C400AB3F71 /* Traduction.swift in Sources */,
 				E914E99C27CF9D6700FA4B68 /* MotRowView.swift in Sources */,
 				E95C7E4E27D507C400AB3F71 /* TraductionJMdict.swift in Sources */,
 				E914E9CA27CF9E7200FA4B68 /* Functions.swift in Sources */,
 				E95C7E5727D5297400AB3F71 /* LanguesAffichéView.swift in Sources */,
 				E973CF8627EE4ED000916178 /* ListePageView.swift in Sources */,
-				E96E874627F0657100BD4B2A /* ModifyNotesView.swift in Sources */,
 				E98BF1CE27F565D4005E04F5 /* MetaDataRowView.swift in Sources */,
-				E914EA2027D11F8500FA4B68 /* ModifySenseView.swift in Sources */,
 				E914E9A427CF9D6700FA4B68 /* SideMenuView.swift in Sources */,
 				E990343C27FFF92700D97CD5 /* ImportationSheetView.swift in Sources */,
 				E914EA2827D1F50900FA4B68 /* MetaDatasEditorView.swift in Sources */,
@@ -510,9 +501,10 @@
 				E914EA0A27CFB5D900FA4B68 /* Japonais.swift in Sources */,
 				E914E9C627CF9E6200FA4B68 /* MotStrcImporter.swift in Sources */,
 				E90E130A2815373900BACC5F /* SearchTableHolderMotJMdict.swift in Sources */,
+				E9A180362821346400173C35 /* ModifyJapSheetView.swift in Sources */,
 				E95C7E5027D507C400AB3F71 /* Mot.swift in Sources */,
 				E973CF7727EDC60A00916178 /* MotListView.swift in Sources */,
-				E914E9C227CF9DC600FA4B68 /* StructsForModify.swift in Sources */,
+				E9A18033282079ED00173C35 /* ModifyMotSheetView.swift in Sources */,
 				E914EA1A27CFC5C800FA4B68 /* JaponaisJMdict.swift in Sources */,
 				E98BF1C827F4DC96005E04F5 /* PropertyWrappers.swift in Sources */,
 				E90E131D281BD54700BACC5F /* EnvironmentKeys.swift in Sources */,
@@ -520,6 +512,7 @@
 				E914EA0627CFB5D900FA4B68 /* MotModifier.swift in Sources */,
 				E90E130728141C7300BACC5F /* DebugSearchTable.swift in Sources */,
 				E990343A27FF31E000D97CD5 /* ImiwaSaveController.swift in Sources */,
+				E9C5D8E32822957E009C5EE1 /* MetaDataPickerSheetView.swift in Sources */,
 				E98BF1CC27F5646F005E04F5 /* JaponaisDetailsRowView.swift in Sources */,
 				E914E99E27CF9D6700FA4B68 /* MotDetailsView.swift in Sources */,
 				E914E97827CF9CF800FA4B68 /* JishoApp.swift in Sources */,
@@ -527,10 +520,9 @@
 				E914E99A27CF9D6700FA4B68 /* ListeView.swift in Sources */,
 				E98BF1C627F4C8D4005E04F5 /* DebugCloudStorage.swift in Sources */,
 				E914E9C127CF9DC600FA4B68 /* DataModel.xcdatamodeld in Sources */,
+				E9C5D8E128228164009C5EE1 /* ModifySenseSheetView.swift in Sources */,
 				E914E9A327CF9D6700FA4B68 /* SettingsPageView.swift in Sources */,
 				E98BF1D027F57208005E04F5 /* LangueRowView.swift in Sources */,
-				E914E9A027CF9D6700FA4B68 /* ModifySheatView.swift in Sources */,
-				E914E99F27CF9D6700FA4B68 /* ModifyJaponaisView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

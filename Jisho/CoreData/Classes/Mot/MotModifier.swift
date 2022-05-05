@@ -71,11 +71,16 @@ public class MotModifier: Mot {
     }
     
     
-    //@NSManaged private var modifiedMotJMdictIDAtb: Int64
+    
+    //MARK: NSManaged attributes
+
     @NSManaged private var modifiedMotUUIDAtb: UUID?
     @NSManaged public var modifiedMotObjIDURi: URL?
 
     
+    
+    //MARK: Specifique to MotModifier
+
     var modifiedMotUUID: UUID {
         get {
             return modifiedMotUUIDAtb!
@@ -85,7 +90,6 @@ public class MotModifier: Mot {
         }
     }
    
-    
     var modifiedMotObjID: NSManagedObjectID {
         
         get {
@@ -97,62 +101,42 @@ public class MotModifier: Mot {
         
     }
     
+    var modifiedMot: MotJMdict {
+        self.context.object(with: modifiedMotObjID) as! MotJMdict
+    }
+      
     
-    convenience init(_ copiedMot:MotJMdict) {
+    
+    override func objectWillChangeSend() {
+        self.objectWillChange.send()
+        modifiedMot.objectWillChange.send()
+    }
+    
+    
+    
+    convenience init(ordre: Int64,
+                     japonais:[Japonais]? = nil,
+                     senses:[Sense]? = nil,
+                     noSenseTrads:[Traduction]? = nil,
+                     notes:String? = nil,
+                     copiedMot: MotJMdict,
+                     context:NSManagedObjectContext) {
         
-        var japonais:[Japonais]? = nil
-        var senses:[Sense]? = nil
-        var noSenseTrad:[Traduction]? = nil
-        let notes:String? = copiedMot.notes
+        self.init(context: context)
         
-        var japArray:[Japonais] = []
-        for jap in copiedMot.japonaisReel ?? [] {
-            japArray.append(Japonais(ordre: jap.ordre,
-                                     kanji: jap.kanji,
-                                     kana: jap.kana,
-                                     context: copiedMot.managedObjectContext!))
-        }
-        if japArray.count > 0 { japonais = japArray }
-        
-        var sensesArray:[Sense] = []
-        for sense in copiedMot.sensesReel ?? []{
-            var traductions:[Traduction]? = nil
-            
-            var tradArry:[Traduction] = []
-            for trad in sense.traductionsArray ?? []{
-                tradArry.append(Traduction(ordre: trad.ordre,
-                                           langue: trad.langue,
-                                           traductions: trad.traductions,
-                                           context: copiedMot.managedObjectContext!))
-            }
-            if tradArry.count > 0 { traductions = tradArry }
-            
-            sensesArray.append(Sense(ordre: sense.ordre,
-                                     metaDatas: sense.metaDatas,
-                                     traductions: traductions,
-                                     context: copiedMot.managedObjectContext!))
-        }
-        if sensesArray.count > 0 { senses = sensesArray }
-        
-        for trad in copiedMot.noSenseTradsArrayReel ?? [] {
-            
-            if noSenseTrad == nil { noSenseTrad = [] }
-            
-            noSenseTrad!.append(Traduction(ordre: trad.ordre,
-                                           langue: trad.langue,
-                                           traductions: trad.traductions,
-                                           context: copiedMot.managedObjectContext!))
-        }
-        
-        self.init(odre: copiedMot.ordre,
-                  japonais: japonais,
-                  senses: senses,
-                  noSenseTrads: noSenseTrad,
-                  notes: notes,
-                  context: copiedMot.managedObjectContext!)
-
         self.modifiedMotUUID = copiedMot.uuid
         self.modifiedMotObjID = copiedMot.objectID
+                
+        self.uuid = UUID()
+        self.ordre = ordre
+        self.timestamp = Date()
+        
+        self.japonais = japonais
+        self.senses = senses
+        self.noSenseTradsArray = noSenseTrads
+        self.notes = notes
+
+        
     }
 }
 

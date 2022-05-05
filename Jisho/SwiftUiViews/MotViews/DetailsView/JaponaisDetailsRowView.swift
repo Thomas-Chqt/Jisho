@@ -9,7 +9,8 @@ import SwiftUI
 
 struct JaponaisDetailsRowView: View {
     
-    var jap:Japonais
+    @ObservedObject var jap:Japonais
+    
     
     var body: some View
     {
@@ -29,6 +30,7 @@ struct JaponaisDetailsRowView: View {
             }
         }
         .padding(.vertical, 6.0)
+        
     }
 }
 

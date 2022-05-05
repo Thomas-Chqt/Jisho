@@ -18,9 +18,37 @@ public class JaponaisJMdict: Japonais {
     
     
     
-    @NSManaged public var parentJMdict: MotJMdict?
+    //MARK: NSManaged attributes
+
+    @NSManaged private var parentJMdict: MotJMdict?
 
     
+    
+    //MARK: Modifiable Values (Only used in Init)
+    
+    private var modifiableKanji: String? {
+        get {
+            return super.kanji
+        }
+
+        set {
+            super.kanji = newValue
+        }
+    }
+    
+    private var modifiableKana: String? {
+        get {
+            return super.kana
+        }
+        
+        set {
+            super.kana = newValue
+        }
+    }
+    
+    
+    
+    //MARK: Used Values
     
     override var kanji: String? {
         get {
@@ -49,9 +77,11 @@ public class JaponaisJMdict: Japonais {
         
         self.ordre = ordre
         
-        self.kanjiAtb = kanji
-        self.kanaAtb = kana
+        self.modifiableKanji = kanji
+        self.modifiableKana = kana
     }
     
-    
+//    static func == (lhs: JaponaisJMdict, rhs: Japonais) -> Bool {
+//        return lhs.kanji == rhs.kanji && lhs.kana == rhs.kana
+//    }
 }
