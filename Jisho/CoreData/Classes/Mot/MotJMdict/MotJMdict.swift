@@ -395,18 +395,8 @@ public class MotJMdict: Mot {
         
         do {
             if let modifier = try getModifier() {
-                modifier.delete()
+                modifier.delete(save: save)
 //                cacheMotModifier.removeObject(forKey: self.uuid as NSUUID)
-                if save {
-                    Task {
-                        do {
-                            try await DataController.shared.save()
-                        }
-                        catch {
-                            fatalError(error.localizedDescription)
-                        }
-                    }
-                }
             }
             else {
                 fatalError("Unable to find the modifier, should check before try to reset")
@@ -419,7 +409,7 @@ public class MotJMdict: Mot {
 
     
         
-    override func delete() {
+    override func delete(save: Bool = true) {
         fatalError("Cannot delete JMdict mot")
     }
     

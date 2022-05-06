@@ -237,15 +237,17 @@ public class Mot: NSManagedObject, Identifiable {
     
     //MARK: Functions
 
-    func delete() {
+    func delete(save: Bool = true) {
         self.managedObjectContext?.delete(self)
         
-        Task {
-            do {
-                try await DataController.shared.save()
-            }
-            catch {
-                fatalError(error.localizedDescription)
+        if save {
+            Task {
+                do {
+                    try await DataController.shared.save()
+                }
+                catch {
+                    fatalError(error.localizedDescription)
+                }
             }
         }
     }

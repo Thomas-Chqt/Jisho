@@ -11,7 +11,6 @@ import CoreData
 fileprivate class MotDetailsViewModel: ObservableObject {
     
     @Published var showSheet = false
-    @Published var showConfirmDialog = false
     
     var sheetView = AnyView(EmptyView())
     
