@@ -12,7 +12,7 @@ struct MotRowView: View
     @Environment(\.languesPref) var languesPref
     @Environment(\.languesAffichées) var languesAffichées
     
-    @StateObject var mot:Mot
+    @MotWrapper var mot:Mot
     
     
     var body: some View

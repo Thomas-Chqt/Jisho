@@ -211,17 +211,17 @@ struct SearchPageView: View
                 List {
                     if !searchResult.exactMatch.isEmpty {
                         vm.exactMatchResultsList
-                            .onAppear{vm.showSuggestions = false}
+                            .onAppear { vm.showSuggestions = false }
                     }
                     if !searchResult.nonExactMatch.isEmpty {
                         vm.nonExactMatchResultsList
-                            .onAppear{vm.showSuggestions = false}
+                            .onAppear { vm.showSuggestions = false }
                     }
                 }
             }
             else {
                 ProgressView()
-                    .onAppear{vm.showSuggestions = false}
+                    .onAppear { vm.showSuggestions = false }
             }
         }
         .searchable(text: $vm.textFieldText, placement: .navigationBarDrawer(displayMode: .always)) {
@@ -250,31 +250,3 @@ struct SearchPageView: View
         }
     }
 }
-
-
-
-/*
-fileprivate struct SearchResultView: View {
-    @Environment(\.dismissSearch) var dismissSearch
-    
-    var motsObjectIDs: (exactMatch: [NSManagedObjectID], nonExactMatch: [NSManagedObjectID])?
-    
-    var body: some View {
-        
-        Group {
-            if let motsObjectIDs = motsObjectIDs {
-                List {
-                    MotListView(motsObjectIDs: motsObjectIDs)
-                        .onAppear { dismissSearch() }
-                }
-            }
-            else {
-                Spacer()
-                ProgressView()
-                    .onAppear { dismissSearch() }
-                Spacer()
-            }
-        }
-    }
-}
-*/
