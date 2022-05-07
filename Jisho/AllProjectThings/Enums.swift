@@ -108,27 +108,6 @@ enum ErrorPerso: Error {
     case mulitipleMotWithSameUUID
     case unableToFindTheMot
     case wtf
-    
-    var localizedDescription: String {
-        get {
-            switch self {
-            case .metaDataTypeInconnu:
-                return "MetaData type in importer not exist in the enum"
-            case .keyInconnue:
-                return "MetaData key in importer no exist in the enum"
-            case .wtf:
-                return "WTF"
-            case .pasDeMainListe:
-                return "No liste without parent"
-            case .multipleMainListe:
-                return "Multiple liste without parent"
-            case .mulitipleMotWithSameUUID:
-                return "Mulitiple mot with same UUID"
-            case .unableToFindTheMot:
-                return "Unable to find the mot"
-            }
-        }
-    }
 }
 
 

@@ -40,7 +40,7 @@ public class Liste: NSManagedObject, Identifiable {
     @NSManaged private var nameAtb: String?
     
     @NSManaged private var parent: Liste?
-    @NSManaged private var ordreInParentAtb: Int64
+    @NSManaged public var ordreInParentAtb: Int64
     
     @NSManaged private var motsObjIDURIAtb: [URL]?
 

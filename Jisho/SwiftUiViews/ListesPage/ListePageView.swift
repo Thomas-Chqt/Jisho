@@ -8,61 +8,28 @@
 import SwiftUI
 import CoreData
 
+class ListePageViewModel: ObservableObject {
+    @Published var showAlert = false
 
-struct ListePageView: View {
     
-    @State var showAlert = false
-    
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "parent == nil")) var listes: FetchedResults<Liste>
-    
-    @Environment(\.toggleSideMenu) var showSideMenu
-        
-    var body: some View {
-        
-        List {
-            ForEach(listes.sorted(by: { $0.ordre < $1.ordre })) { liste in
-                
-                NavigationLink(liste.name ?? "No name") {
-                    ListeView(liste: liste)
-                }
-                .isDetailLink(false)
-                 
+    func alertSumited(result: String?) {
+        if let text = result, text != "" {
+            do {
+                try createListe(name: text)
             }
-            .onDelete(perform: deleteListe)
-        }
-        
-        .alert(isPresented: $showAlert, TextAlert() { result in
-            
-            if let text = result {
-                createListe(name: text)
-            }
-            
-        })
-        .listStyle(.inset)
-        .navigationTitle("Listes")
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarLeading) {
-                sideMenuButton
-            }
-            
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                addButton
+            catch {
+                fatalError(error.localizedDescription)
             }
         }
-
     }
     
-    
-    private func deleteListe(at offsets: IndexSet) {
-        offsets.forEach {
-            
-            var listes:[Liste] = listes.sorted(by: { $0.ordre < $1.ordre }).map { $0 }
-            DataController.shared.mainQueueManagedObjectContext.delete(listes.remove(at: $0))
-            for (i, liste) in listes.enumerated() {
-                liste.ordre = Int64(i)
-                
-            }
-        }
+    func deleteListe(at offsets: IndexSet) throws {
+        let request:NSFetchRequest<NSManagedObjectID> = Liste.fetchRequest()
+        request.predicate = NSPredicate(format: "parent == nil")
+        request.sortDescriptors = [NSSortDescriptor(key: "ordreInParentAtb", ascending: true)]
+        let rootLists:[NSManagedObjectID] = try DataController.shared.mainQueueManagedObjectContext.fetch(request)
+        
+        offsets.forEach { DataController.shared.mainQueueManagedObjectContext.delete(rootLists[$0].getObject(on: .mainQueue)) }
         
         Task {
             do {
@@ -72,14 +39,20 @@ struct ListePageView: View {
                 fatalError(error.localizedDescription)
             }
         }
-
     }
     
-    private func createListe(name: String) {
+    
+
+    private func createListe(name: String) throws {
+        let request:NSFetchRequest<NSManagedObjectID> = Liste.fetchRequest()
+        request.predicate = NSPredicate(format: "parent == nil")
+        request.sortDescriptors = [NSSortDescriptor(key: "ordreInParentAtb", ascending: true)]
+        let rootLists:[NSManagedObjectID] = try DataController.shared.mainQueueManagedObjectContext.fetch(request)
+        
+        let lastListe:Liste? = rootLists.last?.getObject(on: .mainQueue)
+        let lastOrdre: Int64 = lastListe?.ordre ?? -1
                 
-        _ = Liste(ordre: (listes.sorted(by: { $0.ordre < $1.ordre }).last?.ordre ?? -1) + 1,
-                  name: name,
-                  context: DataController.shared.mainQueueManagedObjectContext)
+        _ = Liste(ordre: lastOrdre + 1, name: name, context: DataController.shared.mainQueueManagedObjectContext)
                         
         Task {
             do {
@@ -89,26 +62,50 @@ struct ListePageView: View {
                 fatalError(error.localizedDescription)
             }
         }
-         
+    }
+}
+
+
+struct ListePageView: View {
+    @Environment(\.toggleSideMenu) var showSideMenu
+
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.ordreInParentAtb)], predicate: NSPredicate(format: "parent == nil"))
+        var listes: FetchedResults<Liste>
+
+    @StateObject var vm = ListePageViewModel()
+    
+        
+    var body: some View {
+        
+        List {
+            ForEach(listes) { liste in
+                
+                NavigationLink("\(liste.ordre) \(liste.name ?? "No name")") {
+                    ListeView(liste: liste)
+                }
+                .isDetailLink(false)
+                 
+            }
+            .onDelete(perform: { do { try vm.deleteListe(at: $0) } catch { fatalError(error.localizedDescription) } })
+        }
+        
+        .alert(isPresented: $vm.showAlert, TextAlert(action: vm.alertSumited))
+        .listStyle(.inset)
+        .navigationTitle("Listes")
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) { sideMenuButton }
+            ToolbarItemGroup(placement: .navigationBarTrailing) { addButton }
+        }
+
     }
     
     
     private var sideMenuButton: some View {
-        Button {
-            showSideMenu()
-        } label: {
-            Image(systemName: "list.bullet")
-        }
+        Button { showSideMenu() } label: { Image(systemName: "list.bullet") }
     }
     
     private var addButton: some View {
-        
-        Button(action: {
-            showAlert.toggle()
-            
-        }, label: {
-            Image(systemName: "plus")
-        })
+        Button { vm.showAlert.toggle() } label: { Image(systemName: "plus") }
     }
     
 }

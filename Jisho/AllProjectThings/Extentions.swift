@@ -106,6 +106,7 @@ extension Array where Element : NSManagedObject {
     }
 }
 
+
 extension Sense {
     func contains(tradWith langue: Langue) -> Bool {
         return self.traductionsArray?.map { $0.langue }.contains(langue) ?? false
@@ -198,3 +199,37 @@ extension View {
     }
 }
 
+
+extension NSManagedObjectID {
+    func getObject<ObjectType: NSManagedObject>(on queue: Queue) -> ObjectType {
+        switch queue {
+        case .mainQueue:
+            return DataController.shared.mainQueueManagedObjectContext.object(with: self) as! ObjectType
+            
+        case .privateQueue:
+            return DataController.shared.privateQueueManagedObjectContext.object(with: self) as! ObjectType
+        }
+    }
+}
+
+
+extension ErrorPerso: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .metaDataTypeInconnu:
+            return NSLocalizedString("MetaData type in importer not exist in the enum", comment: "Error perso")
+        case .keyInconnue:
+            return NSLocalizedString("MetaData key in importer no exist in the enum", comment: "Error perso")
+        case .wtf:
+            return NSLocalizedString("WTF", comment: "Error perso")
+        case .pasDeMainListe:
+            return NSLocalizedString("No liste without parent", comment: "Error perso")
+        case .multipleMainListe:
+            return NSLocalizedString("Multiple liste without parent", comment: "Error perso")
+        case .mulitipleMotWithSameUUID:
+            return NSLocalizedString("Mulitiple mot with same UUID", comment: "Error perso")
+        case .unableToFindTheMot:
+            return NSLocalizedString("Unable to find the mot", comment: "Error perso")
+        }
+    }
+}
