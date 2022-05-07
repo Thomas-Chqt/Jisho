@@ -9,8 +9,7 @@ import Foundation
 import CoreGraphics
 import SwiftUI
 
-enum Langue: String, Encodable, /*Comparable,*/ Decodable, Identifiable
-{
+enum Langue: String, Encodable, /*Comparable,*/ Decodable, Identifiable {
     var id: Self { self }
     
     case francais = "fre"
@@ -87,18 +86,19 @@ enum Langue: String, Encodable, /*Comparable,*/ Decodable, Identifiable
     
 }
 
-enum TypeInit
-{
+
+enum TypeInit {
     case vide
     case preview
 }
 
-enum LoadingStatus
-{
+
+enum LoadingStatus {
     case loading
     case loadingPercent(String, Int)
     case finished
 }
+
 
 enum ErrorPerso: Error {
     case metaDataTypeInconnu
@@ -139,8 +139,14 @@ enum Page {
     case debug
 }
 
-enum MetaData: Equatable, Hashable, Identifiable
-{
+
+enum Queue {
+    case mainQueue
+    case privateQueue
+}
+
+
+enum MetaData: Equatable, Hashable, Identifiable {
     
     var id: Self { self }
     
