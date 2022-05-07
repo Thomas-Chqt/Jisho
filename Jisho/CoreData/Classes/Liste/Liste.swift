@@ -13,16 +13,27 @@ import CoreData
 public class Liste: NSManagedObject, Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Liste> {
-        return NSFetchRequest<Liste>(entityName: "Liste")
-    }
-
-    @nonobjc public class func fetchRequestMainListe() -> NSFetchRequest<Liste> {
-        let fetchRequest:NSFetchRequest<Liste> = Liste.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timestampAtb", ascending: false)]
-        fetchRequest.predicate = NSPredicate(format: "parent == nil")
+        let fetchRequest = NSFetchRequest<Liste>(entityName: "Liste")
+        fetchRequest.includesSubentities = false
         
         return fetchRequest
     }
+    
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<NSManagedObjectID> {
+        let fetchRequest = NSFetchRequest<NSManagedObjectID>(entityName: "Liste")
+        fetchRequest.includesSubentities = false
+        fetchRequest.resultType = .managedObjectIDResultType
+        
+        return fetchRequest
+    }
+
+//    @nonobjc public class func fetchRequestMainListe() -> NSFetchRequest<Liste> {
+//        let fetchRequest:NSFetchRequest<Liste> = Liste.fetchRequest()
+//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timestampAtb", ascending: false)]
+//        fetchRequest.predicate = NSPredicate(format: "parent == nil")
+//        
+//        return fetchRequest
+//    }
     
     
     @NSManaged private var timestampAtb: Date?
