@@ -71,7 +71,6 @@ extension Array where Element == Sense {
     }
 }
 
-
 extension Array where Element == NSManagedObjectID {
     func getObjects<ObjectType: NSManagedObject>(on queue: Queue) -> [ObjectType] {
         switch queue {
@@ -84,6 +83,28 @@ extension Array where Element == NSManagedObjectID {
     }
 }
 
+extension Array where Element == URL {
+    func getObjectIDs() -> [NSManagedObjectID] {
+        return self.map {
+            DataController.shared.container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: $0)!
+        }
+    }
+}
+
+extension Array where Element : NSManagedObject {
+    func getObjectIDs(on queue: Queue) throws -> [NSManagedObjectID] {
+        switch queue {
+        case .mainQueue:
+            try DataController.shared.mainQueueManagedObjectContext.obtainPermanentIDs(for: self)
+            return self.map { $0.objectID }
+            
+        case .privateQueue:
+            try DataController.shared.privateQueueManagedObjectContext.obtainPermanentIDs(for: self)
+            return self.map { $0.objectID }
+        }
+        
+    }
+}
 
 extension Sense {
     func contains(tradWith langue: Langue) -> Bool {

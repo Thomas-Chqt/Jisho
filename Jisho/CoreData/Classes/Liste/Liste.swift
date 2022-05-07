@@ -25,17 +25,24 @@ public class Liste: NSManagedObject, Identifiable {
     }
     
     
-    @NSManaged public var timestampAtb: Date?
-    @NSManaged public var nameAtb: String?
+    @NSManaged private var timestampAtb: Date?
+    @NSManaged private var nameAtb: String?
     
-    @NSManaged public var parent: Liste?
-    @NSManaged public var ordreInParentAtb: Int64
+    @NSManaged private var parent: Liste?
+    @NSManaged private var ordreInParentAtb: Int64
     
-    @NSManaged public var motsObjIDURIAtb: [URL]?
+    @NSManaged private var motsObjIDURIAtb: [URL]?
+
     
-    @NSManaged public var souListAtb: NSSet?
+    @NSManaged private var souListAtb: NSSet?
     
     
+    
+    var context: NSManagedObjectContext {
+        guard let context = self.managedObjectContext else { fatalError() }
+        return context
+    }
+
     
     var timestamp: Date {
         get {
@@ -66,32 +73,53 @@ public class Liste: NSManagedObject, Identifiable {
         set {
             self.nameAtb = newValue
         }
-        
     }
     
     
-    var motsObjIDs: [NSManagedObjectID]? {
+    var sousListes: [Liste]? {
         get {
-            guard let objectIDsURIRepresented = motsObjIDURIAtb else { return nil }
+            if souListAtb == nil { return nil }
+            if souListAtb!.allObjects.isEmpty { return nil }
             
-            return objectIDsURIRepresented.map {
-                DataController.shared.container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: $0)!
-            }
+            let set = souListAtb as! Set<Liste>
+            return set.sorted { $0.ordre < $1.ordre }
         }
         set {
-            guard let newValue = newValue else { motsObjIDURIAtb = nil ; return }
-                        
-            motsObjIDURIAtb = newValue.map {
-                $0.uriRepresentation()
+            self.objectWillChange.send()
+            
+            for liste in newValue ?? [] {
+                if !(sousListes ?? []).contains(liste) {
+                    addToSouListAtb(liste)
+                    timestamp = Date()
+                }
             }
+            for liste in sousListes ?? [] {
+                if !(newValue ?? []).contains(liste) {
+                    removeFromSouListAtb(liste)
+                    self.context.delete(liste)
+                    timestamp = Date()
+                }
+            }
+            for (i, liste) in (sousListes ?? []).enumerated() {
+                liste.ordre = Int64(i)
+            }
+        }
+    }
+
+    private var motsObjIDs: [NSManagedObjectID]? {
+        get {
+//            guard let objectIDsURIRepresented = motsObjIDURIAtb else { return nil }
+            return motsObjIDURIAtb?.getObjectIDs()
+        }
+        set {
+//            guard let newValue = newValue else { motsObjIDURIAtb = nil ; return }
+            motsObjIDURIAtb = newValue?.map { $0.uriRepresentation() }
         }
     }
     
     var mots: [Mot]? {
         get {
-            return motsObjIDs?.map {
-                DataController.shared.mainQueueManagedObjectContext.object(with: $0) as! Mot
-            }
+            return motsObjIDs?.getObjects(on: .mainQueue)
         }
         
         set {
@@ -99,8 +127,8 @@ public class Liste: NSManagedObject, Identifiable {
             if newValue.isEmpty { motsObjIDs = nil ; return }
             
             do {
-                try DataController.shared.mainQueueManagedObjectContext.obtainPermanentIDs(for: newValue)
-                motsObjIDs = newValue.map { $0.objectID }
+                motsObjIDs = try newValue.getObjectIDs(on: .mainQueue)
+                timestamp = Date()
             }
             catch {
                 fatalError(error.localizedDescription)
@@ -108,26 +136,12 @@ public class Liste: NSManagedObject, Identifiable {
         }
     }
     
-    var sousListes:[Liste]? {
-        get {
-            if souListAtb == nil { return nil }
-            if souListAtb!.allObjects.isEmpty { return nil }
-            
-            let set = souListAtb as! Set<Liste>
-            return set.sorted
-            {
-                $0.ordre < $1.ordre
-            }
-        }
-    }
     
     
     
     public func contains(_ mot: Mot) -> Bool {
-        
-        guard let mots = mots else { return false }
-
-        return mots.contains(mot)
+//        guard let mots = mots else { return false }
+        return mots?.contains(mot) == true
     }
     
     
@@ -286,22 +300,5 @@ extension Liste {
 
     @objc(removeSouListAtb:)
     @NSManaged public func removeFromSouListAtb(_ values: NSSet)
-
-}
-
-// MARK: Generated accessors for motsAtb
-extension Liste {
-
-    @objc(addMotsAtbObject:)
-    @NSManaged public func addToMotsAtb(_ value: Mot)
-
-    @objc(removeMotsAtbObject:)
-    @NSManaged public func removeFromMotsAtb(_ value: Mot)
-
-    @objc(addMotsAtb:)
-    @NSManaged public func addToMotsAtb(_ values: NSSet)
-
-    @objc(removeMotsAtb:)
-    @NSManaged public func removeFromMotsAtb(_ values: NSSet)
 
 }
