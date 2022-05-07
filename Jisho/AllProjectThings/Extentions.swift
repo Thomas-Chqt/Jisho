@@ -17,13 +17,25 @@ extension String: Identifiable{
 }
 
 
-extension Array where Element : Traduction {
-    func sorted(_ languesPref:[Langue]) -> Array<Element> {
-        return self.sorted {
-            return languesPref.firstIndex(of: $0.langue)! < languesPref.firstIndex(of: $1.langue)!
+extension Array {
+    
+    func separated(by separator: Element) -> [Element] {
+        return (0 ..< 2 * self.count - 1).map { $0 % 2 == 0 ? self[$0/2] : separator }
+    }
+    
+    func compacted(_ closure: (Element) -> Bool ) -> Array<Element> {
+        return self.compactMap {
+            if closure($0) {
+                return $0
+            }
+            else {
+                return nil as Element?
+            }
         }
     }
+    
 }
+
 
 extension Array where Element : Traduction {
     func compacted(_ langueAffiché: Set<Langue>) -> Array<Element> {
@@ -36,17 +48,10 @@ extension Array where Element : Traduction {
             }
         }
     }
-}
-
-extension Array {
-    func compacted(_ closure: (Element) -> Bool ) -> Array<Element> {
-        return self.compactMap {
-            if closure($0) {
-                return $0
-            }
-            else {
-                return nil as Element?
-            }
+    
+    func sorted(_ languesPref:[Langue]) -> Array<Element> {
+        return self.sorted {
+            return languesPref.firstIndex(of: $0.langue)! < languesPref.firstIndex(of: $1.langue)!
         }
     }
 }
@@ -59,12 +64,6 @@ extension Array where Element == Langue {
     }
 }
 
-extension Sense {
-    func contains(tradWith langue: Langue) -> Bool {
-        return self.traductionsArray?.map { $0.langue }.contains(langue) ?? false
-    }
-}
-
 extension Array where Element == Sense {
     
     func compacted(notContain langue: Langue) -> Array<Element> {
@@ -73,13 +72,25 @@ extension Array where Element == Sense {
 }
 
 
-extension Array {
-    
-    func separated(by separator: Element) -> [Element] {
-        return (0 ..< 2 * self.count - 1).map { $0 % 2 == 0 ? self[$0/2] : separator }
+extension Array where Element == NSManagedObjectID {
+    func getObjects<ObjectType: NSManagedObject>(on queue: Queue) -> [ObjectType] {
+        switch queue {
+        case .mainQueue:
+            return self.map { DataController.shared.mainQueueManagedObjectContext.object(with: $0) as! ObjectType }
+            
+        case .privateQueue:
+            return self.map { DataController.shared.privateQueueManagedObjectContext.object(with: $0) as! ObjectType }
+        }
     }
-    
 }
+
+
+extension Sense {
+    func contains(tradWith langue: Langue) -> Bool {
+        return self.traductionsArray?.map { $0.langue }.contains(langue) ?? false
+    }
+}
+
 
 extension Optional where Wrapped == Array<Japonais> {
     
@@ -131,7 +142,6 @@ extension Optional where Wrapped == Array<Traduction> {
         return true
     }
 }
-
 
 
 extension View {
