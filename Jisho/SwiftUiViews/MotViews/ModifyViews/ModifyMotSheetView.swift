@@ -10,8 +10,9 @@ import SwiftUI
 struct ModifyMotSheetView: View {
     @Environment(\.dismiss) var dismiss
     
-    @Environment(\.languesPref) var languesPref
-    @Environment(\.languesAffichées) var languesAffichées
+//    @Environment(\.languesPref) var languesPref
+//    @Environment(\.languesAffichées) var languesAffichées
+    @EnvironmentObject private var settings: Settings
     
     @ObservedObject var modifiableMot: Mot    
     
@@ -61,7 +62,7 @@ struct ModifyMotSheetView: View {
     var senseSection: some View {
         ForEach(modifiableMot.senses ?? []) { sense in
             NavigationLink(destination: ModifySenseSheetView(modifiableSense: sense)) {
-                Text("\(sense.traductionsArray?.sorted(languesPref.wrappedValue).first(where: { languesPref.wrappedValue.contains($0.langue) })?.traductions?.joined(separator: ", ") ?? "Pas de traductions" )")
+                Text("\(sense.traductionsArray?.sorted(settings.languesPref).first(where: { settings.languesPref.contains($0.langue) })?.traductions?.joined(separator: ", ") ?? "Pas de traductions" )")
             }
         }
         .onDelete(perform: deleteSense)

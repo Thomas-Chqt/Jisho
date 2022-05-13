@@ -12,6 +12,7 @@ import CoreData
 struct JishoApp: App {
     
     @StateObject private var dataController = DataController.shared
+    @StateObject var settings = Settings()
     
     var body: some Scene
     {
@@ -35,6 +36,7 @@ struct JishoApp: App {
             case .finished:
                     ContentView()
                         .environment(\.managedObjectContext, dataController.mainQueueManagedObjectContext)
+                        .environmentObject(settings)
             }
         }
     }

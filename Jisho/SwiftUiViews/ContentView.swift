@@ -58,19 +58,10 @@ fileprivate class ContentViewModel: ObservableObject {
 
 struct ContentView: View
 {
-    // Les property wrapper ne son pas dans la vm car ils ne fonctionnent pas comme des @Publised ( a modifer a term )
-    
-    @CloudStorage("languesPrefData") private var languesPref:[Langue] = languesPrefOriginal
-    @CloudStorage("metaDataDictData") private var metaDataDict:[MetaData : String?] = metaDataDictOriginal
-    @CloudStorage("languesAfficheesData") private var languesAffichées:Set<Langue> = languesAffichéesOriginal
-    
-    
     @StateObject private var vm = ContentViewModel()
     
     
-    init() {
-        UITabBar.appearance().isHidden = true
-    }
+    init() { UITabBar.appearance().isHidden = true }
     
     var body: some View
     {
@@ -90,9 +81,6 @@ struct ContentView: View
         }
         .sideMenu(isPresented: $vm.sideMenuIsShow, currentPage: $vm.currentPage)
         .environment(\.toggleSideMenu, vm.toggleSideMenu)
-        .environment(\.languesPref, _languesPref)
-        .environment(\.languesAffichées, _languesAffichées)
-        .environment(\.metaDataDict, _metaDataDict)
     }
 }
 

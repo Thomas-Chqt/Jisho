@@ -9,8 +9,9 @@ import SwiftUI
 
 struct MotRowView: View
 {
-    @Environment(\.languesPref) var languesPref
-    @Environment(\.languesAffichées) var languesAffichées
+//    @Environment(\.languesPref) var languesPref
+//    @Environment(\.languesAffichées) var languesAffichées
+    @EnvironmentObject private var settings: Settings
     
     @MotWrapper var mot:Mot
     
@@ -66,8 +67,8 @@ struct MotRowView: View
     var sensePart: some View {
         let firstSense = mot.senses!.first!
         
-        let firstTrad = firstSense.traductionsArray?.sorted(languesPref.wrappedValue).first(where: {
-            $0.traductions != nil && languesAffichées.wrappedValue.contains($0.langue)
+        let firstTrad = firstSense.traductionsArray?.sorted(settings.languesPref).first(where: {
+            $0.traductions != nil && settings.languesAffichées.contains($0.langue)
         })
         
         guard let firstTrad = firstTrad else { return Text("Pas de traduction") }

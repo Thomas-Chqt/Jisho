@@ -17,13 +17,6 @@ fileprivate class SearchPageViewModel: ObservableObject {
                                                 = (exactMatch: [], nonExactMatch: [])
     @Published var showSuggestions = true
     @Published var textFieldText:String = ""
-
-    
-    
-    init() {
-        _searchHistory.objectWillChange = self.objectWillChange.send
-    }
-    
     
     
     var searchResult: (exactMatch: [Mot], nonExactMatch: [Mot])? {

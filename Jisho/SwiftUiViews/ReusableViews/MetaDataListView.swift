@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MetaDataListView<Content: View>: View
 {
-    @Environment(\.metaDataDict) var metaDataDict
+//    @Environment(\.metaDataDict) var metaDataDict
+    @EnvironmentObject private var settings: Settings
     
     var content: (MetaData) -> Content
     
@@ -18,7 +19,7 @@ struct MetaDataListView<Content: View>: View
     
     var body: some View
     {
-        let groupedMetaDataDictKeys = Dictionary(grouping: metaDataDictKeysVisible ?? Array(metaDataDict.wrappedValue.keys),
+        let groupedMetaDataDictKeys = Dictionary(grouping: metaDataDictKeysVisible ?? Array(settings.metaDataDict.keys),
                                                  by: {key -> String in
             switch key {
                 
@@ -141,7 +142,7 @@ struct MetaDataListView<Content: View>: View
         }
         .searchable(text: $search, placement: .navigationBarDrawer(displayMode: .always))
         .onChange(of: search, perform: { search in
-            self.metaDataDictKeysVisible = metaDataDict.wrappedValue.compactMap { (key: MetaData, value: String?) -> MetaData? in
+            self.metaDataDictKeysVisible = settings.metaDataDict.compactMap { (key: MetaData, value: String?) -> MetaData? in
                 if search == "" { return key }
                 else if (value ?? "").range(of: search, options: .caseInsensitive) != nil {return key}
                 else { return nil as MetaData?}

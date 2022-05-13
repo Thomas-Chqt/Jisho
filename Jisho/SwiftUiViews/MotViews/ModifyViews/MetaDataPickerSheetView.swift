@@ -9,14 +9,15 @@ import SwiftUI
 
 struct MetaDataPickerSheetView: View {
     @Environment(\.dismiss) var dismiss
-    @Environment(\.metaDataDict) var metaDataDict
+//    @Environment(\.metaDataDict) var metaDataDict
+    @EnvironmentObject private var settings: Settings
     
     @Binding var selectedMetaData: MetaData
     
     var body: some View {
         NavigationView {
             MetaDataListView { metaData in
-                Button(metaData.description(metaDataDict.wrappedValue)) {
+                Button(metaData.description(settings.metaDataDict)) {
                     selectedMetaData = metaData
                     dismiss()
                 }

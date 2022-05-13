@@ -9,13 +9,14 @@ import SwiftUI
 
 struct MetaDataRowView<Content: View>: View {
 
-    @Environment(\.metaDataDict) var metaDataDict
+//    @Environment(\.metaDataDict) var metaDataDict
+    @EnvironmentObject private var settings: Settings
     
     var metaData: MetaData
     var content: (String) -> Content
     
     var body: some View {
-        content(metaData.description(metaDataDict.wrappedValue))
+        content(metaData.description(settings.metaDataDict))
     }
 }
 

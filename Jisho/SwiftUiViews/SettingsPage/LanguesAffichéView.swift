@@ -11,14 +11,15 @@ struct LanguesAffiche_View: View {
     
 //    @EnvironmentObject var settings: Settings
 
-    @Environment(\.languesPref) var languesPref
-    @Environment(\.languesAffichées) var languesAffichées
+//    @Environment(\.languesPref) var languesPref
+//    @Environment(\.languesAffichées) var languesAffichées
+    @EnvironmentObject private var settings: Settings
     
     var body: some View
     {
-        List(selection: languesAffichées.projectedValue)
+        List(selection: $settings.languesAffichées)
         {
-            ForEach(languesPref.wrappedValue){ langue in
+            ForEach(settings.languesPref){ langue in
                 if langue != .none {
                     LangueRowView(langue: langue) { flag, fullName in
                         HStack
@@ -44,8 +45,8 @@ struct LanguesAffiche_View: View {
         {
             Button("Reset")
             {
-                languesPref.wrappedValue = languesPrefOriginal
-                languesAffichées.wrappedValue = languesAffichéesOriginal
+                settings.languesPref = languesPrefOriginal
+                settings.languesAffichées = languesAffichéesOriginal
             }
         }
         label:
@@ -56,7 +57,7 @@ struct LanguesAffiche_View: View {
     }
     
     func move(from source: IndexSet, to destination: Int) {
-        languesPref.wrappedValue.move(fromOffsets: source, toOffset: destination)
+        settings.languesPref.move(fromOffsets: source, toOffset: destination)
     }
 }
 

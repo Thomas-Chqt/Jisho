@@ -107,6 +107,8 @@ enum ErrorPerso: Error {
     case multipleMainListe
     case mulitipleMotWithSameUUID
     case unableToFindTheMot
+    case readingFileError
+    case wrongType
     case wtf
 }
 

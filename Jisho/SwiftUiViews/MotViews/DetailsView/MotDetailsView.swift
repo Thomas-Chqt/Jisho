@@ -24,10 +24,9 @@ struct MotDetailsView: View
 {
     @Environment(\.toggleSideMenu) var showSideMenu
 
-    @Environment(\.languesPref) var languesPref
-    @Environment(\.languesAffichées) var languesAffichées
+    @EnvironmentObject private var settings: Settings
     
-    @StateObject private var vm: MotDetailsViewModel = MotDetailsViewModel()
+    @StateObject private var vm = MotDetailsViewModel()
     @MotWrapper var mot: Mot
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "timestampAtb", ascending: false)])
@@ -96,7 +95,7 @@ struct MotDetailsView: View
                 }
             }
             
-            if let noSenseTrads = mot.noSenseTradsArray?.sorted(languesPref.wrappedValue).compacted(languesAffichées.wrappedValue) {
+            if let noSenseTrads = mot.noSenseTradsArray?.sorted(settings.languesPref).compacted(settings.languesAffichées), !noSenseTrads.isEmpty {
                 Section("Autres traductions") {
                     ForEach(noSenseTrads) { trad in
                         TradDetailsRowView(trad: trad, contexMenuActions: nil) {

@@ -9,13 +9,14 @@ import SwiftUI
 
 struct MetaDatasEditorView: View {
     
-    @Environment(\.metaDataDict) var metaDataDict
+//    @Environment(\.metaDataDict) var metaDataDict
+    @EnvironmentObject private var settings: Settings
 
     var body: some View
     {
         MetaDataListView() { metaData in
-            TextField(metaDataDictOriginal[metaData] ?? "", text: Binding( get: { metaData.description(metaDataDict.wrappedValue) },
-                                                                           set: { metaDataDict.wrappedValue[metaData] = $0 }))
+            TextField(metaDataDictOriginal[metaData] ?? "", text: Binding( get: { metaData.description(settings.metaDataDict) },
+                                                                           set: { settings.metaDataDict[metaData] = $0 }))
         }
         .toolbar { ToolbarItem(placement: .navigationBarTrailing, content: { menuButton }) }
         .navigationBarTitleDisplayMode(.inline)
@@ -28,7 +29,7 @@ struct MetaDatasEditorView: View {
         {
             Button("Reset")
             {
-                metaDataDict.wrappedValue = metaDataDictOriginal
+                settings.metaDataDict = metaDataDictOriginal
             }
         }
         label:

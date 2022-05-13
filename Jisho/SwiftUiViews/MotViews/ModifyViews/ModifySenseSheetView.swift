@@ -21,7 +21,8 @@ fileprivate class ModifySenseSheetViewModel: ObservableObject {
 
 struct ModifySenseSheetView: View {
     @Environment(\.dismiss) var dismiss
-    @Environment(\.metaDataDict) var metaDataDict
+//    @Environment(\.metaDataDict) var metaDataDict
+    @EnvironmentObject private var settings: Settings
     
     @StateObject private var vm = ModifySenseSheetViewModel()
     @ObservedObject var modifiableSense: Sense
@@ -87,7 +88,7 @@ struct ModifySenseSheetView: View {
     var metadataSection: some View {
         ForEach(Binding(get: { modifiableSense.metaDatas ?? [] }, set: { modifiableSense.metaDatas = $0 })) { $metaData in
             HStack {
-                Button(metaData.description(metaDataDict.wrappedValue)) {
+                Button(metaData.description(settings.metaDataDict)) {
                     vm.showSheet(view: MetaDataPickerSheetView(selectedMetaData: $metaData ))
                 }
             }
@@ -110,8 +111,9 @@ struct ModifySenseSheetView: View {
 
 fileprivate struct FlagMenuView: View {
     
-    @Environment(\.languesPref) var languesPref
-    @Environment(\.languesAffichées) var languesAffichées
+//    @Environment(\.languesPref) var languesPref
+//    @Environment(\.languesAffichées) var languesAffichées
+    @EnvironmentObject private var settings: Settings
     
     @Binding var langue: Langue
     
@@ -120,7 +122,7 @@ fileprivate struct FlagMenuView: View {
     var body: some View {
         
         let selectableOrderedLangues =
-            Array(languesAffichées.wrappedValue).sorted(languesPref: languesPref.wrappedValue).compactMap { langue -> Langue? in
+            Array(settings.languesAffichées).sorted(languesPref: settings.languesPref).compactMap { langue -> Langue? in
                 if langue == .none {
                     return nil as Langue?
                 }

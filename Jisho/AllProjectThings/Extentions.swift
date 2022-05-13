@@ -54,6 +54,10 @@ extension Array where Element : Traduction {
             return languesPref.firstIndex(of: $0.langue)! < languesPref.firstIndex(of: $1.langue)!
         }
     }
+    
+    func sortedCompacted(_ setttings: Settings) -> Array<Element> {
+        return self.sorted(setttings.languesPref).compacted(setttings.languesAffichées)
+    }
 }
 
 extension Array where Element == Langue {
@@ -230,6 +234,10 @@ extension ErrorPerso: LocalizedError {
             return NSLocalizedString("Mulitiple mot with same UUID", comment: "Error perso")
         case .unableToFindTheMot:
             return NSLocalizedString("Unable to find the mot", comment: "Error perso")
+        case .readingFileError:
+            return NSLocalizedString("Reading file error", comment: "Error perso")
+        case .wrongType:
+            return NSLocalizedString("Wrong type in imiwa save file", comment: "Error perso")
         }
     }
 }

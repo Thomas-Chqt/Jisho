@@ -10,16 +10,12 @@ import SwiftUI
 fileprivate class DebugCloudStorageViewModel: ObservableObject {
     
     @PublishedCloudStorage("searchHistory") var searchHistory:[String] = []
-    
-    init() {
-        _searchHistory.objectWillChange = self.objectWillChange.send
-    }
-
 }
 
 struct DebugCloudStorage: View {
         
-    @Environment(\.languesPref) var languesPref
+//    @Environment(\.languesPref) var languesPref
+    @EnvironmentObject private var settings: Settings
     
     @StateObject private var vm = DebugCloudStorageViewModel()
     

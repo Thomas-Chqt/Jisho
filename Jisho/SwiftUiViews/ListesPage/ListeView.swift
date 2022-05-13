@@ -9,27 +9,60 @@ import SwiftUI
 import CoreData
 import UniformTypeIdentifiers
 
+fileprivate class ListeViewModel: ObservableObject {
+    
+    @Published var showAlert = false
+    
+    @Published var showFilePicker = false
+    @Published var importedImiwaSaveFile: ImiwaSaveFile? = nil
+    @Published var showFileImporterSheet = false
+    
+    @Published var fileToExport: CSVForAnkiFile? = nil
+    @Published var showFileExporter = false
+    
+    
+    func filePicked(result: Result<URL, Error>) {
+        do {
+            let url = try result.get()
+            importedImiwaSaveFile = try ImiwaSaveFile(fileURL: url)
+            showFileImporterSheet.toggle()
+        }
+        catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func export(file: CSVForAnkiFile) {
+        fileToExport = file
+        showFileExporter.toggle()
+    }
+    
+    func fileExported(result: Result<URL, Error>) {
+        switch result {
+            
+        case .success(_):
+            print("success")
+            
+        case .failure(let error):
+            print(error.localizedDescription)
+        }
+    }
+}
+
 
 struct ListeView: View {
     
-    @Environment(\.managedObjectContext) var moc
     @Environment(\.toggleSideMenu) var showSideMenu
-    @Environment(\.metaDataDict) var metaDataDict
-    @Environment(\.languesPref) var languesPref
-    @Environment(\.languesAffichées) var languesAffichées
+//    @Environment(\.metaDataDict) var metaDataDict
+//    @Environment(\.languesPref) var languesPref
+//    @Environment(\.languesAffichées) var languesAffichées
     @Environment(\.editMode) private var editMode
     
-
-    @StateObject var liste: Liste
+    @EnvironmentObject private var settings: Settings
     
-    @State var showAlert = false
-    @State private var showFilePicker = false
-    @State private var showImporterSheet = false
-    @State private var showFileExporter = false
+    @StateObject private var vm = ListeViewModel()
     
-    @State private var loadedImiwaFile: SaveImiwa? = nil
-    @State private var fileToExport: CSVForAnkiFile? = nil
-    
+    @ObservedObject var liste: Liste
         
     var body: some View {
         
@@ -60,41 +93,15 @@ struct ListeView: View {
         .navigationTitle(liste.name ?? "No name")
         .navigationBarTitleDisplayMode(.inline)
         
-        .alert(isPresented: $showAlert, TextAlert() { result in
-            
-            if let text = result {
-
-                _ = self.liste.createSousListe(name: text, context: moc)
-            }
-            
-        })
-        .fileImporter(isPresented: $showFilePicker, allowedContentTypes: [UTType("fileType.imiwa")!]) { result in
-            do {
-                let url = try result.get()
-                importImiwaFile(url)
-            }
-            catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-        .fileExporter(isPresented: $showFileExporter, document: fileToExport, contentType: UTType("fileType.CSVForAnki")!, defaultFilename: liste.name ?? "Jisho export") { result in
-            switch result {
-                
-            case .success(_):
-                print("success")
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        .sheet(isPresented: $showImporterSheet) {
-            ImportationSheetView(loadedImiwaFile: self.loadedImiwaFile,
-                                 listToImportIn: ObservedObject(wrappedValue: self.liste))
-        }
+        .alert(isPresented: $vm.showAlert, TextAlert(action: alertSumited))
+        .fileImporter(isPresented: $vm.showFilePicker, allowedContentTypes: [UTType("fileType.imiwa")!], onCompletion: vm.filePicked)
+        .fileExporter(isPresented: $vm.showFileExporter, document: vm.fileToExport, contentType: UTType("fileType.CSVForAnki")!,
+                      defaultFilename: liste.name ?? "Jisho export", onCompletion: vm.fileExported)
+        .sheet(isPresented: $vm.showFileImporterSheet) { EmptyView() }
         
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
-                sideMenuButton
+                Button { showSideMenu() } label: { Image(systemName: "list.bullet") }
             }
             
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -104,83 +111,22 @@ struct ListeView: View {
         }
     }
     
-    private var sideMenuButton: some View {
-        Button {
-            showSideMenu()
-        } label: {
-            Image(systemName: "list.bullet")
-        }
-    }
-    
     private var menuButton: some View {
-        Menu
-        {
-            addButton
-            importButton
+        Menu {
+            Button { vm.showAlert.toggle() } label: { Label("Ajouter une sous liste", systemImage: "plus") }
+//            Button { vm.showFilePicker.toggle() } label: { Label("Importer save Imiwa", systemImage: "square.and.arrow.down") }
             exportButton
         }
-        label:
-        {
+        label: {
             Image(systemName: "ellipsis.circle")
         }
         .padding([.leading,.bottom,.top])
     }
     
-    private var addButton: some View {
-        
-        Button(action: {
-            showAlert.toggle()
-            
-        }, label: {
-            Label("Ajouter une sous liste", systemImage: "plus")
-        })
-    }
-    
-    private var importButton: some View {
-        Button {
-            showFilePicker.toggle()
-        } label: {
-            Label("Impoter save Imiwa", systemImage: "square.and.arrow.down")
-        }
-
-    }
-    
     private var exportButton: some View {
         Button {
             if let mots = liste.mots {
-                
-                let motsPourExport = mots.map { mot -> (id: String, japs: [(kanji:String, kana:String)], senses: [(metaDatas:[String], traductions:[String])], traductions: [String], note: String ) in
-            
-                    let id = mot.uuid.uuidString
-                    let japs = (mot.japonais ?? []).map { return (kanji: $0.kanji ?? "", kana: $0.kana ?? "") }
-                    
-                    let senses = (mot.senses ?? []).map {
-                        (metaDatas: ($0.metaDatas ?? []).map { $0.description(metaDataDict.wrappedValue) },
-                                                           
-                         traductions: ($0.traductionsArray ?? [])
-                            .compactMap {
-                                if languesAffichées.wrappedValue.contains($0.langue) { return $0 }
-                                else { return nil as Traduction? }
-                            }
-                            .sorted(languesPref.wrappedValue)
-                            .map{ ($0.traductions ?? []).joined(separator: ", ") } )
-                    }
-                    
-                    let traductions = (mot.noSenseTradsArray ?? [])
-                        .compactMap {
-                            if languesAffichées.wrappedValue.contains($0.langue) { return $0 }
-                            else { return nil as Traduction? }
-                        }
-                        .sorted(languesPref.wrappedValue)
-                        .map{ ($0.traductions ?? []).joined(separator: ", ") }
-                    
-                    let note = mot.notes ?? ""
-                    
-                    return (id: id, japs: japs, senses: senses, traductions: traductions, note: note)
-                }
-                
-                self.fileToExport = CSVForAnkiFile(motsPourExport)
-                self.showFileExporter.toggle()
+                vm.export(file: CSVForAnkiFile(mots: mots, settings: settings))
             }
         } label: {
             Label("Exporter pour Anki", systemImage: "square.and.arrow.up")
@@ -189,31 +135,16 @@ struct ListeView: View {
     
     
     private func deleteSouListe(at offsets: IndexSet) {
-        offsets.forEach{
-            liste.deleteSousListe(liste: liste.sousListes![$0])
-        }
-
-    }
-    
-    private func importImiwaFile(_ fileURL: URL) {
-        
-        _ = fileURL.startAccessingSecurityScopedResource()
-        
-        do {
-            self.loadedImiwaFile = try ImiwaSaveController.shared.loadFile(fileURL)
-            self.showImporterSheet.toggle()
-        }
-        catch {
-            fatalError(error.localizedDescription)
-        }
-        
-        
-        fileURL.stopAccessingSecurityScopedResource()
+        liste.sousListes?.remove(atOffsets: offsets)
     }
     
     private func removeMot(at offsets: IndexSet) {
-        offsets.forEach { index in
-            liste.removeMot(at: index)
+        liste.mots?.remove(atOffsets: offsets)
+    }
+    
+    private func alertSumited(result: String?) {
+        if let text = result, text != "" {
+            _ = self.liste.createSousListe(name: text, context: DataController.shared.mainQueueManagedObjectContext)
         }
     }
 }

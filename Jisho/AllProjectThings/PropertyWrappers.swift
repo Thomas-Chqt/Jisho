@@ -10,7 +10,7 @@ import Combine
 
 // MARK: PublishedCloudStorage
 
-
+/*
 @propertyWrapper public class PublishedCloudStorage<ValueType> {
         
     private var value: ValueType
@@ -71,11 +71,78 @@ import Combine
     } // unused
     
 }
+ */
+
+@propertyWrapper public struct PublishedCloudStorage<ValueType> {
+    
+    static public subscript<T: ObservableObject>( _enclosingInstance instance: T,
+                                                  wrapped wrappedKeyPath: ReferenceWritableKeyPath<T, ValueType>,
+                                                  storage storageKeyPath: ReferenceWritableKeyPath<T, Self> ) -> ValueType {
+        get {
+            instance[keyPath: storageKeyPath].usedWrappedValue
+        }
+        set {
+            let publisher = instance.objectWillChange as! ObservableObjectPublisher
+            publisher.send()
+
+            instance[keyPath: storageKeyPath].usedWrappedValue = newValue
+        }
+    }
+        
+    
+    private var value: ValueType
+    
+    private let saveValue: (ValueType) throws -> Void
+    
+    
+    public var usedWrappedValue: ValueType {
+        get {
+            return value
+        }
+        set {
+            do {
+                try saveValue(newValue)
+                value = newValue
+                
+                let keyValStore = NSUbiquitousKeyValueStore.default
+                if keyValStore.synchronize() == false { fatalError() }
+            }
+            catch {
+                fatalError(error.localizedDescription)
+            }
+        }
+    }
+    
+    
+    private init(readValue: () throws -> ValueType, saveValue : @escaping (ValueType) throws -> Void) {
+        do {
+            value = try readValue()
+            
+            let keyValStore = NSUbiquitousKeyValueStore.default
+            if keyValStore.synchronize() == false { fatalError() }
+            
+            
+            self.saveValue = saveValue
+        }
+        catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    
+    @available(*, unavailable, message: "@PublishedCloudStorage can only be applied to classes" )
+
+    public var wrappedValue: ValueType {
+        get { fatalError() }
+        set { fatalError() }
+    }
+}
+
 
 // MARK: PublishedCloudStorage Extended Inits
 
 extension PublishedCloudStorage where ValueType == [MetaData:String?] {
-    public convenience init(wrappedValue: ValueType, _ key: String) {
+    public init(wrappedValue: ValueType, _ key: String) {
         self.init(
             readValue: {
                 let keyValStore = NSUbiquitousKeyValueStore.default
@@ -92,7 +159,7 @@ extension PublishedCloudStorage where ValueType == [MetaData:String?] {
 }
 
 extension PublishedCloudStorage where ValueType == [Langue] {
-    public convenience init(wrappedValue: ValueType, _ key: String) {
+    public init(wrappedValue: ValueType, _ key: String) {
         self.init(
             readValue: {
                 let keyValStore = NSUbiquitousKeyValueStore.default
@@ -109,7 +176,7 @@ extension PublishedCloudStorage where ValueType == [Langue] {
 }
 
 extension PublishedCloudStorage where ValueType == Set<Langue> {
-    public convenience init(wrappedValue: ValueType, _ key: String) {
+    public init(wrappedValue: ValueType, _ key: String) {
         self.init(
             readValue: {
                 let keyValStore = NSUbiquitousKeyValueStore.default
@@ -126,7 +193,7 @@ extension PublishedCloudStorage where ValueType == Set<Langue> {
 }
 
 extension PublishedCloudStorage where ValueType == [String] {
-    public convenience init(wrappedValue: ValueType, _ key: String) {
+    public init(wrappedValue: ValueType, _ key: String) {
         self.init(
             readValue: {
                 let keyValStore = NSUbiquitousKeyValueStore.default

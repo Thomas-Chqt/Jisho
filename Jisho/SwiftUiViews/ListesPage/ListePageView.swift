@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-class ListePageViewModel: ObservableObject {
+fileprivate class ListePageViewModel: ObservableObject {
     @Published var showAlert = false
 
     
@@ -69,10 +69,10 @@ class ListePageViewModel: ObservableObject {
 struct ListePageView: View {
     @Environment(\.toggleSideMenu) var showSideMenu
 
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.ordreInParentAtb)], predicate: NSPredicate(format: "parent == nil"))
-        var listes: FetchedResults<Liste>
-
-    @StateObject var vm = ListePageViewModel()
+    @StateObject private var vm = ListePageViewModel()
+    
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.ordreInParentAtb)],
+                  predicate: NSPredicate(format: "parent == nil")) var listes: FetchedResults<Liste>
     
         
     var body: some View {

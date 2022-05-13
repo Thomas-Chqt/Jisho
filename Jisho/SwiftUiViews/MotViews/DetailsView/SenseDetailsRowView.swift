@@ -9,16 +9,15 @@ import SwiftUI
 
 struct SenseDetailsRowView: View
 {
-    
-    @Environment(\.languesPref) var languesPref
-    @Environment(\.languesAffichées) var languesAffichées
+    @EnvironmentObject private var settings: Settings
     
     @ObservedObject var sense:Sense
     
     var body: some View
     {
         let metaDatas = sense.metaDatas
-        let trads = sense.traductionsArray?.sorted(languesPref.wrappedValue)
+        let trads = sense.traductionsArray?.sortedCompacted(settings)
+        
         
         VStack(alignment: .leading, spacing: 5)
         {
@@ -26,15 +25,13 @@ struct SenseDetailsRowView: View
             {
                 ForEach(Array(metaDatas.enumerated()), id: \.offset ) { offset, metaData in
                     
-                    if offset != 0 {
-                        Divider()
-                    }
+                    if offset != 0 { Divider() }
                     
                     MetaDataRowView(metaData: metaData) { description in
                         HStack(alignment:.top)
                         {
                             Image(systemName: "info.circle")
-                            Text(description).lineLimit(1)
+                            Text(description)
                         }
                         .font(.caption)
                         .frame(height: 8)
@@ -45,14 +42,9 @@ struct SenseDetailsRowView: View
             if let trads = trads
             {
                 ForEach(Array(trads.enumerated()), id: \.offset) { offset, trad in
-                    if languesAffichées.wrappedValue.contains(trad.langue)
-                    {
-                        if metaDatas != nil || offset != 0 {
-                            Divider()
-                        }
-                        
-                        TradDetailsRowView<AnyView>(trad: trad)
-                    }
+                    if metaDatas != nil || offset != 0 { Divider() }
+                    
+                    TradDetailsRowView<AnyView>(trad: trad)
                 }
             }
             else
