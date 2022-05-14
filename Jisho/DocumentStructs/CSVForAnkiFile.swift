@@ -83,11 +83,5 @@ struct CSVForAnkiFile: FileDocument {
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         return FileWrapper(regularFileWithContents: csvString.data(using: .utf8)!)
-    }
-    
-    
-    
-    
-    
-    
+    }   
 }

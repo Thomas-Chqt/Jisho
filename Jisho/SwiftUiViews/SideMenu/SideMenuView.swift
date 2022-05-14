@@ -36,12 +36,6 @@ struct SideMenuView: View
                 switchPage(.settings)
             }
             
-            Divider().frame(width: 250)
-            
-            SideMenuButtonView(icone: Image(systemName: "wrench"), text: "Debug") {
-                switchPage(.debug)
-            }
-            
             /*
             Divider().frame(width: 250)
 

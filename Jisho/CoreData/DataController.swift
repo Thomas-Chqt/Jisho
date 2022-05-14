@@ -18,7 +18,7 @@ class DataController: ObservableObject
     let mainQueueManagedObjectContext: NSManagedObjectContext
     let privateQueueManagedObjectContext: NSManagedObjectContext
 
-    @Published var loadingStatus:LoadingStatus? //= .finished
+//    @Published var loadingStatus:LoadingStatus? //= .finished
     
     private let searchTableHolderMotJMdictObjIDDict:[Int:NSManagedObjectID]
     
@@ -112,7 +112,7 @@ class DataController: ObservableObject
             
             self.searchTableHolderMotJMdictObjIDDict = TEMPsearchTableHolderMotJMdictObjIDDict
             
-            self.loadingStatus = .finished
+//            self.loadingStatus = .finished
             
 //        }
         

@@ -23,16 +23,6 @@ func getDocumentDirectory() -> URL {
 
 
 
-func parsJMdict(file:URL) throws -> [MotImporter] {
-    do{
-        let brutData = try Data(contentsOf: file)
-        let decodedData = try JSONDecoder().decode([MotImporter].self, from: brutData)
-        return decodedData
-    }
-    catch{
-        throw error
-    }
-}
 
 
 

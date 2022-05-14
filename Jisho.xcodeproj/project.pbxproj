@@ -12,7 +12,8 @@
 		E90E13162815C20700BACC5F /* local.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = E90E13132815C20700BACC5F /* local.sqlite-wal */; };
 		E90E13172815C20700BACC5F /* local.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = E90E13142815C20700BACC5F /* local.sqlite-shm */; };
 		E90E131D281BD54700BACC5F /* EnvironmentKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90E131C281BD54700BACC5F /* EnvironmentKeys.swift */; };
-		E9138BDB282E987F004777C0 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9138BDA282E987F004777C0 /* Settings.swift */; };
+		E914D675282FDCA700AF6A52 /* JMdictFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914D674282FDCA700AF6A52 /* JMdictFile.swift */; };
+		E914D677282FF02300AF6A52 /* DebugActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914D676282FF02300AF6A52 /* DebugActionsView.swift */; };
 		E914E97827CF9CF800FA4B68 /* JishoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E97727CF9CF800FA4B68 /* JishoApp.swift */; };
 		E914E97C27CF9CFB00FA4B68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E914E97B27CF9CFB00FA4B68 /* Assets.xcassets */; };
 		E914E99A27CF9D6700FA4B68 /* ListeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E98727CF9D6700FA4B68 /* ListeView.swift */; };
@@ -25,7 +26,6 @@
 		E914E9A527CF9D6700FA4B68 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E99927CF9D6700FA4B68 /* ContentView.swift */; };
 		E914E9C027CF9DC600FA4B68 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E9B227CF9DC600FA4B68 /* DataController.swift */; };
 		E914E9C127CF9DC600FA4B68 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E914E9B327CF9DC600FA4B68 /* DataModel.xcdatamodeld */; };
-		E914E9C627CF9E6200FA4B68 /* MotStrcImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E9C427CF9E6200FA4B68 /* MotStrcImporter.swift */; };
 		E914E9CA27CF9E7200FA4B68 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E9C927CF9E7200FA4B68 /* Functions.swift */; };
 		E914E9D327CF9EB500FA4B68 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E914E9D227CF9EB500FA4B68 /* CloudKit.framework */; };
 		E914EA0627CFB5D900FA4B68 /* MotModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E9FC27CFB5D900FA4B68 /* MotModifier.swift */; };
@@ -73,7 +73,8 @@
 		E90E13132815C20700BACC5F /* local.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "local.sqlite-wal"; sourceTree = "<group>"; };
 		E90E13142815C20700BACC5F /* local.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "local.sqlite-shm"; sourceTree = "<group>"; };
 		E90E131C281BD54700BACC5F /* EnvironmentKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentKeys.swift; sourceTree = "<group>"; };
-		E9138BDA282E987F004777C0 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		E914D674282FDCA700AF6A52 /* JMdictFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMdictFile.swift; sourceTree = "<group>"; };
+		E914D676282FF02300AF6A52 /* DebugActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugActionsView.swift; sourceTree = "<group>"; };
 		E914E97427CF9CF800FA4B68 /* Jisho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jisho.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E914E97727CF9CF800FA4B68 /* JishoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JishoApp.swift; sourceTree = "<group>"; };
 		E914E97B27CF9CFB00FA4B68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -87,7 +88,6 @@
 		E914E99927CF9D6700FA4B68 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E914E9B227CF9DC600FA4B68 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		E914E9B427CF9DC600FA4B68 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		E914E9C427CF9E6200FA4B68 /* MotStrcImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotStrcImporter.swift; sourceTree = "<group>"; };
 		E914E9C927CF9E7200FA4B68 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		E914E9D027CF9EB200FA4B68 /* Jisho.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Jisho.entitlements; sourceTree = "<group>"; };
 		E914E9D227CF9EB500FA4B68 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -151,14 +151,6 @@
 			path = SearchTableHolder;
 			sourceTree = "<group>";
 		};
-		E9138BDC282E9886004777C0 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				E9138BDA282E987F004777C0 /* Settings.swift */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
 		E914E96B27CF9CF800FA4B68 = {
 			isa = PBXGroup;
 			children = (
@@ -201,7 +193,6 @@
 				E914E98827CF9D6700FA4B68 /* SearchPage */,
 				E914E98627CF9D6700FA4B68 /* ListesPage */,
 				E914E99527CF9D6700FA4B68 /* SettingsPage */,
-				E914E99227CF9D6700FA4B68 /* DebugViews */,
 				E914E98A27CF9D6700FA4B68 /* MotViews */,
 				E96262D527EAD9200007594C /* ReusableViews */,
 			);
@@ -253,6 +244,7 @@
 				E973CF7E27EDE8B800916178 /* DebugPage.swift */,
 				E98BF1C527F4C8D4005E04F5 /* DebugCloudStorage.swift */,
 				E90E130628141C7300BACC5F /* DebugSearchTable.swift */,
+				E914D676282FF02300AF6A52 /* DebugActionsView.swift */,
 			);
 			path = DebugViews;
 			sourceTree = "<group>";
@@ -263,6 +255,7 @@
 				E914E99627CF9D6700FA4B68 /* SettingsPageView.swift */,
 				E914EA2727D1F50900FA4B68 /* MetaDatasEditorView.swift */,
 				E95C7E5627D5297400AB3F71 /* LanguesAffichéView.swift */,
+				E914E99227CF9D6700FA4B68 /* DebugViews */,
 			);
 			path = SettingsPage;
 			sourceTree = "<group>";
@@ -289,8 +282,6 @@
 		E914E9C827CF9E7200FA4B68 /* AllProjectThings */ = {
 			isa = PBXGroup;
 			children = (
-				E914E9C427CF9E6200FA4B68 /* MotStrcImporter.swift */,
-				E9138BDC282E9886004777C0 /* Classes */,
 				E914EA3127D36C9B00FA4B68 /* Constantes.swift */,
 				E90E131C281BD54700BACC5F /* EnvironmentKeys.swift */,
 				E92349E527E33B8F00F6DE9C /* structs.swift */,
@@ -396,6 +387,7 @@
 			children = (
 				E9C5D8EB282635D2009C5EE1 /* ImiwaSaveFile.swift */,
 				E9C5D8ED2827E07B009C5EE1 /* CSVForAnkiFile.swift */,
+				E914D674282FDCA700AF6A52 /* JMdictFile.swift */,
 			);
 			path = DocumentStructs;
 			sourceTree = "<group>";
@@ -493,9 +485,10 @@
 				E973CF7F27EDE8B800916178 /* DebugPage.swift in Sources */,
 				E914E9A527CF9D6700FA4B68 /* ContentView.swift in Sources */,
 				E9C5D8E52822B9C4009C5EE1 /* ModifyNotesSheetView.swift in Sources */,
-				E9138BDB282E987F004777C0 /* Settings.swift in Sources */,
+				E914D677282FF02300AF6A52 /* DebugActionsView.swift in Sources */,
 				E95C7E5227D507C400AB3F71 /* Traduction.swift in Sources */,
 				E914E99C27CF9D6700FA4B68 /* MotRowView.swift in Sources */,
+				E914D675282FDCA700AF6A52 /* JMdictFile.swift in Sources */,
 				E95C7E4E27D507C400AB3F71 /* TraductionJMdict.swift in Sources */,
 				E914E9CA27CF9E7200FA4B68 /* Functions.swift in Sources */,
 				E95C7E5727D5297400AB3F71 /* LanguesAffichéView.swift in Sources */,
@@ -511,7 +504,6 @@
 				E973CF7A27EDCBEF00916178 /* Liste.swift in Sources */,
 				E92349E627E33B8F00F6DE9C /* structs.swift in Sources */,
 				E914EA0A27CFB5D900FA4B68 /* Japonais.swift in Sources */,
-				E914E9C627CF9E6200FA4B68 /* MotStrcImporter.swift in Sources */,
 				E90E130A2815373900BACC5F /* SearchTableHolderMotJMdict.swift in Sources */,
 				E9A180362821346400173C35 /* ModifyJapSheetView.swift in Sources */,
 				E95C7E5027D507C400AB3F71 /* Mot.swift in Sources */,
@@ -666,7 +658,7 @@
 				CODE_SIGN_ENTITLEMENTS = Jisho/Jisho.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 7MA43Y48DR;
 				ENABLE_PREVIEWS = YES;
@@ -703,7 +695,7 @@
 				CODE_SIGN_ENTITLEMENTS = Jisho/Jisho.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 7MA43Y48DR;
 				ENABLE_PREVIEWS = YES;

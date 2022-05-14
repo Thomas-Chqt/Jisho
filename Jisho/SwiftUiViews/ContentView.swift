@@ -38,13 +38,6 @@ fileprivate class ContentViewModel: ObservableObject {
         }
     }
     
-    var debugPage: some View {
-        NavigationView {
-            DebugMenu()
-            EmptyView()
-        }
-    }
-    
     
     // MARK: Functions
     
@@ -75,9 +68,6 @@ struct ContentView: View
             
             vm.settingsPage
                 .tag(Page.settings)
-            
-            vm.debugPage
-                .tag(Page.debug)
         }
         .sideMenu(isPresented: $vm.sideMenuIsShow, currentPage: $vm.currentPage)
         .environment(\.toggleSideMenu, vm.toggleSideMenu)

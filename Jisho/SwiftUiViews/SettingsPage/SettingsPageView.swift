@@ -18,6 +18,7 @@ struct SettingsPageView: View{
         {
             NavigationLink("Meta datas", destination: MetaDatasEditorView())
             NavigationLink("Langues", destination: LanguesAffiche_View())
+            NavigationLink("Debug", destination: DebugMenu())
         }
         .listStyle(.plain)
         .navigationTitle("Paramètres")

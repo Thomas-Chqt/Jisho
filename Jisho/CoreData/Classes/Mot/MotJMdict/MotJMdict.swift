@@ -495,7 +495,7 @@ public class MotJMdict: Mot {
                   notes: nil,
                   context: context)
     }
-     */
+    */
 }
 
 

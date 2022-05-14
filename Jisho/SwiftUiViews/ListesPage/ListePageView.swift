@@ -80,7 +80,7 @@ struct ListePageView: View {
         List {
             ForEach(listes) { liste in
                 
-                NavigationLink("\(liste.ordre) \(liste.name ?? "No name")") {
+                NavigationLink("\(liste.name ?? "No name")") {
                     ListeView(liste: liste)
                 }
                 .isDetailLink(false)

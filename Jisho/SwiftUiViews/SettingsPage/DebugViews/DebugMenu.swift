@@ -93,27 +93,11 @@ struct DebugMenu: View {
     
     var body: some View {
         List {
+            NavigationLink(destination: { DebugActionsView() },
+                           label: {Text("Debug Actions")})
             
-            NavigationLink(destination: {
-                    DebugCloudStorage()
-            },
-            label: { Text("Cloud Storage") })
-            
-            
-            NavigationLink(destination: {
-                DebugPage { (item: Mot) in
-                    MotRowView(mot: item)
-                        .contextMenu {
-                            Button("Delete") {
-                                DataController.shared.mainQueueManagedObjectContext.delete(item)
-                                Task {
-                                    try await DataController.shared.save()
-                                }
-                            }
-                        }
-                }
-            },
-            label: { Text("Mot perso (\(nbrMotCloud))") })
+            NavigationLink(destination: { DebugCloudStorage() },
+                           label: { Text("Cloud Storage") })
             
             NavigationLink(destination: {
                 DebugPage { (item: MotJMdict) in
@@ -129,20 +113,22 @@ struct DebugMenu: View {
                 }
                 
             },
-            label: { Text("Mot JMdict (\(nbrMotLocal))") })
+                           label: { Text("Mot JMdict (\(nbrMotLocal))") })
             
-            /*
-            Text("Japonais (\(nbrJapCloud))")
-            Text("Japonais JMdict (\(nbrJapLocal))")
-            
-            Text("Sense (\(nbrSenseCloud))")
-            Text("Sense JMdict (\(nbrSenseLocal))")
-             */
-            
-            Text("Traduction (\(nbrTradCloud))")
-            Text("Traduction JMdict (\(nbrTradLocal))")
-            
-            Text("Mot modifier (\(nbrModifier))")
+            NavigationLink(destination: {
+                DebugPage { (item: MotModifier) in
+                    MotRowView(mot: item)
+                        .contextMenu {
+                            Button("Delete") {
+                                DataController.shared.mainQueueManagedObjectContext.delete(item)
+                                Task {
+                                    try await DataController.shared.save()
+                                }
+                            }
+                        }
+                }
+            },
+                           label: { Text("Mot modifier (\(nbrModifier))") })
             
             NavigationLink(destination: {
                 DebugPage { (item: Liste) in
@@ -157,11 +143,10 @@ struct DebugMenu: View {
                         }
                 }
             },
-            label: { Text("Liste (\(nbrListe))") })
+                           label: { Text("Liste (\(nbrListe))") })
             
-            NavigationLink(destination: DebugSearchTable()) {
-                Text("Search Tables (\(nbrSearchTableHolderMotJMdict))")
-            }
+            NavigationLink(destination: { DebugSearchTable() },
+                           label: { Text("Search Tables (\(nbrSearchTableHolderMotJMdict))") })
             
         }
         .listStyle(.plain)
@@ -228,7 +213,7 @@ struct DebugMenu: View {
                     Image(systemName: "list.bullet")
                 }
             }
-            
+            /*
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     
@@ -252,6 +237,7 @@ struct DebugMenu: View {
                     Image(systemName: "square.and.arrow.up")
                 }
             }
+             */
         }
     }
 }
