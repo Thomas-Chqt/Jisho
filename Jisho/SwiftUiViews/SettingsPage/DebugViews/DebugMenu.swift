@@ -213,31 +213,6 @@ struct DebugMenu: View {
                     Image(systemName: "list.bullet")
                 }
             }
-            /*
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    
-                    let sourceSqliteURLs = [
-                        getApplicationSupportDirectory().appendingPathComponent("local.sqlite"),
-                        getApplicationSupportDirectory().appendingPathComponent("local.sqlite-shm"),
-                        getApplicationSupportDirectory().appendingPathComponent("local.sqlite-wal")
-                    ]
-
-                    let destSqliteURLs = [
-                        getDocumentDirectory().appendingPathComponent("local.sqlite"),
-                        getDocumentDirectory().appendingPathComponent("local.sqlite-shm"),
-                        getDocumentDirectory().appendingPathComponent("local.sqlite-wal")
-                    ]
-
-                    for i in 0...2 {
-                        try! FileManager.default.copyItem(at: sourceSqliteURLs[i], to: destSqliteURLs[i])
-                    }
-                    
-                } label: {
-                    Image(systemName: "square.and.arrow.up")
-                }
-            }
-             */
         }
     }
 }

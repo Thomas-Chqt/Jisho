@@ -64,7 +64,7 @@ public class MotJMdict: Mot {
         return fetchRequest
     }
     
-    /*
+    
     @nonobjc public class func fetchRequest(recherche:String,
                                             allModifiedMotObjIDs:[NSManagedObjectID],
                                             searchedModifiedMotObjIDs:[NSManagedObjectID]) -> NSFetchRequest<NSManagedObjectID> {
@@ -100,7 +100,7 @@ public class MotJMdict: Mot {
         fetchRequest.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [predicate1, predicate2])
         
         return fetchRequest
-    }*/
+    }
     
     
     //MARK: NSManaged attributes
@@ -134,15 +134,13 @@ public class MotJMdict: Mot {
             if japonaisJMdictAtb!.allObjects.isEmpty { return nil }
             
             let set = japonaisJMdictAtb as! Set<JaponaisJMdict>
-            //return set.sorted { $0.ordre < $1.ordre }
-            //bug lors de l'importation a retirer plus tard
-            let sorted = set.sorted { $0.ordre < $1.ordre }
-            for (i, obj) in sorted.enumerated() {
-                obj.ordre = Int64(i)
-            }
-            return sorted
+            return set.sorted { $0.ordre < $1.ordre }
         }
         set {
+            for (i, value) in (newValue ?? []).enumerated() {
+                value.ordre = Int64(i)
+            }
+            
             for japonai in japonaisReel ?? [] {
                 removeFromJaponaisJMdictAtb(japonai)
                 self.managedObjectContext!.delete(japonai)
@@ -159,15 +157,13 @@ public class MotJMdict: Mot {
             if sensesJMdictAtb!.allObjects.isEmpty { return nil }
             
             let set = sensesJMdictAtb as! Set<SenseJMdict>
-            //return set.sorted { $0.ordre < $1.ordre }
-            //bug lors de l'importation a retirer plus tard
-            let sorted = set.sorted { $0.ordre < $1.ordre }
-            for (i, obj) in sorted.enumerated() {
-                obj.ordre = Int64(i)
-            }
-            return sorted
+            return set.sorted { $0.ordre < $1.ordre }
         }
         set{
+            for (i, value) in (newValue ?? []).enumerated() {
+                value.ordre = Int64(i)
+            }
+            
             for sense in sensesReel ?? [] {
                 removeFromSensesJMdictAtb(sense)
                 self.managedObjectContext!.delete(sense)
@@ -184,15 +180,13 @@ public class MotJMdict: Mot {
             if noSenseTradJMdictAtb!.allObjects.isEmpty { return nil }
             
             let set = noSenseTradJMdictAtb as! Set<TraductionJMdict>
-            //return set.sorted { $0.ordre < $1.ordre }
-            //bug lors de l'importation a retirer plus tard
-            let sorted = set.sorted { $0.ordre < $1.ordre }
-            for (i, obj) in sorted.enumerated() {
-                obj.ordre = Int64(i)
-            }
-            return sorted
+            return set.sorted { $0.ordre < $1.ordre }
         }
         set{
+            for (i, value) in (newValue ?? []).enumerated() {
+                value.ordre = Int64(i)
+            }
+            
             for trad in noSenseTradsArrayReel ?? [] {
                 removeFromNoSenseTradJMdictAtb(trad)
                 self.managedObjectContext!.delete(trad)
@@ -335,20 +329,17 @@ public class MotJMdict: Mot {
         var senses:[Sense]? = nil
         var noSenseTrads:[Traduction]? = nil
         
-        japonais = self.japonaisReel?.map { Japonais(ordre: $0.ordre, kanji: $0.kanji, kana: $0.kana, context: self.context) }
+        japonais = self.japonaisReel?.map { Japonais(kanji: $0.kanji, kana: $0.kana, context: self.context) }
         
         senses = self.sensesReel?.map { sense in
-            Sense(ordre: sense.ordre,
-                  metaDatas: sense.metaDatas,
-                  traductions: sense.traductionsArray?.map { Traduction(ordre: $0.ordre,
-                                                                        langue: $0.langue,
+            Sense(metaDatas: sense.metaDatas,
+                  traductions: sense.traductionsArray?.map { Traduction(langue: $0.langue,
                                                                         traductions: $0.traductions,
                                                                         context: self.context) },
                   context: self.context)
         }
         
-        noSenseTrads = self.noSenseTradsArrayReel?.map { Traduction(ordre: $0.ordre,
-                                                                    langue: $0.langue,
+        noSenseTrads = self.noSenseTradsArrayReel?.map { Traduction(langue: $0.langue,
                                                                     traductions: $0.traductions,
                                                                     context: self.context) }
         
@@ -437,65 +428,6 @@ public class MotJMdict: Mot {
         self.noSenseTradsArrayReel = noSenseTrads
         self.notesReel = notes
     }
-    
-    /*
-    convenience init(ordre: Int64, strct:MotImporter, context:NSManagedObjectContext) {
-        var japonais:[JaponaisJMdict] = []
-        var senses:[SenseJMdict] = []
-        var noSenseTrads:[TraductionJMdict] = []
-        
-        for (i,jap) in strct.japonais.enumerated() {
-            japonais.append(JaponaisJMdict(ordre: Int64(i),
-                                           kanji: jap.kanji != "" ? jap.kanji : nil,
-                                           kana: jap.kana != "" ? jap.kana : nil,
-                                           context: context))
-        }
-        
-        for (i,sense) in strct.senses.enumerated() {
-                
-            var metaDatas:[MetaData] = []
-            for metaData in sense.metaDatas {
-                do {
-                    metaDatas.append(try metaData.getEnumFormat())
-                }
-                catch {
-                    fatalError(error.localizedDescription)
-                }
-            }
-            
-            var trads:[TraductionJMdict] = []
-            for (i,trad) in sense.traductions.enumerated() {
-                trads.append(TraductionJMdict(ordre: Int64(i),
-                                              langue: Langue.init_(trad.langue),
-                                              traductions: trad.traductions,
-                                              context: context))
-            }
-            
-            
-            senses.append(SenseJMdict(ordre: Int64(i),
-                                      metaDatas: metaDatas.isEmpty ? nil : metaDatas,
-                                      traductions: trads.isEmpty ? nil : trads,
-                                      context: context))
-        }
-        
-        for (i,trad) in strct.noLangueTrads.enumerated() {
-            
-            noSenseTrads.append(TraductionJMdict(ordre: Int64(i),
-                                                 langue: Langue.init_(trad.langue),
-                                                 traductions: trad.traductions,
-                                                 context: context))
-        }
-    
-        self.init(odre: ordre,
-                  jmDictID: Int64(strct.jmDictID),
-                  uuid: UUID(uuidString: strct.uuid)!,
-                  japonais: japonais.isEmpty ? nil : japonais,
-                  senses: senses.isEmpty ? nil : senses,
-                  noSenseTrads: noSenseTrads.isEmpty ? nil : noSenseTrads,
-                  notes: nil,
-                  context: context)
-    }
-    */
 }
 
 

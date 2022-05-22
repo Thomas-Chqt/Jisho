@@ -15,7 +15,7 @@ fileprivate class ListeViewModel: ObservableObject {
     
     @Published var showFilePicker = false
     @Published var importedImiwaSaveFile: ImiwaSaveFile? = nil
-    @Published var showFileImporterSheet = false
+    @Published var showImportResumeSheet = false
     
     @Published var fileToExport: CSVForAnkiFile? = nil
     @Published var showFileExporter = false
@@ -25,7 +25,7 @@ fileprivate class ListeViewModel: ObservableObject {
         do {
             let url = try result.get()
             importedImiwaSaveFile = try ImiwaSaveFile(fileURL: url)
-            showFileImporterSheet.toggle()
+            showImportResumeSheet.toggle()
         }
         catch {
             fatalError(error.localizedDescription)
@@ -53,9 +53,6 @@ fileprivate class ListeViewModel: ObservableObject {
 struct ListeView: View {
     
     @Environment(\.toggleSideMenu) var showSideMenu
-//    @Environment(\.metaDataDict) var metaDataDict
-//    @Environment(\.languesPref) var languesPref
-//    @Environment(\.languesAffichées) var languesAffichées
     @Environment(\.editMode) private var editMode
     
     @EnvironmentObject private var settings: Settings
@@ -70,12 +67,13 @@ struct ListeView: View {
             if let sousListes = liste.sousListes {
                 ForEach(sousListes) { liste in
                     
-                    NavigationLink(liste.name ?? "No name") {
+                    NavigationLink("\(liste.ordre) \(liste.name ?? "No name")") {
                         ListeView(liste: liste)
                     }
                     .isDetailLink(false)
                 }
                 .onDelete(perform: deleteSouListe)
+                .onMove(perform: moveSousListe)
             }
             
             if let mots = liste.mots {
@@ -85,7 +83,7 @@ struct ListeView: View {
                     }
                 }
                 .onDelete(perform: removeMot)
-                .onMove(perform: liste.moveMot)
+                .onMove(perform: moveMot)
             }
         }.environment(\.editMode, editMode)
         
@@ -97,7 +95,7 @@ struct ListeView: View {
         .fileImporter(isPresented: $vm.showFilePicker, allowedContentTypes: [UTType("fileType.imiwa")!], onCompletion: vm.filePicked)
         .fileExporter(isPresented: $vm.showFileExporter, document: vm.fileToExport, contentType: UTType("fileType.CSVForAnki")!,
                       defaultFilename: liste.name ?? "Jisho export", onCompletion: vm.fileExported)
-        .sheet(isPresented: $vm.showFileImporterSheet) { EmptyView() }
+        .sheet(isPresented: $vm.showImportResumeSheet) { EmptyView() }
         
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
@@ -142,9 +140,18 @@ struct ListeView: View {
         liste.mots?.remove(atOffsets: offsets)
     }
     
+    private func moveMot(sources: IndexSet, destination: Int) {
+        liste.mots?.move(fromOffsets: sources, toOffset: destination)
+    }
+    
+    private func moveSousListe(sources: IndexSet, destination: Int) {
+        liste.sousListes?.move(fromOffsets: sources, toOffset: destination)
+    }
+    
+    
     private func alertSumited(result: String?) {
         if let text = result, text != "" {
-            _ = self.liste.createSousListe(name: text, context: DataController.shared.mainQueueManagedObjectContext)
+            liste.sousListes = (liste.sousListes ?? []) + [ Liste(name: text, context: DataController.shared.mainQueueManagedObjectContext) ]
         }
     }
 }

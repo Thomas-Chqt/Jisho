@@ -26,14 +26,6 @@ public class Liste: NSManagedObject, Identifiable {
         
         return fetchRequest
     }
-
-//    @nonobjc public class func fetchRequestMainListe() -> NSFetchRequest<Liste> {
-//        let fetchRequest:NSFetchRequest<Liste> = Liste.fetchRequest()
-//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timestampAtb", ascending: false)]
-//        fetchRequest.predicate = NSPredicate(format: "parent == nil")
-//        
-//        return fetchRequest
-//    }
     
     
     @NSManaged private var timestampAtb: Date?
@@ -98,6 +90,10 @@ public class Liste: NSManagedObject, Identifiable {
         set {
             self.objectWillChange.send()
             
+            for (i, value) in (newValue ?? []).enumerated() {
+                value.ordre = Int64(i)
+            }
+            
             for liste in newValue ?? [] {
                 if !(sousListes ?? []).contains(liste) {
                     addToSouListAtb(liste)
@@ -111,19 +107,19 @@ public class Liste: NSManagedObject, Identifiable {
                     timestamp = Date()
                 }
             }
-            for (i, liste) in (sousListes ?? []).enumerated() {
-                liste.ordre = Int64(i)
+            
+            Task {
+                try await DataController.shared.save()
             }
         }
     }
 
-    private var motsObjIDs: [NSManagedObjectID]? {
+    
+    var motsObjIDs: [NSManagedObjectID]? {
         get {
-//            guard let objectIDsURIRepresented = motsObjIDURIAtb else { return nil }
             return motsObjIDURIAtb?.getObjectIDs()
         }
         set {
-//            guard let newValue = newValue else { motsObjIDURIAtb = nil ; return }
             motsObjIDURIAtb = newValue?.map { $0.uriRepresentation() }
         }
     }
@@ -134,6 +130,8 @@ public class Liste: NSManagedObject, Identifiable {
         }
         
         set {
+            self.objectWillChange.send()
+
             guard let newValue = newValue else { motsObjIDs = nil ; return }
             if newValue.isEmpty { motsObjIDs = nil ; return }
             
@@ -144,155 +142,41 @@ public class Liste: NSManagedObject, Identifiable {
             catch {
                 fatalError(error.localizedDescription)
             }
+            
+            Task {
+                try await DataController.shared.save()
+            }
         }
     }
     
-    
-    
+        
     
     public func contains(_ mot: Mot) -> Bool {
-//        guard let mots = mots else { return false }
         return mots?.contains(mot) == true
     }
     
     
-    public func addMot(_ newMot: Mot) {
-        if contains(newMot) { return }
-                
-        if mots == nil
-        {
-            mots = [newMot]
-        }
-        else {
-            mots!.append(newMot)
-        }
-        
-        timestamp = Date()
-        
-        Task {
-            do {
-                try await DataController.shared.save()
-            }
-            catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-    }
     
-    public func removeMot(_ mot: Mot) {
-        
-        if !contains(mot) { return }
-        
-        mots!.remove(at: mots!.firstIndex(of: mot)!)
-        
-        timestamp = Date()
-        
-        Task {
-            do {
-                try await DataController.shared.save()
-            }
-            catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-    }
-    
-    
-    public func removeMot(at index: Int) {
-        if mots == nil { fatalError() }
-        
-        mots!.remove(at: index)
-        
-        Task {
-            do {
-                try await DataController.shared.save()
-            }
-            catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-    }
-    
-    
-    
-    func createSousListe(name:String, context:NSManagedObjectContext) -> Liste {
-        
-        let newOrdre = (sousListes?.last?.ordre ?? -1) + 1
-        
-        let newListe = Liste(ordre: newOrdre, name: name, context: context)
-        
-        self.addToSouListAtb(newListe)
-        
-        self.timestamp = Date()
-        
-        Task {
-            do {
-                try await DataController.shared.save()
-            }
-            catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-        
-        return newListe
-    }
-    
-    func getOrCreateSousListe(name:String, context:NSManagedObjectContext) -> Liste {
-        
-        guard let sousListes = self.sousListes else { return createSousListe(name: name, context: context) }
-        
-        if let findedListe = sousListes.first(where: { $0.name == name }) {
-            return findedListe
-        }
-        else {
-            return createSousListe(name: name, context: context)
-        }
-    }
-    
-    func deleteSousListe(liste: Liste) {
-        removeFromSouListAtb(liste)
-        self.managedObjectContext!.delete(liste)
-        
-        if sousListes != nil {
-            for (i, sousListe) in sousListes!.enumerated() {
-                sousListe.ordre = Int64(i)
-            }
-        }
-        
-        Task {
-            do {
-                try await DataController.shared.save()
-            }
-            catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-    }
-    
-    func moveMot(from source: IndexSet, to destination: Int) {
-        self.mots?.move(fromOffsets: source, toOffset: destination)
-        
-        Task {
-            do {
-                try await DataController.shared.save()
-            }
-            catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-    }
-    
-    
-    
-    convenience init(ordre:Int64 = 0, name:String, context: NSManagedObjectContext) {
+    convenience init(name:String, context: NSManagedObjectContext) {
         self.init(context: context)
         
         self.name = name
-        self.ordre = ordre
+        self.ordre = -99
         self.mots = nil
         self.souListAtb = nil
         
         timestamp = Date()
+    }
+    
+    convenience init(jishoSaveListe: JishoSave_Liste, uuidToObjIDDict:[UUID:NSManagedObjectID], context: NSManagedObjectContext) {
+        self.init(name: jishoSaveListe.name, context: context)
+        
+        for mot in jishoSaveListe.mots {
+            self.motsObjIDs = (self.motsObjIDs ?? []) + [uuidToObjIDDict[mot]!]
+        }
+        for sousListe in jishoSaveListe.sousListes {
+            self.sousListes = (self.sousListes ?? []) + [Liste(jishoSaveListe: sousListe, uuidToObjIDDict: uuidToObjIDDict, context: context)]
+        }
     }
     
 }

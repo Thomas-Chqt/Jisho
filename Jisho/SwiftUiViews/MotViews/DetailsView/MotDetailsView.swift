@@ -64,7 +64,7 @@ struct MotDetailsView: View
                             .contextMenu {
                                 Button {
                                     let index = mot.senses!.firstIndex(of: sense)!
-                                    let sheetView = ModifySenseSheetView( modifiableSense: $mot.senses![index] )
+                                    let sheetView = NavigationView { ModifySenseSheetView( modifiableSense: $mot.senses![index] ) }
                                     vm.showSheet( view: sheetView )
                                 }
                                 label: { Label("Modifier", systemImage: "pencil.circle") }
@@ -171,23 +171,19 @@ struct MotDetailsView: View
         Menu {
             ForEach(listes) { liste in
                 
-                if liste.contains(mot) {
-                    Button {
-                        liste.removeMot(mot)
-                    } label: {
-                        HStack {
-                            Image(systemName: "checkmark")
-                            Text(liste.name ?? "No name")
-                        }
+                Button {
+                    if liste.contains(mot) {
+                        liste.mots?.remove(at: liste.mots!.firstIndex(of: mot)!)
                     }
-                }
-                else {
-                    Button {
-                        liste.addMot(mot)
-                    } label: {
-                        HStack {
-                            Text(liste.name ?? "No name")
-                        }
+                    else {
+                        liste.mots = (liste.mots ?? []) + [mot]
+                    }
+                } label: {
+                    if liste.contains(mot) {
+                        Label(liste.name ?? "No name", systemImage: "checkmark")
+                    }
+                    else {
+                        Text(liste.name ?? "No name")
                     }
                 }
             }

@@ -16,6 +16,25 @@ extension String: Identifiable{
     }
 }
 
+extension String {
+    func addHtml(balise: BaliseHTLM, htlmClass:String? = nil) -> Self {
+        
+        var classString = ""
+        
+        if let htlmClass = htlmClass {
+            classString = " class=\(htlmClass)"
+        }
+        
+        switch balise {
+        case .p:
+            return "<p\(classString)>\(self)</p>"
+            
+        case .div:
+            return "<div\(classString)>\(self)</div>"
+        }
+    }
+}
+
 
 extension Array {
     
@@ -107,6 +126,20 @@ extension Array where Element : NSManagedObject {
             return self.map { $0.objectID }
         }
         
+    }
+}
+
+extension Array where Element == [String] {
+    var csvString: String {
+        get {
+            let rows = self.map { row in
+                return row.map { cell in
+                    return "\"\(cell)\""
+                }.joined(separator: ",")
+            }
+            
+            return rows.joined(separator: "\n")
+        }
     }
 }
 
@@ -241,3 +274,6 @@ extension ErrorPerso: LocalizedError {
         }
     }
 }
+
+
+

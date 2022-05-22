@@ -17,13 +17,13 @@ fileprivate class SearchPageViewModel: ObservableObject {
                                                 = (exactMatch: [], nonExactMatch: [])
     @Published var showSuggestions = true
     @Published var textFieldText:String = ""
-    
+        
     
     var searchResult: (exactMatch: [Mot], nonExactMatch: [Mot])? {
         guard let searchResultObjID = searchResultObjID else { return nil }
-
-        return (exactMatch: searchResultObjID.exactMatch.map { DataController.shared.mainQueueManagedObjectContext.object(with: $0) as! Mot },
-                nonExactMatch: searchResultObjID.nonExactMatch.map { DataController.shared.mainQueueManagedObjectContext.object(with: $0) as! Mot })
+        
+        return (exactMatch: searchResultObjID.exactMatch.getObjects(on: .mainQueue),
+                nonExactMatch: searchResultObjID.nonExactMatch.getObjects(on: .mainQueue))
     }
     
     var suggestions: some View {
@@ -66,11 +66,17 @@ fileprivate class SearchPageViewModel: ObservableObject {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         
         Task {
-            searchResultObjID = try await quickSearch(textFieldText)
+            if Settings.performRealSearch == false {
+                searchResultObjID = try await quickSearch(textFieldText)
+            }
+            else {
+                let result = try await realSearch(textFieldText)
+                searchResultObjID = (exactMatch: [], nonExactMatch: result)
+            }
         }
     }
     
-    /*
+    
     func realSearch(_ recherche:String) async throws -> [NSManagedObjectID] {
 
         try await DataController.shared.privateQueueManagedObjectContext.perform {
@@ -125,7 +131,7 @@ fileprivate class SearchPageViewModel: ObservableObject {
             return findedMotPerso + findedMotJMdict
         }
     }
-    */
+    
     
     func quickSearch(_ recherche:String) async throws -> (exactMatch: [NSManagedObjectID], nonExactMatch: [NSManagedObjectID]) {
         
@@ -156,7 +162,22 @@ fileprivate class SearchPageViewModel: ObservableObject {
             if hash < 0 { hash *= -1 }
             let id = hash % 1000
             
-            let allSearchedMotJMdict = DataController.shared.getSearchtableMotJMdict(id: id)[recherche] ?? []
+            let searchTable: [String : Set<NSManagedObjectID>]
+            
+            if let cachedVersion = motJMdictSearchTableCache.object(forKey: NSNumber(value: id)) {
+                searchTable = cachedVersion as! Dictionary<String,Set<NSManagedObjectID>>
+            }
+            else {
+                let request:NSFetchRequest<SearchTableHolderMotJMdict> = SearchTableHolderMotJMdict.fetchRequest()
+                request.predicate = NSPredicate(format: "idAtb == %i", id)
+                let result = try DataController.shared.privateQueueManagedObjectContext.fetch(request)
+                searchTable = result.first!.searchTable
+                
+                motJMdictSearchTableCache.setObject(searchTable as NSDictionary, forKey: NSNumber(value: id))
+            }
+            
+            let allSearchedMotJMdict = searchTable[recherche] ?? []
+
             print("Mot JMdict : \( b.distance(to: Date()) )s")
 
             

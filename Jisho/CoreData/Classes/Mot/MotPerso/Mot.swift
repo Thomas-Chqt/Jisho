@@ -146,6 +146,10 @@ public class Mot: NSManagedObject, Identifiable {
         set {
             objectWillChangeSend()
             
+            for (i, value) in (newValue ?? []).enumerated() {
+                value.ordre = Int64(i)
+            }
+            
             for japonai in newValue ?? [] {
                 if !(japonais ?? []).contains(japonai) {
                     addToJaponaisAtb(japonai)
@@ -156,9 +160,6 @@ public class Mot: NSManagedObject, Identifiable {
                     removeFromJaponaisAtb(japonai)
                     self.context.delete(japonai)
                 }
-            }
-            for (i, japonai) in (japonais ?? []).enumerated() {
-                japonai.ordre = Int64(i)
             }
         }
     }
@@ -175,6 +176,10 @@ public class Mot: NSManagedObject, Identifiable {
         }
         set{
             objectWillChangeSend()
+            
+            for (i, value) in (newValue ?? []).enumerated() {
+                value.ordre = Int64(i)
+            }
 
             for sense in newValue ?? [] {
                 if !(senses ?? []).contains(sense) {
@@ -186,9 +191,6 @@ public class Mot: NSManagedObject, Identifiable {
                     removeFromSensesAtb(sense)
                     self.context.delete(sense)
                 }
-            }
-            for (i, sense) in (senses ?? []).enumerated() {
-                sense.ordre = Int64(i)
             }
         }
     }
@@ -205,6 +207,10 @@ public class Mot: NSManagedObject, Identifiable {
         }
         set{
             objectWillChangeSend()
+            
+            for (i, value) in (newValue ?? []).enumerated() {
+                value.ordre = Int64(i)
+            }
 
             for trad in newValue ?? [] {
                 if !(noSenseTradsArray ?? []).contains(trad) {
@@ -216,9 +222,6 @@ public class Mot: NSManagedObject, Identifiable {
                     removeFromNoSenseTradAtb(trad)
                     self.context.delete(trad)
                 }
-            }
-            for (i, trad) in (noSenseTradsArray ?? []).enumerated() {
-                trad.ordre = Int64(i)
             }
         }
     }

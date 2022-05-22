@@ -12,6 +12,8 @@ public class Settings: ObservableObject {
     @PublishedCloudStorage("languesPrefData") var languesPref:[Langue] = languesPrefOriginal
     @PublishedCloudStorage("metaDataDictData") var metaDataDict:[MetaData : String?] = metaDataDictOriginal
     @PublishedCloudStorage("languesAfficheesData") var languesAffichées:Set<Langue> = languesAffichéesOriginal
+    
+    static var performRealSearch = false
 }
 
 @main
@@ -24,26 +26,9 @@ struct JishoApp: App {
     {
         WindowGroup
         {
-//            switch dataController.loadingStatus {
-//
-//
-//            case nil:
-//                EmptyView()
-//
-//            case .loading:
-//                ProgressView()
-//
-//            case .loadingPercent(let description, let percent):
-//                VStack {
-//                    Text("\(description) - \(percent)%")
-//                    ProgressView()
-//                }
-//
-//            case .finished:
-                    ContentView()
-                        .environment(\.managedObjectContext, dataController.mainQueueManagedObjectContext)
-                        .environmentObject(settings)
-//            }
+            ContentView()
+                .environment(\.managedObjectContext, dataController.mainQueueManagedObjectContext)
+                .environmentObject(settings)
         }
     }
 }

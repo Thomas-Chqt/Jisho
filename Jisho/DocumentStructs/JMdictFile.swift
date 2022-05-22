@@ -11,11 +11,11 @@ import UniformTypeIdentifiers
 import CoreData
 
 struct JMdictFile: FileDocument {
-    static var readableContentTypes: [UTType] = [UTType("fileType.JMdictFile")!]
+    static var readableContentTypes: [UTType] = [ UTType("fileType.JMdictFile")! ]
     
     fileprivate var mots: [MotImporter]
     
-    init(fileURL: URL) throws {
+    init(fileURL: URL) async throws {
         let brutData = try Data(contentsOf: fileURL)
         self.mots = try JSONDecoder().decode([MotImporter].self, from: brutData)
     }
@@ -31,31 +31,23 @@ struct JMdictFile: FileDocument {
         return FileWrapper(regularFileWithContents: data)
     }
     
-    func createMotsJMdict(on queue: Queue, percentCallback: (Int) -> Void) {
+    func createMotsJMdict(percentCallback: (Int) -> Void) {
         for (i, mot) in mots.enumerated() {
             
-            let ordre = Int64(i), strct = mot
-            var context = DataController.shared.privateQueueManagedObjectContext
-            
-            switch queue {
-            case .mainQueue:
-                context = DataController.shared.mainQueueManagedObjectContext
-            case .privateQueue:
-                context = DataController.shared.privateQueueManagedObjectContext
-            }
+            let ordre = Int64(i), strct = mot, context = DataController.shared.privateQueueManagedObjectContext
             
             var japonais:[JaponaisJMdict] = []
             var senses:[SenseJMdict] = []
             var noSenseTrads:[TraductionJMdict] = []
             
-            for (i,jap) in strct.japonais.enumerated() {
-                japonais.append(JaponaisJMdict(ordre: Int64(i),
+            for (_,jap) in strct.japonais.enumerated() {
+                japonais.append(JaponaisJMdict(/*ordre: Int64(i),*/
                                                kanji: jap.kanji != "" ? jap.kanji : nil,
                                                kana: jap.kana != "" ? jap.kana : nil,
                                                context: context))
             }
             
-            for (i,sense) in strct.senses.enumerated() {
+            for (_,sense) in strct.senses.enumerated() {
                     
                 var metaDatas:[MetaData] = []
                 for metaData in sense.metaDatas {
@@ -68,23 +60,23 @@ struct JMdictFile: FileDocument {
                 }
                 
                 var trads:[TraductionJMdict] = []
-                for (i,trad) in sense.traductions.enumerated() {
-                    trads.append(TraductionJMdict(ordre: Int64(i),
+                for (_,trad) in sense.traductions.enumerated() {
+                    trads.append(TraductionJMdict(/*ordre: Int64(i),*/
                                                   langue: Langue.init_(trad.langue),
                                                   traductions: trad.traductions,
                                                   context: context))
                 }
                 
                 
-                senses.append(SenseJMdict(ordre: Int64(i),
+                senses.append(SenseJMdict(/*ordre: Int64(i),*/
                                           metaDatas: metaDatas.isEmpty ? nil : metaDatas,
                                           traductions: trads.isEmpty ? nil : trads,
                                           context: context))
             }
             
-            for (i,trad) in strct.noLangueTrads.enumerated() {
+            for (_,trad) in strct.noLangueTrads.enumerated() {
                 
-                noSenseTrads.append(TraductionJMdict(ordre: Int64(i),
+                noSenseTrads.append(TraductionJMdict(/*ordre: Int64(i),*/
                                                      langue: Langue.init_(trad.langue),
                                                      traductions: trad.traductions,
                                                      context: context))
@@ -98,7 +90,6 @@ struct JMdictFile: FileDocument {
                           noSenseTrads: noSenseTrads.isEmpty ? nil : noSenseTrads,
                           notes: nil,
                           context: context)
-            
             
             if ((i+1) % (mots.count / 100)) == 0 {
                 percentCallback((i + 1) / (mots.count / 100))

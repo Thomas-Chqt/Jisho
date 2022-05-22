@@ -13,6 +13,7 @@ let languesAffichéesOriginal: Set<Langue> = [.francais, .anglais, .none]
 let languesPrefOriginal:[Langue] = [.francais, .anglais, .espagnol, .russe, .neerlandais, .allemand, .hongrois, .suedois, .slovene, .none]
 
 let cacheMotModifier = NSCache<NSUUID, NSManagedObjectID>()
+let motJMdictSearchTableCache = NSCache<NSNumber, NSDictionary>()
 
 
 struct CommunMetaData {

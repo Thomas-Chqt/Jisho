@@ -9,7 +9,7 @@ import Foundation
 import CoreGraphics
 import SwiftUI
 
-enum Langue: String, Encodable, /*Comparable,*/ Decodable, Identifiable {
+enum Langue: String, Encodable, Decodable, Identifiable {
     var id: Self { self }
     
     case francais = "fre"
@@ -94,7 +94,7 @@ enum TypeInit {
 
 
 enum LoadingStatus {
-    case loading
+    case loading(String)
     case loadingPercent(String, Int)
     case finished
 }
@@ -126,6 +126,10 @@ enum Queue {
     case privateQueue
 }
 
+enum BaliseHTLM {
+    case p
+    case div
+}
 
 enum MetaData: Equatable, Hashable, Identifiable {
     

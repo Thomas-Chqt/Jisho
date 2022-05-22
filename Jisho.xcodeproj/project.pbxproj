@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		E90E130728141C7300BACC5F /* DebugSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90E130628141C7300BACC5F /* DebugSearchTable.swift */; };
 		E90E130A2815373900BACC5F /* SearchTableHolderMotJMdict.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90E13082815373900BACC5F /* SearchTableHolderMotJMdict.swift */; };
-		E90E13162815C20700BACC5F /* local.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = E90E13132815C20700BACC5F /* local.sqlite-wal */; };
-		E90E13172815C20700BACC5F /* local.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = E90E13142815C20700BACC5F /* local.sqlite-shm */; };
 		E90E131D281BD54700BACC5F /* EnvironmentKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90E131C281BD54700BACC5F /* EnvironmentKeys.swift */; };
 		E914D675282FDCA700AF6A52 /* JMdictFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914D674282FDCA700AF6A52 /* JMdictFile.swift */; };
 		E914D677282FF02300AF6A52 /* DebugActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914D676282FF02300AF6A52 /* DebugActionsView.swift */; };
+		E914D6792832690900AF6A52 /* JishoSaveFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914D6782832690900AF6A52 /* JishoSaveFile.swift */; };
+		E914D67B2832803600AF6A52 /* ImportResumeSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914D67A2832803600AF6A52 /* ImportResumeSheetView.swift */; };
 		E914E97827CF9CF800FA4B68 /* JishoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E97727CF9CF800FA4B68 /* JishoApp.swift */; };
 		E914E97C27CF9CFB00FA4B68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E914E97B27CF9CFB00FA4B68 /* Assets.xcassets */; };
 		E914E99A27CF9D6700FA4B68 /* ListeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914E98727CF9D6700FA4B68 /* ListeView.swift */; };
@@ -43,6 +43,9 @@
 		E95C7E5227D507C400AB3F71 /* Traduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95C7E4A27D507C400AB3F71 /* Traduction.swift */; };
 		E95C7E5427D507C400AB3F71 /* MotJMdict.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95C7E4C27D507C400AB3F71 /* MotJMdict.swift */; };
 		E95C7E5727D5297400AB3F71 /* LanguesAffichéView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95C7E5627D5297400AB3F71 /* LanguesAffichéView.swift */; };
+		E95FCB88283A32A8003A1A80 /* local.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = E95FCB85283A32A8003A1A80 /* local.sqlite-shm */; };
+		E95FCB89283A32A8003A1A80 /* local.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = E95FCB86283A32A8003A1A80 /* local.sqlite-wal */; };
+		E95FCB8A283A32A8003A1A80 /* local.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = E95FCB87283A32A8003A1A80 /* local.sqlite */; };
 		E96262D727EAD9490007594C /* MetaDataListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96262D627EAD9490007594C /* MetaDataListView.swift */; };
 		E973CF7727EDC60A00916178 /* MotListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E973CF7627EDC60A00916178 /* MotListView.swift */; };
 		E973CF7A27EDCBEF00916178 /* Liste.swift in Sources */ = {isa = PBXBuildFile; fileRef = E973CF7827EDCBEF00916178 /* Liste.swift */; };
@@ -57,7 +60,6 @@
 		E98BF1CE27F565D4005E04F5 /* MetaDataRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98BF1CD27F565D4005E04F5 /* MetaDataRowView.swift */; };
 		E98BF1D027F57208005E04F5 /* LangueRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98BF1CF27F57208005E04F5 /* LangueRowView.swift */; };
 		E98C583227F1C10B0001CAB1 /* SideMenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C583127F1C10B0001CAB1 /* SideMenuButtonView.swift */; };
-		E9966E91281F041E009AD4FD /* local.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = E9966E90281F041E009AD4FD /* local.sqlite */; };
 		E9A18033282079ED00173C35 /* ModifyMotSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A18032282079ED00173C35 /* ModifyMotSheetView.swift */; };
 		E9A180362821346400173C35 /* ModifyJapSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A180352821346400173C35 /* ModifyJapSheetView.swift */; };
 		E9C5D8E128228164009C5EE1 /* ModifySenseSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C5D8E028228164009C5EE1 /* ModifySenseSheetView.swift */; };
@@ -70,11 +72,11 @@
 /* Begin PBXFileReference section */
 		E90E130628141C7300BACC5F /* DebugSearchTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSearchTable.swift; sourceTree = "<group>"; };
 		E90E13082815373900BACC5F /* SearchTableHolderMotJMdict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableHolderMotJMdict.swift; sourceTree = "<group>"; };
-		E90E13132815C20700BACC5F /* local.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "local.sqlite-wal"; sourceTree = "<group>"; };
-		E90E13142815C20700BACC5F /* local.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "local.sqlite-shm"; sourceTree = "<group>"; };
 		E90E131C281BD54700BACC5F /* EnvironmentKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentKeys.swift; sourceTree = "<group>"; };
 		E914D674282FDCA700AF6A52 /* JMdictFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMdictFile.swift; sourceTree = "<group>"; };
 		E914D676282FF02300AF6A52 /* DebugActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugActionsView.swift; sourceTree = "<group>"; };
+		E914D6782832690900AF6A52 /* JishoSaveFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JishoSaveFile.swift; sourceTree = "<group>"; };
+		E914D67A2832803600AF6A52 /* ImportResumeSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportResumeSheetView.swift; sourceTree = "<group>"; };
 		E914E97427CF9CF800FA4B68 /* Jisho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jisho.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E914E97727CF9CF800FA4B68 /* JishoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JishoApp.swift; sourceTree = "<group>"; };
 		E914E97B27CF9CFB00FA4B68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -107,6 +109,9 @@
 		E95C7E4A27D507C400AB3F71 /* Traduction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Traduction.swift; sourceTree = "<group>"; };
 		E95C7E4C27D507C400AB3F71 /* MotJMdict.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = MotJMdict.swift; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
 		E95C7E5627D5297400AB3F71 /* LanguesAffichéView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguesAffichéView.swift"; sourceTree = "<group>"; };
+		E95FCB85283A32A8003A1A80 /* local.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "local.sqlite-shm"; sourceTree = "<group>"; };
+		E95FCB86283A32A8003A1A80 /* local.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "local.sqlite-wal"; sourceTree = "<group>"; };
+		E95FCB87283A32A8003A1A80 /* local.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = local.sqlite; sourceTree = "<group>"; };
 		E96262D627EAD9490007594C /* MetaDataListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataListView.swift; sourceTree = "<group>"; };
 		E973CF7627EDC60A00916178 /* MotListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotListView.swift; sourceTree = "<group>"; };
 		E973CF7827EDCBEF00916178 /* Liste.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Liste.swift; sourceTree = "<group>"; };
@@ -121,7 +126,6 @@
 		E98BF1CD27F565D4005E04F5 /* MetaDataRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataRowView.swift; sourceTree = "<group>"; };
 		E98BF1CF27F57208005E04F5 /* LangueRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangueRowView.swift; sourceTree = "<group>"; };
 		E98C583127F1C10B0001CAB1 /* SideMenuButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuButtonView.swift; sourceTree = "<group>"; };
-		E9966E90281F041E009AD4FD /* local.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = local.sqlite; sourceTree = "<group>"; };
 		E9A18032282079ED00173C35 /* ModifyMotSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyMotSheetView.swift; sourceTree = "<group>"; };
 		E9A180352821346400173C35 /* ModifyJapSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyJapSheetView.swift; sourceTree = "<group>"; };
 		E9C5D8E028228164009C5EE1 /* ModifySenseSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifySenseSheetView.swift; sourceTree = "<group>"; };
@@ -340,6 +344,7 @@
 				E98BF1CD27F565D4005E04F5 /* MetaDataRowView.swift */,
 				E973CF7627EDC60A00916178 /* MotListView.swift */,
 				E98BF1CF27F57208005E04F5 /* LangueRowView.swift */,
+				E914D67A2832803600AF6A52 /* ImportResumeSheetView.swift */,
 			);
 			path = ReusableViews;
 			sourceTree = "<group>";
@@ -388,6 +393,7 @@
 				E9C5D8EB282635D2009C5EE1 /* ImiwaSaveFile.swift */,
 				E9C5D8ED2827E07B009C5EE1 /* CSVForAnkiFile.swift */,
 				E914D674282FDCA700AF6A52 /* JMdictFile.swift */,
+				E914D6782832690900AF6A52 /* JishoSaveFile.swift */,
 			);
 			path = DocumentStructs;
 			sourceTree = "<group>";
@@ -395,9 +401,9 @@
 		E9DB435E28097BEC001F0311 /* SQLiteFiles */ = {
 			isa = PBXGroup;
 			children = (
-				E9966E90281F041E009AD4FD /* local.sqlite */,
-				E90E13142815C20700BACC5F /* local.sqlite-shm */,
-				E90E13132815C20700BACC5F /* local.sqlite-wal */,
+				E95FCB87283A32A8003A1A80 /* local.sqlite */,
+				E95FCB85283A32A8003A1A80 /* local.sqlite-shm */,
+				E95FCB86283A32A8003A1A80 /* local.sqlite-wal */,
 			);
 			path = SQLiteFiles;
 			sourceTree = "<group>";
@@ -460,10 +466,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E90E13172815C20700BACC5F /* local.sqlite-shm in Resources */,
+				E95FCB88283A32A8003A1A80 /* local.sqlite-shm in Resources */,
 				E914E97C27CF9CFB00FA4B68 /* Assets.xcassets in Resources */,
-				E90E13162815C20700BACC5F /* local.sqlite-wal in Resources */,
-				E9966E91281F041E009AD4FD /* local.sqlite in Resources */,
+				E95FCB89283A32A8003A1A80 /* local.sqlite-wal in Resources */,
+				E95FCB8A283A32A8003A1A80 /* local.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +481,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E973CF8227EE2C4F00916178 /* TextFieldAlert.swift in Sources */,
+				E914D67B2832803600AF6A52 /* ImportResumeSheetView.swift in Sources */,
 				E914E99D27CF9D6700FA4B68 /* SenseDetailsRowView.swift in Sources */,
 				E914E99B27CF9D6700FA4B68 /* SearchPageView.swift in Sources */,
 				E914EA3227D36C9B00FA4B68 /* Constantes.swift in Sources */,
@@ -522,6 +529,7 @@
 				E914E97827CF9CF800FA4B68 /* JishoApp.swift in Sources */,
 				E95C7E5427D507C400AB3F71 /* MotJMdict.swift in Sources */,
 				E914E99A27CF9D6700FA4B68 /* ListeView.swift in Sources */,
+				E914D6792832690900AF6A52 /* JishoSaveFile.swift in Sources */,
 				E98BF1C627F4C8D4005E04F5 /* DebugCloudStorage.swift in Sources */,
 				E914E9C127CF9DC600FA4B68 /* DataModel.xcdatamodeld in Sources */,
 				E9C5D8E128228164009C5EE1 /* ModifySenseSheetView.swift in Sources */,
@@ -584,7 +592,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -639,7 +647,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

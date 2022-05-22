@@ -46,6 +46,10 @@ public class SenseJMdict: Sense {
             }
         }
         set {
+            for (i, value) in (newValue ?? []).enumerated() {
+                value.ordre = Int64(i)
+            }
+            
             for trad in modifiableTraductionsArray ?? [] {
                 removeFromTraductionsJMdictAtb(trad)
                 self.managedObjectContext!.delete(trad)
@@ -87,9 +91,9 @@ public class SenseJMdict: Sense {
 
     
     
-    convenience init(ordre:Int64, metaDatas:[MetaData]? = nil, traductions:[TraductionJMdict]? = nil, context:NSManagedObjectContext) {
+    convenience init(metaDatas:[MetaData]? = nil, traductions:[TraductionJMdict]? = nil, context:NSManagedObjectContext) {
         self.init(context: context)
-        self.ordre = ordre
+        self.ordre = -99
         
         modifiableMetaDatas = metaDatas
         modifiableTraductionsArray = traductions

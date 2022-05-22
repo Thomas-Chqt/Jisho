@@ -10,69 +10,37 @@ import CoreData
 
 fileprivate class ListePageViewModel: ObservableObject {
     @Published var showAlert = false
-
-    
-    func alertSumited(result: String?) {
-        if let text = result, text != "" {
-            do {
-                try createListe(name: text)
-            }
-            catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-    }
-    
-    func deleteListe(at offsets: IndexSet) throws {
-        let request:NSFetchRequest<NSManagedObjectID> = Liste.fetchRequest()
-        request.predicate = NSPredicate(format: "parent == nil")
-        request.sortDescriptors = [NSSortDescriptor(key: "ordreInParentAtb", ascending: true)]
-        let rootLists:[NSManagedObjectID] = try DataController.shared.mainQueueManagedObjectContext.fetch(request)
-        
-        offsets.forEach { DataController.shared.mainQueueManagedObjectContext.delete(rootLists[$0].getObject(on: .mainQueue)) }
-        
-        Task {
-            do {
-                try await DataController.shared.save()
-            }
-            catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-    }
-    
-    
-
-    private func createListe(name: String) throws {
-        let request:NSFetchRequest<NSManagedObjectID> = Liste.fetchRequest()
-        request.predicate = NSPredicate(format: "parent == nil")
-        request.sortDescriptors = [NSSortDescriptor(key: "ordreInParentAtb", ascending: true)]
-        let rootLists:[NSManagedObjectID] = try DataController.shared.mainQueueManagedObjectContext.fetch(request)
-        
-        let lastListe:Liste? = rootLists.last?.getObject(on: .mainQueue)
-        let lastOrdre: Int64 = lastListe?.ordre ?? -1
-                
-        _ = Liste(ordre: lastOrdre + 1, name: name, context: DataController.shared.mainQueueManagedObjectContext)
-                        
-        Task {
-            do {
-                try await DataController.shared.save()
-            }
-            catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-    }
 }
 
 
 struct ListePageView: View {
     @Environment(\.toggleSideMenu) var showSideMenu
+    @Environment(\.editMode) private var editMode
 
     @StateObject private var vm = ListePageViewModel()
     
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.ordreInParentAtb)],
-                  predicate: NSPredicate(format: "parent == nil")) var listes: FetchedResults<Liste>
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "parent == nil")) private var UnOrderedListes: FetchedResults<Liste>
+    
+    var listes: [Liste] {
+        get {
+            return UnOrderedListes.sorted { $0.ordre < $1.ordre }
+        }
+        nonmutating set {
+            for (i, value) in newValue.enumerated() {
+                value.ordre = Int64(i)
+            }
+            
+            for liste in listes {
+                if !(newValue).contains(liste) {
+                    DataController.shared.mainQueueManagedObjectContext.delete(liste)
+                }
+            }
+            
+            Task {
+                try await DataController.shared.save()
+            }
+        }
+    }
     
         
     var body: some View {
@@ -80,21 +48,26 @@ struct ListePageView: View {
         List {
             ForEach(listes) { liste in
                 
-                NavigationLink("\(liste.name ?? "No name")") {
+                NavigationLink("\(liste.ordre) \(liste.name ?? "No name")") {
                     ListeView(liste: liste)
                 }
                 .isDetailLink(false)
                  
             }
-            .onDelete(perform: { do { try vm.deleteListe(at: $0) } catch { fatalError(error.localizedDescription) } })
+            .onDelete(perform: { do { try deleteListe(at: $0) } catch { fatalError(error.localizedDescription) } })
+            .onMove(perform: moveListe)
         }
+        .environment(\.editMode, editMode)
         
-        .alert(isPresented: $vm.showAlert, TextAlert(action: vm.alertSumited))
         .listStyle(.inset)
         .navigationTitle("Listes")
+        .alert(isPresented: $vm.showAlert, TextAlert(action: alertSumited))
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) { sideMenuButton }
-            ToolbarItemGroup(placement: .navigationBarTrailing) { addButton }
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                EditButton()
+                addButton
+            }
         }
 
     }
@@ -108,4 +81,17 @@ struct ListePageView: View {
         Button { vm.showAlert.toggle() } label: { Image(systemName: "plus") }
     }
     
+    private func deleteListe(at offsets: IndexSet) throws {
+        listes.remove(atOffsets: offsets)
+    }
+    
+    private func moveListe(sources: IndexSet, destination: Int) {
+        listes.move(fromOffsets: sources, toOffset: destination)
+    }
+    
+    private func alertSumited(result: String?) {
+        if let text = result, text != "" {
+            listes.append(Liste(name: text, context: DataController.shared.mainQueueManagedObjectContext))
+        }
+    }
 }

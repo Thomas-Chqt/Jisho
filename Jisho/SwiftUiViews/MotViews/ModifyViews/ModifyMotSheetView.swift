@@ -9,9 +9,8 @@ import SwiftUI
 
 struct ModifyMotSheetView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.editMode) var editMode
     
-//    @Environment(\.languesPref) var languesPref
-//    @Environment(\.languesAffichées) var languesAffichées
     @EnvironmentObject private var settings: Settings
     
     @ObservedObject var modifiableMot: Mot    
@@ -45,6 +44,11 @@ struct ModifyMotSheetView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+            }
         }
     }
     
@@ -56,6 +60,7 @@ struct ModifyMotSheetView: View {
             }
         }
         .onDelete(perform: deleteJaponais)
+        .onMove(perform: moveJaponais)
     }
     
     
@@ -66,21 +71,20 @@ struct ModifyMotSheetView: View {
             }
         }
         .onDelete(perform: deleteSense)
+        .onMove(perform: moveSense)
     }
     
     
     
     
     func addNewJaponais() {
-        let newJaponais = Japonais(ordre: (modifiableMot.japonais?.last?.ordre ?? -1) + 1,
-                                   kanji: nil, kana: nil, context: modifiableMot.context)
+        let newJaponais = Japonais(kanji: nil, kana: nil, context: modifiableMot.context)
         
         modifiableMot.japonais = (modifiableMot.japonais ?? []) + [newJaponais]
     }
     
     func addNewSense() {
-        let newSense = Sense(ordre: (modifiableMot.senses?.last?.ordre ?? -1) + 1,
-                             metaDatas: nil, traductions: nil, context: modifiableMot.context)
+        let newSense = Sense(metaDatas: nil, traductions: nil, context: modifiableMot.context)
         
         modifiableMot.senses = (modifiableMot.senses ?? []) + [newSense]
     }
@@ -91,6 +95,18 @@ struct ModifyMotSheetView: View {
     
     func deleteSense(_ indexSet: IndexSet) {
         modifiableMot.senses?.remove(atOffsets: indexSet)
+    }
+    
+    func moveJaponais(sources: IndexSet, destination: Int) {
+        modifiableMot.japonais?.move(fromOffsets: sources, toOffset: destination)
+        editMode?.wrappedValue = .inactive
+        editMode?.wrappedValue = .active
+    }
+    
+    func moveSense(sources: IndexSet, destination: Int) {
+        modifiableMot.senses?.move(fromOffsets: sources, toOffset: destination)
+        editMode?.wrappedValue = .inactive
+        editMode?.wrappedValue = .active
     }
     
 }

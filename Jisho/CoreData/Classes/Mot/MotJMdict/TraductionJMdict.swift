@@ -68,10 +68,10 @@ public class TraductionJMdict: Traduction {
     
     
     
-    convenience init(ordre:Int64, langue:Langue = .none, traductions:[String]? = nil, context:NSManagedObjectContext) {
+    convenience init(langue:Langue = .none, traductions:[String]? = nil, context:NSManagedObjectContext) {
         self.init(context: context)
         
-        self.ordre = ordre
+        self.ordre = -99
         
         self.modifiableLangue = langue
         

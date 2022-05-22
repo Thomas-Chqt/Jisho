@@ -88,6 +88,10 @@ public class Sense: NSManagedObject, Identifiable {
         set {
             objectWillChangeSend()
             
+            for (i, value) in (newValue ?? []).enumerated() {
+                value.ordre = Int64(i)
+            }
+            
             for trad in newValue ?? [] {
                 if !(traductionsArray ?? []).contains(trad) {
                     addToTraductionsAtb(trad)
@@ -98,9 +102,6 @@ public class Sense: NSManagedObject, Identifiable {
                     removeFromTraductionsAtb(trad)
                     self.context.delete(trad)
                 }
-            }
-            for (i, trad) in (traductionsArray ?? []).enumerated() {
-                trad.ordre = Int64(i)
             }
         }
     }
@@ -118,10 +119,10 @@ public class Sense: NSManagedObject, Identifiable {
     
     //MARK: Inits
     
-    convenience init(ordre:Int64, metaDatas:[MetaData]? = nil, traductions:[Traduction]? = nil, context:NSManagedObjectContext) {
+    convenience init(metaDatas:[MetaData]? = nil, traductions:[Traduction]? = nil, context:NSManagedObjectContext) {
         self.init(context: context)
         
-        self.ordre = ordre
+        self.ordre = -99
         
         self.metaDatas = metaDatas
         self.traductionsArray = traductions
@@ -129,8 +130,6 @@ public class Sense: NSManagedObject, Identifiable {
     
     static func == (lhs: Sense, rhs: Sense) -> Bool {
         return lhs.metaDatas == rhs.metaDatas && lhs.traductionsArray == rhs.traductionsArray
-//               lhs.traductionsArray?.map{$0.traductions} == rhs.traductionsArray?.map{$0.traductions} &&
-//               lhs.traductionsArray?.map{$0.langue} == rhs.traductionsArray?.map{$0.langue}
     }
 }
 

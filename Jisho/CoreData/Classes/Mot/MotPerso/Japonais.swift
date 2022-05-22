@@ -80,10 +80,10 @@ public class Japonais: NSManagedObject, Identifiable {
     
     //MARK: Inits
     
-    convenience init(ordre:Int64, kanji:String? = nil, kana:String? = nil, context:NSManagedObjectContext) {
+    convenience init(kanji:String? = nil, kana:String? = nil, context:NSManagedObjectContext) {
         self.init(context: context)
         
-        self.ordre = ordre
+        self.ordre = -99
         
         self.kanji = kanji
         self.kana = kana

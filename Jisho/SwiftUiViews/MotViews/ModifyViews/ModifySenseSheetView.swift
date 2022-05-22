@@ -20,8 +20,8 @@ fileprivate class ModifySenseSheetViewModel: ObservableObject {
 }
 
 struct ModifySenseSheetView: View {
-    @Environment(\.dismiss) var dismiss
-//    @Environment(\.metaDataDict) var metaDataDict
+    @Environment(\.editMode) var editMode
+
     @EnvironmentObject private var settings: Settings
     
     @StateObject private var vm = ModifySenseSheetViewModel()
@@ -49,6 +49,11 @@ struct ModifySenseSheetView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $vm.showSheet) { vm.sheetView }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                EditButton()
+            }
+        }
     }
     
     
@@ -67,18 +72,24 @@ struct ModifySenseSheetView: View {
             }
         }
         .onDelete(perform: deleteTrad)
+        .onMove(perform: moveTrad)
     }
     
     
     func addNewTrad() {
-        let newTrad = Traduction(ordre: (modifiableSense.traductionsArray?.last?.ordre ?? -1) + 1,
-                                 langue: .none, traductions: nil, context: modifiableSense.context)
+        let newTrad = Traduction(langue: .none, traductions: nil, context: modifiableSense.context)
         
         modifiableSense.traductionsArray = (modifiableSense.traductionsArray ?? []) + [newTrad]
     }
     
     func deleteTrad(_ indexSet: IndexSet) {
         modifiableSense.traductionsArray?.remove(atOffsets: indexSet)
+    }
+    
+    func moveTrad(sources: IndexSet, destination: Int) {
+        modifiableSense.traductionsArray?.move(fromOffsets: sources, toOffset: destination)
+        editMode?.wrappedValue = .inactive
+        editMode?.wrappedValue = .active
     }
     
     
@@ -94,6 +105,7 @@ struct ModifySenseSheetView: View {
             }
         }
         .onDelete(perform: deleteMetaData)
+        .onMove(perform: moveMetaData)
     }
     
     
@@ -103,6 +115,12 @@ struct ModifySenseSheetView: View {
     
     func deleteMetaData(_ indexSet: IndexSet) {
         modifiableSense.metaDatas?.remove(atOffsets: indexSet)
+    }
+    
+    func moveMetaData(sources: IndexSet, destination: Int) {
+        modifiableSense.metaDatas?.move(fromOffsets: sources, toOffset: destination)
+        editMode?.wrappedValue = .inactive
+        editMode?.wrappedValue = .active
     }
 }
 
