@@ -10,15 +10,16 @@ import CoreData
 import UniformTypeIdentifiers
 
 fileprivate class ListeViewModel: ObservableObject {
-    
-    @Published var showAlert = false
-    
+        
     @Published var showFilePicker = false
     @Published var importedImiwaSaveFile: ImiwaSaveFile? = nil
     @Published var showImportResumeSheet = false
     
     @Published var fileToExport: CSVForAnkiFile? = nil
     @Published var showFileExporter = false
+    
+    @Published var showTextField = false
+    @Published var textFieldText = ""
     
     
     func filePicked(result: Result<URL, Error>) {
@@ -67,13 +68,18 @@ struct ListeView: View {
             if let sousListes = liste.sousListes {
                 ForEach(sousListes) { liste in
                     
-                    NavigationLink("\(liste.ordre) \(liste.name ?? "No name")") {
+                    NavigationLink("\(liste.name ?? "No name")") {
                         ListeView(liste: liste)
                     }
                     .isDetailLink(false)
                 }
                 .onDelete(perform: deleteSouListe)
                 .onMove(perform: moveSousListe)
+            }
+            
+            if vm.showTextField {
+                TextField("Nouvelle liste", text: $vm.textFieldText)
+                    .onSubmit { textFieldSubmited() }
             }
             
             if let mots = liste.mots {
@@ -85,13 +91,14 @@ struct ListeView: View {
                 .onDelete(perform: removeMot)
                 .onMove(perform: moveMot)
             }
+            
+            
         }.environment(\.editMode, editMode)
         
         .listStyle(.inset)
         .navigationTitle(liste.name ?? "No name")
         .navigationBarTitleDisplayMode(.inline)
         
-        .alert(isPresented: $vm.showAlert, TextAlert(action: alertSumited))
         .fileImporter(isPresented: $vm.showFilePicker, allowedContentTypes: [UTType("fileType.imiwa")!], onCompletion: vm.filePicked)
         .fileExporter(isPresented: $vm.showFileExporter, document: vm.fileToExport, contentType: UTType("fileType.CSVForAnki")!,
                       defaultFilename: liste.name ?? "Jisho export", onCompletion: vm.fileExported)
@@ -111,7 +118,7 @@ struct ListeView: View {
     
     private var menuButton: some View {
         Menu {
-            Button { vm.showAlert.toggle() } label: { Label("Ajouter une sous liste", systemImage: "plus") }
+            Button { vm.showTextField = true } label: { Label("Ajouter une sous liste", systemImage: "plus") }
 //            Button { vm.showFilePicker.toggle() } label: { Label("Importer save Imiwa", systemImage: "square.and.arrow.down") }
             exportButton
         }
@@ -149,9 +156,11 @@ struct ListeView: View {
     }
     
     
-    private func alertSumited(result: String?) {
-        if let text = result, text != "" {
-            liste.sousListes = (liste.sousListes ?? []) + [ Liste(name: text, context: DataController.shared.mainQueueManagedObjectContext) ]
+    private func textFieldSubmited() {
+        if vm.textFieldText != "" {
+            liste.sousListes = (liste.sousListes ?? []) + [ Liste(name: vm.textFieldText, context: DataController.shared.mainQueueManagedObjectContext) ]
+            vm.textFieldText = ""
+            vm.showTextField = false
         }
     }
 }

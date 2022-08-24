@@ -51,7 +51,6 @@
 		E973CF7A27EDCBEF00916178 /* Liste.swift in Sources */ = {isa = PBXBuildFile; fileRef = E973CF7827EDCBEF00916178 /* Liste.swift */; };
 		E973CF7D27EDE36A00916178 /* DebugMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E973CF7C27EDE36A00916178 /* DebugMenu.swift */; };
 		E973CF7F27EDE8B800916178 /* DebugPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E973CF7E27EDE8B800916178 /* DebugPage.swift */; };
-		E973CF8227EE2C4F00916178 /* TextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E973CF8127EE2C4F00916178 /* TextFieldAlert.swift */; };
 		E973CF8627EE4ED000916178 /* ListePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E973CF8527EE4ED000916178 /* ListePageView.swift */; };
 		E988B53B27D398FF0048F783 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E988B53A27D398FF0048F783 /* Extentions.swift */; };
 		E98BF1C627F4C8D4005E04F5 /* DebugCloudStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98BF1C527F4C8D4005E04F5 /* DebugCloudStorage.swift */; };
@@ -117,7 +116,6 @@
 		E973CF7827EDCBEF00916178 /* Liste.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Liste.swift; sourceTree = "<group>"; };
 		E973CF7C27EDE36A00916178 /* DebugMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenu.swift; sourceTree = "<group>"; };
 		E973CF7E27EDE8B800916178 /* DebugPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPage.swift; sourceTree = "<group>"; };
-		E973CF8127EE2C4F00916178 /* TextFieldAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlert.swift; sourceTree = "<group>"; };
 		E973CF8527EE4ED000916178 /* ListePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListePageView.swift; sourceTree = "<group>"; };
 		E988B53A27D398FF0048F783 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		E98BF1C527F4C8D4005E04F5 /* DebugCloudStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCloudStorage.swift; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 				E914E9A627CF9DC600FA4B68 /* CoreData */,
 				E9C5D8E8282629A5009C5EE1 /* DocumentStructs */,
 				E914E9C827CF9E7200FA4B68 /* AllProjectThings */,
-				E973CF8027EE2C1500916178 /* TextFieldAlert */,
 				E9DB435E28097BEC001F0311 /* SQLiteFiles */,
 				E914E97B27CF9CFB00FA4B68 /* Assets.xcassets */,
 				E914E9D427CF9EE400FA4B68 /* Info.plist */,
@@ -357,14 +354,6 @@
 			path = Liste;
 			sourceTree = "<group>";
 		};
-		E973CF8027EE2C1500916178 /* TextFieldAlert */ = {
-			isa = PBXGroup;
-			children = (
-				E973CF8127EE2C4F00916178 /* TextFieldAlert.swift */,
-			);
-			path = TextFieldAlert;
-			sourceTree = "<group>";
-		};
 		E9A18034282079F700173C35 /* ModifyViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,7 +469,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E973CF8227EE2C4F00916178 /* TextFieldAlert.swift in Sources */,
 				E914D67B2832803600AF6A52 /* ImportResumeSheetView.swift in Sources */,
 				E914E99D27CF9D6700FA4B68 /* SenseDetailsRowView.swift in Sources */,
 				E914E99B27CF9D6700FA4B68 /* SearchPageView.swift in Sources */,
@@ -666,7 +654,7 @@
 				CODE_SIGN_ENTITLEMENTS = Jisho/Jisho.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 7MA43Y48DR;
 				ENABLE_PREVIEWS = YES;
@@ -703,7 +691,7 @@
 				CODE_SIGN_ENTITLEMENTS = Jisho/Jisho.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 7MA43Y48DR;
 				ENABLE_PREVIEWS = YES;

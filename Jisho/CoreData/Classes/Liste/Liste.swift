@@ -132,8 +132,29 @@ public class Liste: NSManagedObject, Identifiable {
         set {
             self.objectWillChange.send()
 
-            guard let newValue = newValue else { motsObjIDs = nil ; return }
-            if newValue.isEmpty { motsObjIDs = nil ; return }
+            guard let newValue = newValue else {
+                
+                Task {
+                    try await DataController.shared.save()
+                }
+                
+                motsObjIDs = nil
+                
+                return
+                
+            }
+            
+            if newValue.isEmpty {
+                
+                Task {
+                    try await DataController.shared.save()
+                }
+                
+                motsObjIDs = nil
+                
+                return
+                
+            }
             
             do {
                 motsObjIDs = try newValue.getObjectIDs(on: .mainQueue)

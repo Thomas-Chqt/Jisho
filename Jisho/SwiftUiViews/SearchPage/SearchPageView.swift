@@ -66,7 +66,7 @@ fileprivate class SearchPageViewModel: ObservableObject {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         
         Task {
-            if Settings.performRealSearch == false {
+            if Settings.shared.performRealSearch == false {
                 searchResultObjID = try await quickSearch(textFieldText)
             }
             else {

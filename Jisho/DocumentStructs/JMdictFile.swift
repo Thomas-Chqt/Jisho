@@ -11,6 +11,7 @@ import UniformTypeIdentifiers
 import CoreData
 
 struct JMdictFile: FileDocument {
+    
     static var readableContentTypes: [UTType] = [ UTType("fileType.JMdictFile")! ]
     
     fileprivate var mots: [MotImporter]

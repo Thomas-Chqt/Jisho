@@ -81,14 +81,14 @@ public class MotModifier: Mot {
     
     //MARK: Specifique to MotModifier
 
-    var modifiedMotUUID: UUID {
-        get {
-            return modifiedMotUUIDAtb!
-        }
-        set {
-            modifiedMotUUIDAtb = newValue
-        }
-    }
+//    var modifiedMotUUID: UUID {
+//        get {
+//            return modifiedMotUUIDAtb!
+//        }
+//        set {
+//            modifiedMotUUIDAtb = newValue
+//        }
+//    }
    
     var modifiedMotObjID: NSManagedObjectID {
         
@@ -124,7 +124,7 @@ public class MotModifier: Mot {
         
         self.init(context: context)
         
-        self.modifiedMotUUID = copiedMot.uuid
+//        self.modifiedMotUUID = copiedMot.uuid
         self.modifiedMotObjID = copiedMot.objectID
                 
         self.uuid = UUID()

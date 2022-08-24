@@ -53,7 +53,7 @@ class DataController: ObservableObject
         cloudStoreDescription.configuration = "Cloud"
 
         // Set the container options on the cloud store
-        cloudStoreDescription.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.JishoSave")        
+        cloudStoreDescription.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.Jisho")        
         
         // Update the container's list of store descriptions
         container.persistentStoreDescriptions = [ cloudStoreDescription, localStoreDescription ]

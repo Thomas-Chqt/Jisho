@@ -274,6 +274,8 @@ fileprivate class DebugActionsViewModel: ObservableObject {
 struct DebugActionsView: View {
     @Environment(\.toggleSideMenu) var showSideMenu
     
+    @EnvironmentObject private var settings: Settings
+    
     @StateObject private var vm = DebugActionsViewModel()
 
     
@@ -323,12 +325,14 @@ struct DebugActionsView: View {
                     }
                 }
                 
-                Toggle("Perform real search", isOn: Binding(get: { Settings.performRealSearch }, set: { Settings.performRealSearch = $0 }))
+                Toggle("Perform real search", isOn: Binding(get: { settings.performRealSearch }, set: { settings.performRealSearch = $0 }))
                 
             }
         }
-        .fileImporter(isPresented: $vm.showFileImporter, allowedContentTypes: [UTType("fileType.JMdictFile")!, .json],
+        .fileImporter(isPresented: $vm.showFileImporter,
+                      allowedContentTypes: [UTType("fileType.JMdictFile")!],
                       onCompletion: vm.fileImporterCompletion)
+        
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
@@ -341,8 +345,24 @@ struct DebugActionsView: View {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 struct DebugActionsView_Previews: PreviewProvider {
     static var previews: some View {
         DebugActionsView()
     }
 }
+*/

@@ -13,8 +13,8 @@ fileprivate class SettingsPageViewModel: ObservableObject {
     @Published var showFileExporter = false
     @Published var showFileImporter = false
     @Published var showImportResumeSheet = false
-    @Published var isSaving = false
-    @Published var isLoading = false
+    @Published var showDebug = false
+    
     var importResumeSheetView: AnyView = AnyView(EmptyView())
     var saveFileForExport: JishoSaveFile? = nil
     
@@ -22,7 +22,6 @@ fileprivate class SettingsPageViewModel: ObservableObject {
         switch result {
         case .success(let url):
             print(url)
-            isSaving = false
             
         case .failure(let error):
             fatalError(error.localizedDescription)
@@ -99,7 +98,9 @@ fileprivate class SettingsPageViewModel: ObservableObject {
     }
     
     func importResumeCompletion() {
-        self.isLoading = false
+        Task {
+            try await DataController.shared.save()
+        }
     }
 }
 
@@ -112,29 +113,31 @@ struct SettingsPageView: View{
     
     var body: some View
     {
-        List
-        {
-            NavigationLink("Meta datas", destination: MetaDatasEditorView())
-            NavigationLink("Langues", destination: LanguesAffiche_View())
-            if vm.isSaving { ProgressView() } else {
+        VStack {
+            List
+            {
+                NavigationLink("Meta datas", destination: MetaDatasEditorView())
+                NavigationLink("Langues", destination: LanguesAffiche_View())
                 Button("Sauvegarder") {
                     Task {
-                        vm.isSaving = true
                         try await vm.saveAllListes()
                     }
                 }
-            }
 
-            if vm.isLoading { ProgressView() } else {
                 Button("Charger une sauvegarde") {
-                    vm.isLoading = true
                     vm.showFileImporter.toggle()
+                }
+                
+                if vm.showDebug {
+                    Section("Debug") {
+                        NavigationLink(isActive: $vm.showDebug, destination: { DebugMenu() }, label: { Text("Debug") })
+                    }
                 }
             }
             
-            Section("Debug") {
-                NavigationLink("Debug", destination: DebugMenu())
-            }
+            Color.clear
+                .contentShape(Rectangle())
+                .onTapGesture(count: 5) { vm.showDebug.toggle() }
         }
         .listStyle(.plain)
         .navigationTitle("Paramètres")

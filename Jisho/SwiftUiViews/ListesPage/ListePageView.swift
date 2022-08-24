@@ -8,8 +8,9 @@
 import SwiftUI
 import CoreData
 
-fileprivate class ListePageViewModel: ObservableObject {
-    @Published var showAlert = false
+fileprivate class ListePageViewModel: ObservableObject {    
+    @Published var showTextField = false
+    @Published var textFieldText = ""
 }
 
 
@@ -48,7 +49,7 @@ struct ListePageView: View {
         List {
             ForEach(listes) { liste in
                 
-                NavigationLink("\(liste.ordre) \(liste.name ?? "No name")") {
+                NavigationLink("\(liste.name ?? "No name")") {
                     ListeView(liste: liste)
                 }
                 .isDetailLink(false)
@@ -56,12 +57,16 @@ struct ListePageView: View {
             }
             .onDelete(perform: { do { try deleteListe(at: $0) } catch { fatalError(error.localizedDescription) } })
             .onMove(perform: moveListe)
+            
+            if vm.showTextField {
+                TextField("Nouvelle liste", text: $vm.textFieldText)
+                    .onSubmit { textFieldSubmited() }
+            }
         }
         .environment(\.editMode, editMode)
         
         .listStyle(.inset)
         .navigationTitle("Listes")
-        .alert(isPresented: $vm.showAlert, TextAlert(action: alertSumited))
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) { sideMenuButton }
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -78,7 +83,7 @@ struct ListePageView: View {
     }
     
     private var addButton: some View {
-        Button { vm.showAlert.toggle() } label: { Image(systemName: "plus") }
+        Button { vm.showTextField = true } label: { Image(systemName: "plus") }
     }
     
     private func deleteListe(at offsets: IndexSet) throws {
@@ -89,9 +94,11 @@ struct ListePageView: View {
         listes.move(fromOffsets: sources, toOffset: destination)
     }
     
-    private func alertSumited(result: String?) {
-        if let text = result, text != "" {
-            listes.append(Liste(name: text, context: DataController.shared.mainQueueManagedObjectContext))
+    private func textFieldSubmited() {
+        if vm.textFieldText != "" {
+            listes.append(Liste(name: vm.textFieldText, context: DataController.shared.mainQueueManagedObjectContext))
+            vm.textFieldText = ""
+            vm.showTextField = false
         }
     }
 }
