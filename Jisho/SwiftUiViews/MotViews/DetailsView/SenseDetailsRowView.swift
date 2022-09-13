@@ -32,7 +32,6 @@ struct SenseDetailsRowView: View
                         {
                             Image(systemName: "info.circle")
                             Text(description)
-                                .lineLimit(nil)
                         }
                         .font(.caption)
                         .frame(height: 8)
