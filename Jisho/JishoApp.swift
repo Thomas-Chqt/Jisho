@@ -13,7 +13,12 @@ struct JishoApp: App {
     {
         WindowGroup
         {
-            ContentView()
+			#if os(iOS)
+			ContentView_iOS()
+			#endif
+			#if os(macOS)
+			ContentView_macOS()
+			#endif
         }
     }
 }
