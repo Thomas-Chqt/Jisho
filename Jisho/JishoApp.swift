@@ -9,16 +9,15 @@ import SwiftUI
 
 @main
 struct JishoApp: App {
+	
+	@StateObject private var dataController = DataController.shared
+	
     var body: some Scene
     {
         WindowGroup
         {
-			#if os(iOS)
-			ContentView_iOS()
-			#endif
-			#if os(macOS)
-			ContentView_macOS()
-			#endif
+			ContentView()
+				.environment(\.managedObjectContext, dataController.mainQueueManagedObjectContext)
         }
     }
 }

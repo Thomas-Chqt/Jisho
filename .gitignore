@@ -3,7 +3,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,xcode,swift
 
 #Perso
-local.sqlite
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
 
 ### macOS ###
 # General
