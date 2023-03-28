@@ -50,17 +50,12 @@ class DataController: ObservableObject {
 		let localStoreDescription = NSPersistentStoreDescription(url: DataController.localStoreLocationSQLite)
 		localStoreDescription.configuration = "Local"
 		
+//		let cloudStoreDescription = NSPersistentStoreDescription(url: DataController.cloudStoreLocationSQLite)
+//		cloudStoreDescription.configuration = "Cloud"
 		
-		// Create a store description for a CloudKit-backed local store
-		let cloudStoreDescription = NSPersistentStoreDescription(url: DataController.cloudStoreLocationSQLite)
-		cloudStoreDescription.configuration = "Cloud"
+//		cloudStoreDescription.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.JishoV2")
 		
-		// Set the container options on the cloud store
-		cloudStoreDescription.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.JishoV2")
-		
-		// Update the container's list of store descriptions
-		container.persistentStoreDescriptions = [ cloudStoreDescription, localStoreDescription ]
-
+		container.persistentStoreDescriptions = [ localStoreDescription/*, cloudStoreDescription*/ ]
 		
 		container.loadPersistentStores { description, error in
 			if let error = error {

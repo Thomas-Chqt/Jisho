@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E92DE1CA29D1C61600B5CB86 /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DE1C829D1C61600B5CB86 /* MetaData.swift */; };
+		E92DE1CE29D1C88200B5CB86 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DE1CC29D1C88200B5CB86 /* Entity.swift */; };
+		E92DE1D229D1CAF000B5CB86 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E92DE1D029D1CAF000B5CB86 /* DataModel.xcdatamodeld */; };
 		E9835CAF29CC9382008CF340 /* SQLiteFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8429CC9382008CF340 /* SQLiteFile.swift */; };
 		E9835CB029CC9382008CF340 /* JishoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8629CC9382008CF340 /* JishoApp.swift */; };
 		E9835CB129CC9382008CF340 /* NSManagedObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8829CC9382008CF340 /* NSManagedObjectType.swift */; };
@@ -14,7 +17,6 @@
 		E9835CB329CC9382008CF340 /* InitType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8A29CC9382008CF340 /* InitType.swift */; };
 		E9835CB429CC9382008CF340 /* AppPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8B29CC9382008CF340 /* AppPage.swift */; };
 		E9835CB529CC9382008CF340 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8D29CC9382008CF340 /* DataController.swift */; };
-		E9835CB729CC9382008CF340 /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C9129CC9382008CF340 /* MetaData.swift */; };
 		E9835CB829CC9382008CF340 /* MetaData_struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C9329CC9382008CF340 /* MetaData_struct.swift */; };
 		E9835CB929CC9382008CF340 /* SideMenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C9729CC9382008CF340 /* SideMenuButtonView.swift */; };
 		E9835CBA29CC9382008CF340 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C9829CC9382008CF340 /* SideMenuView.swift */; };
@@ -31,12 +33,12 @@
 		E9835CC529CC9382008CF340 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CAB29CC9382008CF340 /* ContentViewModel.swift */; };
 		E9835CC629CC9382008CF340 /* DebugListRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CAC29CC9382008CF340 /* DebugListRowViewModel.swift */; };
 		E9835CC729CC9382008CF340 /* DebugPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CAD29CC9382008CF340 /* DebugPageViewModel.swift */; };
-		E9835CC829CC9382008CF340 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E9835CAE29CC9382008CF340 /* Info.plist */; };
-		E9835CCB29CDB884008CF340 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9835CC929CDB884008CF340 /* DataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E92DE1C529CDEF4100B5CB86 /* Jisho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Jisho.app; path = "/Users/thomas/Library/Mobile Documents/com~apple~CloudDocs/Xcode/Swift/Swift Projects/Crosplatform/Jisho/build/Debug-iphoneos/Jisho.app"; sourceTree = "<absolute>"; };
+		E92DE1C829D1C61600B5CB86 /* MetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaData.swift; sourceTree = "<group>"; };
+		E92DE1CC29D1C88200B5CB86 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		E92DE1D129D1CAF000B5CB86 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		E9835C8429CC9382008CF340 /* SQLiteFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteFile.swift; sourceTree = "<group>"; };
 		E9835C8529CC9382008CF340 /* Jisho.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Jisho.entitlements; sourceTree = "<group>"; };
 		E9835C8629CC9382008CF340 /* JishoApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JishoApp.swift; sourceTree = "<group>"; };
@@ -45,7 +47,6 @@
 		E9835C8A29CC9382008CF340 /* InitType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitType.swift; sourceTree = "<group>"; };
 		E9835C8B29CC9382008CF340 /* AppPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppPage.swift; sourceTree = "<group>"; };
 		E9835C8D29CC9382008CF340 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		E9835C9129CC9382008CF340 /* MetaData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaData.swift; sourceTree = "<group>"; };
 		E9835C9329CC9382008CF340 /* MetaData_struct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaData_struct.swift; sourceTree = "<group>"; };
 		E9835C9729CC9382008CF340 /* SideMenuButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuButtonView.swift; sourceTree = "<group>"; };
 		E9835C9829CC9382008CF340 /* SideMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
@@ -63,7 +64,7 @@
 		E9835CAC29CC9382008CF340 /* DebugListRowViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugListRowViewModel.swift; sourceTree = "<group>"; };
 		E9835CAD29CC9382008CF340 /* DebugPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugPageViewModel.swift; sourceTree = "<group>"; };
 		E9835CAE29CC9382008CF340 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E9835CCA29CDB884008CF340 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		E996A1E929D27E6000DD700D /* Jisho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Jisho.app; path = "/Users/thomas/Library/Mobile Documents/com~apple~CloudDocs/Xcode/Swift/Swift Projects/Crosplatform/Jisho/build/Debug-iphoneos/Jisho.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +128,7 @@
 				E9835C9229CC9382008CF340 /* Structs */,
 				E9835C9429CC9382008CF340 /* SQLiteFiles */,
 				E9835C8D29CC9382008CF340 /* DataController.swift */,
-				E9835CC929CDB884008CF340 /* DataModel.xcdatamodeld */,
+				E92DE1D029D1CAF000B5CB86 /* DataModel.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -135,7 +136,8 @@
 		E9835C9029CC9382008CF340 /* CoreDataClasses */ = {
 			isa = PBXGroup;
 			children = (
-				E9835C9129CC9382008CF340 /* MetaData.swift */,
+				E92DE1CC29D1C88200B5CB86 /* Entity.swift */,
+				E92DE1C829D1C61600B5CB86 /* MetaData.swift */,
 			);
 			path = CoreDataClasses;
 			sourceTree = "<group>";
@@ -263,7 +265,7 @@
 			);
 			name = Jisho;
 			productName = Jisho;
-			productReference = E92DE1C529CDEF4100B5CB86 /* Jisho.app */;
+			productReference = E996A1E929D27E6000DD700D /* Jisho.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -274,7 +276,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					E914E97327CF9CF800FA4B68 = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -304,7 +306,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9835CC829CC9382008CF340 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +318,7 @@
 			files = (
 				E9835CC129CC9382008CF340 /* DebugListRowView.swift in Sources */,
 				E9835CB529CC9382008CF340 /* DataController.swift in Sources */,
+				E92DE1CE29D1C88200B5CB86 /* Entity.swift in Sources */,
 				E9835CC329CC9382008CF340 /* EnvironmentValueExtensions.swift in Sources */,
 				E9835CB329CC9382008CF340 /* InitType.swift in Sources */,
 				E9835CB829CC9382008CF340 /* MetaData_struct.swift in Sources */,
@@ -329,15 +331,15 @@
 				E9835CC529CC9382008CF340 /* ContentViewModel.swift in Sources */,
 				E9835CC729CC9382008CF340 /* DebugPageViewModel.swift in Sources */,
 				E9835CC629CC9382008CF340 /* DebugListRowViewModel.swift in Sources */,
+				E92DE1CA29D1C61600B5CB86 /* MetaData.swift in Sources */,
 				E9835CB429CC9382008CF340 /* AppPage.swift in Sources */,
-				E9835CB729CC9382008CF340 /* MetaData.swift in Sources */,
 				E9835CAF29CC9382008CF340 /* SQLiteFile.swift in Sources */,
 				E9835CBB29CC9382008CF340 /* ContentView.swift in Sources */,
 				E9835CC429CC9382008CF340 /* FileError.swift in Sources */,
 				E9835CBF29CC9382008CF340 /* DebugPageDetailMetaDataListRowView.swift in Sources */,
 				E9835CB229CC9382008CF340 /* SideMenuSize.swift in Sources */,
-				E9835CCB29CDB884008CF340 /* DataModel.xcdatamodeld in Sources */,
 				E9835CB029CC9382008CF340 /* JishoApp.swift in Sources */,
+				E92DE1D229D1CAF000B5CB86 /* DataModel.xcdatamodeld in Sources */,
 				E9835CC229CC9382008CF340 /* ViewExtensions.swift in Sources */,
 				E9835CBE29CC9382008CF340 /* DebugPageDetailMetaDataListView.swift in Sources */,
 			);
@@ -566,12 +568,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		E9835CC929CDB884008CF340 /* DataModel.xcdatamodeld */ = {
+		E92DE1D029D1CAF000B5CB86 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				E9835CCA29CDB884008CF340 /* DataModel.xcdatamodel */,
+				E92DE1D129D1CAF000B5CB86 /* DataModel.xcdatamodel */,
 			);
-			currentVersion = E9835CCA29CDB884008CF340 /* DataModel.xcdatamodel */;
+			currentVersion = E92DE1D129D1CAF000B5CB86 /* DataModel.xcdatamodel */;
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

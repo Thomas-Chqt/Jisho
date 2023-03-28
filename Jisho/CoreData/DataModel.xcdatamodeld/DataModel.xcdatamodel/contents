@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class">
+    <entity name="Entity" representedClassName="Entity" syncable="YES">
         <attribute name="id_atb" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
-    <entity name="Exemble" representedClassName="Exemble" parentEntity="Entity" syncable="YES" codeGenerationType="class">
+    <entity name="Exemple" representedClassName="Exemple" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="text_atb" optional="YES" attributeType="String"/>
         <relationship name="parent_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Sense" inverseName="exemples_atb" inverseEntity="Sense"/>
         <relationship name="traductions_atb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExempleTrad" inverseName="parent_atb" inverseEntity="ExempleTrad"/>
@@ -11,14 +11,14 @@
     <entity name="ExempleTrad" representedClassName="ExempleTrad" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="langue_atb" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="text_atb" optional="YES" attributeType="String"/>
-        <relationship name="parent_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exemble" inverseName="traductions_atb" inverseEntity="Exemble"/>
+        <relationship name="parent_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exemple" inverseName="traductions_atb" inverseEntity="Exemple"/>
     </entity>
     <entity name="Japonais" representedClassName="Japonais" parentEntity="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="kanas_atb" optional="YES" attributeType="String"/>
         <attribute name="kanjis_atb" optional="YES" attributeType="String"/>
         <relationship name="parent_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mot" inverseName="japonais_atb" inverseEntity="Mot"/>
     </entity>
-    <entity name="MetaData" representedClassName="MetaData" parentEntity="Entity" syncable="YES" codeGenerationType="class">
+    <entity name="MetaData" representedClassName="MetaData" parentEntity="Entity" syncable="YES">
         <attribute name="text_atb" optional="YES" attributeType="String"/>
         <relationship name="sensesIn_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Sense" inverseName="metaDatas_atb" inverseEntity="Sense"/>
     </entity>
@@ -30,7 +30,7 @@
         <relationship name="sense_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Sense" inverseName="parent_atb" inverseEntity="Sense"/>
     </entity>
     <entity name="Sense" representedClassName="Sense" parentEntity="Entity" syncable="YES" codeGenerationType="class">
-        <relationship name="exemples_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Exemble" inverseName="parent_atb" inverseEntity="Exemble"/>
+        <relationship name="exemples_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Exemple" inverseName="parent_atb" inverseEntity="Exemple"/>
         <relationship name="metaDatas_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="MetaData" inverseName="sensesIn_atb" inverseEntity="MetaData"/>
         <relationship name="parent_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mot" inverseName="sense_atb" inverseEntity="Mot"/>
         <relationship name="traductions_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Traduction" inverseName="parentSense_atb" inverseEntity="Traduction"/>
@@ -41,10 +41,14 @@
         <relationship name="parentMot_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mot" inverseName="noSenseTrads_atb" inverseEntity="Mot"/>
         <relationship name="parentSense_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sense" inverseName="traductions_atb" inverseEntity="Sense"/>
     </entity>
-    <configuration name="Cloud" usedWithCloudKit="YES"/>
     <configuration name="Local">
         <memberEntity name="Entity"/>
         <memberEntity name="Mot"/>
         <memberEntity name="Japonais"/>
+        <memberEntity name="Exemple"/>
+        <memberEntity name="ExempleTrad"/>
+        <memberEntity name="MetaData"/>
+        <memberEntity name="Sense"/>
+        <memberEntity name="Traduction"/>
     </configuration>
 </model>
