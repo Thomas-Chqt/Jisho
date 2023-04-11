@@ -8,17 +8,28 @@
 import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
+import CoreData
 
 class DebugPageViewModel: ObservableObject {
-	@Published var selection:NSManagedObjectType?
+	@Published var selection: Entity?
 	@Published var showFileExporter = false
+	
+
 	
 	var fileExporterContent: (document: SQLiteFile?,
 							  type: UTType,
 							  filename: String,
 							  completion: (Result<URL, Error>) -> Void) = ( nil, UTType.text, "", {_ in} )
+}
 
-	init() {}
+extension DebugPageViewModel: FileExporterDelegate {
+	
+	var isPresented: Binding<Bool> { Binding(get: { [self] in showFileExporter }, set: { self.showFileExporter = $0 })}
+	var document: SQLiteFile? { fileExporterContent.document }
+	var contentType: UTType { fileExporterContent.type }
+	var defaultFilename: String? { fileExporterContent.filename }
+	var onCompletion: (Result<URL, Error>) -> Void { fileExporterContent.completion }
+	
 	
 	func exportSQLiteFile() {
 		self.fileExporterContent = (

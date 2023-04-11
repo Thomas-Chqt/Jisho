@@ -9,16 +9,14 @@ import SwiftUI
 import CoreData
 import Combine
 
-struct DebugListRowView<T: NSManagedObject>: View {
+struct ManagedObjectDebugRowView<T: NSManagedObject>: View {
 	@Environment(\.managedObjectContext) var viewContext
-	@StateObject var vm = DebugListRowViewModel<T>()
-	
-	var objType: NSManagedObjectType
-	
+	@StateObject var vm = ManagedObjectDebugRowViewModel<T>()
+			
 	var body: some View {
-		NavigationLink(value: objType) {
+		NavigationLink(value: CoreDataEntityType(T.description())){
 			HStack {
-				Text(objType.description)
+				Text(T.description())
 				Spacer()
 				Text("\(vm.objectCount)")
 			}
@@ -26,17 +24,18 @@ struct DebugListRowView<T: NSManagedObject>: View {
 	}
 }
 
-struct DebugListRowView_Previews: PreviewProvider {
+struct ManagedObjectDebugRowView_Previews: PreviewProvider {
     static var previews: some View {
 		NavigationSplitView(columnVisibility: .constant(.all)) {
 			List {
-				DebugListRowView<MetaData>(objType: .metaData)
-					.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
+				ManagedObjectDebugRowView<MetaData>()
 			}
 			.listStyle(.plain)
+			.navigationTitle("Title")
 		} detail: {
 			EmptyView()
 		}
 		.navigationSplitViewStyle(.balanced)
+		.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
     }
 }

@@ -16,13 +16,13 @@ class DataController: ObservableObject {
 	static let localStoreLocationSQLiteSHM = applicationSupportDirectory.appendingPathComponent("local.sqlite-shm")
 	static let localStoreLocationSQLiteWAL = applicationSupportDirectory.appendingPathComponent("local.sqlite-wal")
 	
-	static let cloudStoreLocationSQLite = applicationSupportDirectory.appendingPathComponent("cloud.sqlite")
-	static let cloudStoreLocationSQLiteSHM = applicationSupportDirectory.appendingPathComponent("cloud.sqlite-shm")
-	static let cloudStoreLocationSQLiteWAL = applicationSupportDirectory.appendingPathComponent("cloud.sqlite-wal")
+//	static let cloudStoreLocationSQLite = applicationSupportDirectory.appendingPathComponent("cloud.sqlite")
+//	static let cloudStoreLocationSQLiteSHM = applicationSupportDirectory.appendingPathComponent("cloud.sqlite-shm")
+//	static let cloudStoreLocationSQLiteWAL = applicationSupportDirectory.appendingPathComponent("cloud.sqlite-wal")
 
 	
-	let container = NSPersistentCloudKitContainer(name: "DataModel")
-//	let container = NSPersistentContainer(name: "DataModel")
+//	let container = NSPersistentCloudKitContainer(name: "DataModel")
+	let container = NSPersistentContainer(name: "DataModel")
 	
 	let mainQueueManagedObjectContext: NSManagedObjectContext
 	let privateQueueManagedObjectContext: NSManagedObjectContext
@@ -48,7 +48,7 @@ class DataController: ObservableObject {
 //		}
 		
 		let localStoreDescription = NSPersistentStoreDescription(url: DataController.localStoreLocationSQLite)
-		localStoreDescription.configuration = "Local"
+//		localStoreDescription.configuration = "Local"
 		
 //		let cloudStoreDescription = NSPersistentStoreDescription(url: DataController.cloudStoreLocationSQLite)
 //		cloudStoreDescription.configuration = "Cloud"
@@ -76,17 +76,33 @@ class DataController: ObservableObject {
 	}
 	
 	
-	func save() async throws {
-		
-		try await mainQueueManagedObjectContext.perform {
-			if self.mainQueueManagedObjectContext.hasChanges {
-				try self.mainQueueManagedObjectContext.save()
+//	func save() async throws {
+//
+//		try await mainQueueManagedObjectContext.perform {
+//			if self.mainQueueManagedObjectContext.hasChanges {
+//				try self.mainQueueManagedObjectContext.save()
+//			}
+//		}
+//
+//		try await privateQueueManagedObjectContext.perform {
+//			if self.privateQueueManagedObjectContext.hasChanges {
+//				try self.privateQueueManagedObjectContext.save()
+//			}
+//		}
+//	}
+	
+	func save() {
+		Task {
+			try await mainQueueManagedObjectContext.perform {
+				if self.mainQueueManagedObjectContext.hasChanges {
+					try self.mainQueueManagedObjectContext.save()
+				}
 			}
-		}
-		
-		try await privateQueueManagedObjectContext.perform {
-			if self.privateQueueManagedObjectContext.hasChanges {
-				try self.privateQueueManagedObjectContext.save()
+			
+			try await privateQueueManagedObjectContext.perform {
+				if self.privateQueueManagedObjectContext.hasChanges {
+					try self.privateQueueManagedObjectContext.save()
+				}
 			}
 		}
 	}

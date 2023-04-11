@@ -11,6 +11,7 @@ import SwiftUI
 struct JishoApp: App {
 	
 	@StateObject private var dataController = DataController.shared
+	@StateObject private var settings = Settings.shared
 	
     var body: some Scene
     {
@@ -18,6 +19,7 @@ struct JishoApp: App {
         {
 			ContentView()
 				.environment(\.managedObjectContext, dataController.mainQueueManagedObjectContext)
+				.environmentObject(settings)
         }
     }
 }

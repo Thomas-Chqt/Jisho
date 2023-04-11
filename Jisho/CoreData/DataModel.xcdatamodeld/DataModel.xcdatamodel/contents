@@ -1,54 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E252" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Entity" representedClassName="Entity" syncable="YES">
+        <attribute name="createTime_atb" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="editTime_atb" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id_atb" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
-    <entity name="Exemple" representedClassName="Exemple" parentEntity="Entity" syncable="YES" codeGenerationType="class">
-        <attribute name="text_atb" optional="YES" attributeType="String"/>
+    <entity name="Exemple" representedClassName="Exemple" parentEntity="Entity" syncable="YES">
+        <attribute name="japonais_atb" optional="YES" attributeType="String"/>
         <relationship name="parent_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Sense" inverseName="exemples_atb" inverseEntity="Sense"/>
-        <relationship name="traductions_atb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExempleTrad" inverseName="parent_atb" inverseEntity="ExempleTrad"/>
+        <relationship name="traductions_atb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Traduction" inverseName="parentExemple_atb" inverseEntity="Traduction"/>
     </entity>
-    <entity name="ExempleTrad" representedClassName="ExempleTrad" parentEntity="Entity" syncable="YES" codeGenerationType="class">
-        <attribute name="langue_atb" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="text_atb" optional="YES" attributeType="String"/>
-        <relationship name="parent_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exemple" inverseName="traductions_atb" inverseEntity="Exemple"/>
-    </entity>
-    <entity name="Japonais" representedClassName="Japonais" parentEntity="Entity" syncable="YES" codeGenerationType="class">
+    <entity name="Japonais" representedClassName="Japonais" parentEntity="Entity" syncable="YES">
         <attribute name="kanas_atb" optional="YES" attributeType="String"/>
         <attribute name="kanjis_atb" optional="YES" attributeType="String"/>
         <relationship name="parent_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mot" inverseName="japonais_atb" inverseEntity="Mot"/>
     </entity>
     <entity name="MetaData" representedClassName="MetaData" parentEntity="Entity" syncable="YES">
-        <attribute name="text_atb" optional="YES" attributeType="String"/>
         <relationship name="sensesIn_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Sense" inverseName="metaDatas_atb" inverseEntity="Sense"/>
+        <relationship name="traductions_atb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Traduction" inverseName="parentMetaData_atb" inverseEntity="Traduction"/>
     </entity>
-    <entity name="Mot" representedClassName="Mot" parentEntity="Entity" syncable="YES" codeGenerationType="class">
-        <attribute name="jmDictID_atb" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    <entity name="Mot" representedClassName="Mot" parentEntity="Entity" syncable="YES">
+        <attribute name="jmDictID_atb" optional="YES" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="notes_atb" optional="YES" attributeType="String"/>
         <relationship name="japonais_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Japonais" inverseName="parent_atb" inverseEntity="Japonais"/>
-        <relationship name="noSenseTrads_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Traduction" inverseName="parentMot_atb" inverseEntity="Traduction"/>
+        <relationship name="noSenseTrads_atb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Traduction" inverseName="parentMot_atb" inverseEntity="Traduction"/>
         <relationship name="sense_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Sense" inverseName="parent_atb" inverseEntity="Sense"/>
     </entity>
-    <entity name="Sense" representedClassName="Sense" parentEntity="Entity" syncable="YES" codeGenerationType="class">
+    <entity name="Sense" representedClassName="Sense" parentEntity="Entity" syncable="YES">
         <relationship name="exemples_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Exemple" inverseName="parent_atb" inverseEntity="Exemple"/>
         <relationship name="metaDatas_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="MetaData" inverseName="sensesIn_atb" inverseEntity="MetaData"/>
         <relationship name="parent_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mot" inverseName="sense_atb" inverseEntity="Mot"/>
-        <relationship name="traductions_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Traduction" inverseName="parentSense_atb" inverseEntity="Traduction"/>
+        <relationship name="traductions_atb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Traduction" inverseName="parentSense_atb" inverseEntity="Traduction"/>
     </entity>
-    <entity name="Traduction" representedClassName="Traduction" parentEntity="Entity" syncable="YES" codeGenerationType="class">
+    <entity name="Traduction" representedClassName="Traduction" parentEntity="Entity" syncable="YES">
         <attribute name="langue_atb" optional="YES" attributeType="String"/>
-        <attribute name="texts_atb" optional="YES" attributeType="String"/>
+        <attribute name="text_atb" optional="YES" attributeType="String"/>
+        <relationship name="parentExemple_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exemple" inverseName="traductions_atb" inverseEntity="Exemple"/>
+        <relationship name="parentMetaData_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MetaData" inverseName="traductions_atb" inverseEntity="MetaData"/>
         <relationship name="parentMot_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mot" inverseName="noSenseTrads_atb" inverseEntity="Mot"/>
         <relationship name="parentSense_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sense" inverseName="traductions_atb" inverseEntity="Sense"/>
     </entity>
-    <configuration name="Local">
-        <memberEntity name="Entity"/>
-        <memberEntity name="Mot"/>
-        <memberEntity name="Japonais"/>
-        <memberEntity name="Exemple"/>
-        <memberEntity name="ExempleTrad"/>
-        <memberEntity name="MetaData"/>
-        <memberEntity name="Sense"/>
-        <memberEntity name="Traduction"/>
-    </configuration>
 </model>

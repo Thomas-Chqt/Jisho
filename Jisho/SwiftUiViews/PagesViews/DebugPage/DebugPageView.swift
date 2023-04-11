@@ -11,34 +11,82 @@ import UniformTypeIdentifiers
 
 struct DebugPageView: View {
 	@Environment(\.toggleSideMenu) var showSideMenu
+	
 	@StateObject var vm = DebugPageViewModel()
 	
+		
     var body: some View {
 		NavigationSplitView(columnVisibility: .constant(.all)) {
-			List(selection: $vm.selection) {
-				DebugListRowView<MetaData>(objType: .metaData)
-			}
-			.fileExporter(isPresented: $vm.showFileExporter,
-						  document: vm.fileExporterContent.document,
-						  contentType: vm.fileExporterContent.type,
-						  defaultFilename: vm.fileExporterContent.filename,
-						  onCompletion: vm.fileExporterContent.completion)
-			.listStyle(.plain)
-			.navigationTitle("Debug")
-			.showSideMenuButton(showSideMenu: showSideMenu)
-			.menuButton {
-				Button("Export SQLite file", action: vm.exportSQLiteFile)
-				Button("Export SQLite-shm file", action: vm.exportSQLiteSHMFile)
-				Button("Export SQLite-wal file", action: vm.exportSQLiteWALFile)
-
+			NavigationStack {
+				List {
+					Section("Entities") {
+						ManagedObjectDebugRowView<Mot>()
+						ManagedObjectDebugRowView<Japonais>()
+						ManagedObjectDebugRowView<Sense>()
+						ManagedObjectDebugRowView<Traduction>()
+						ManagedObjectDebugRowView<MetaData>()
+					}
+					Section("Settings") {
+						Text("Reset Settings").clickable {
+							Settings.shared.selectedLangues = Settings.defaulSselectedLangues
+							Settings.shared.langueOrder = Settings.defaulLangueOrder
+							print("Reset")
+						}
+					}
+				}
+				.navigationDestination(for: CoreDataEntityType.self) { type in
+					switch type {
+					case .mot(_):
+						DebugEntityListWrapper<Mot>(selection: $vm.selection)
+					case .japonais(_):
+						DebugEntityListWrapper<Japonais>(selection: $vm.selection)
+					case .sense(_):
+						DebugEntityListWrapper<Sense>(selection: $vm.selection)
+					case .traduction(_):
+						DebugEntityListWrapper<Traduction>(selection: $vm.selection)
+					case .metaData(_):
+						DebugEntityListWrapper<MetaData>(selection: $vm.selection)
+					default:
+						EmptyView()
+					}
+				}
+				.fileExporter(vm)
+				.listStyle(.plain)
+				.navigationTitle("Debug")
+				.showSideMenuButton(showSideMenu: showSideMenu)
+				.menuButton {
+					Button("Export SQLite file", action: vm.exportSQLiteFile)
+					Button("Export SQLite-shm file", action: vm.exportSQLiteSHMFile)
+					Button("Export SQLite-wal file", action: vm.exportSQLiteWALFile)
+				}
 			}
 		}
 		detail: {
-			if let selection = vm.selection {
-				DebugPageDetailView(objType: selection)
+			if let mot = vm.selection as? Mot {
+				MotDetailView(mot)
+			}
+			if let japonais = vm.selection as? Japonais {
+				List {
+					JaponaisDetailsView(japonais)
+				}
+			}
+			if let sense = vm.selection as? Sense {
+				List {
+					SenseDetailView(sense)
+				}
+			}
+			if let metaData = vm.selection as? MetaData {
+				List {
+					MetaDataDetailView(metaData)
+				}
+			}
+			if let traduction = vm.selection as? Traduction {
+				List {
+					TraductionDetailView(traduction)
+				}
 			}
 			else {
-				Text("")
+				EmptyView()
 			}
 		}
 		.navigationSplitViewStyle(.balanced)
@@ -50,5 +98,6 @@ struct DebugPageView_Previews: PreviewProvider {
     static var previews: some View {
 		DebugPageView()
 			.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
+			.environmentObject(Settings.shared)
     }
 }

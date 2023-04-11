@@ -58,4 +58,12 @@ extension View {
 				}
 			}
 	}
+	
+	func fileExporter<Delegate: FileExporterDelegate>(_ delegate: Delegate) -> some View {
+		self.fileExporter(isPresented: delegate.isPresented,
+						  document: delegate.document,
+						  contentType: delegate.contentType,
+						  defaultFilename: delegate.defaultFilename,
+						  onCompletion: delegate.onCompletion)
+	}
 }

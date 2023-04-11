@@ -1,5 +1,5 @@
 //
-//  DebugListRowViewModel.swift
+//  ManagedObjectDebugRowViewModel.swift
 //  Jisho
 //
 //  Created by Thomas Choquet on 2023/03/22.
@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import Combine
 
-class DebugListRowViewModel<T: NSManagedObject>: ObservableObject {
+class ManagedObjectDebugRowViewModel<T: NSManagedObject>: ObservableObject {
 	@Published var objectCount: Int = 0
 	
 	private var viewContext = DataController.shared.mainQueueManagedObjectContext

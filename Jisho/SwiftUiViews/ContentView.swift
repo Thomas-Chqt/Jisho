@@ -11,7 +11,6 @@ import SwiftUI
 struct ContentView: View {
 	
 	@StateObject var vm = ContentViewModel()
-//	@Environment(\.appGeometry) var appGeometry
 	
 	init() { UITabBar.appearance().isHidden = true }
 	
@@ -30,8 +29,8 @@ struct ContentView: View {
 //			Text(AppPage.listes.fullName)
 //				.tag(AppPage.listes);
 //
-//			Text(AppPage.settings.fullName)
-//				.tag(AppPage.settings);
+			SettingsPageView()
+				.tag(AppPage.settings);
 			
 			DebugPageView()
 				.tag(AppPage.debug);

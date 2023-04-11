@@ -7,64 +7,126 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E924BCCB29E2BAE600D80708 /* MetaDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E924BCCA29E2BAE600D80708 /* MetaDataPicker.swift */; };
+		E92D3CA129E3E6580051781D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E92D3CA029E3E6580051781D /* Assets.xcassets */; };
+		E92D3CA329E3EA4D0051781D /* ModifiableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA229E3EA4D0051781D /* ModifiableText.swift */; };
+		E92D3CA529E447690051781D /* JaponaisEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA429E447690051781D /* JaponaisEditSheetView.swift */; };
+		E92D3CA729E4FCF60051781D /* MotEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA629E4FCF60051781D /* MotEditSheetView.swift */; };
 		E92DE1CA29D1C61600B5CB86 /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DE1C829D1C61600B5CB86 /* MetaData.swift */; };
 		E92DE1CE29D1C88200B5CB86 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DE1CC29D1C88200B5CB86 /* Entity.swift */; };
-		E92DE1D229D1CAF000B5CB86 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E92DE1D029D1CAF000B5CB86 /* DataModel.xcdatamodeld */; };
+		E93D515329D9A36B00AAC780 /* Japonais.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D515129D9A36B00AAC780 /* Japonais.swift */; };
+		E93D515629DA992500AAC780 /* ListDisplayableEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D515529DA992500AAC780 /* ListDisplayableEntityView.swift */; };
+		E93D515829DAF1CA00AAC780 /* CoreDataEntityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D515729DAF1CA00AAC780 /* CoreDataEntityType.swift */; };
+		E93D515B29DC0CB400AAC780 /* Sense.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D515929DC0CB400AAC780 /* Sense.swift */; };
+		E93D516029DC0F8900AAC780 /* MotDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D515F29DC0F8900AAC780 /* MotDetailView.swift */; };
 		E9835CAF29CC9382008CF340 /* SQLiteFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8429CC9382008CF340 /* SQLiteFile.swift */; };
 		E9835CB029CC9382008CF340 /* JishoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8629CC9382008CF340 /* JishoApp.swift */; };
-		E9835CB129CC9382008CF340 /* NSManagedObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8829CC9382008CF340 /* NSManagedObjectType.swift */; };
 		E9835CB229CC9382008CF340 /* SideMenuSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8929CC9382008CF340 /* SideMenuSize.swift */; };
 		E9835CB329CC9382008CF340 /* InitType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8A29CC9382008CF340 /* InitType.swift */; };
 		E9835CB429CC9382008CF340 /* AppPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8B29CC9382008CF340 /* AppPage.swift */; };
 		E9835CB529CC9382008CF340 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C8D29CC9382008CF340 /* DataController.swift */; };
-		E9835CB829CC9382008CF340 /* MetaData_struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C9329CC9382008CF340 /* MetaData_struct.swift */; };
 		E9835CB929CC9382008CF340 /* SideMenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C9729CC9382008CF340 /* SideMenuButtonView.swift */; };
 		E9835CBA29CC9382008CF340 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C9829CC9382008CF340 /* SideMenuView.swift */; };
 		E9835CBB29CC9382008CF340 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C9929CC9382008CF340 /* ContentView.swift */; };
 		E9835CBC29CC9382008CF340 /* SearchPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C9C29CC9382008CF340 /* SearchPageView.swift */; };
 		E9835CBD29CC9382008CF340 /* DebugPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835C9E29CC9382008CF340 /* DebugPageView.swift */; };
-		E9835CBE29CC9382008CF340 /* DebugPageDetailMetaDataListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CA129CC9382008CF340 /* DebugPageDetailMetaDataListView.swift */; };
-		E9835CBF29CC9382008CF340 /* DebugPageDetailMetaDataListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CA229CC9382008CF340 /* DebugPageDetailMetaDataListRowView.swift */; };
-		E9835CC029CC9382008CF340 /* DebugPageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CA329CC9382008CF340 /* DebugPageDetailView.swift */; };
-		E9835CC129CC9382008CF340 /* DebugListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CA429CC9382008CF340 /* DebugListRowView.swift */; };
+		E9835CC129CC9382008CF340 /* ManagedObjectDebugRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CA429CC9382008CF340 /* ManagedObjectDebugRowView.swift */; };
 		E9835CC229CC9382008CF340 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CA629CC9382008CF340 /* ViewExtensions.swift */; };
 		E9835CC329CC9382008CF340 /* EnvironmentValueExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CA729CC9382008CF340 /* EnvironmentValueExtensions.swift */; };
 		E9835CC429CC9382008CF340 /* FileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CA929CC9382008CF340 /* FileError.swift */; };
 		E9835CC529CC9382008CF340 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CAB29CC9382008CF340 /* ContentViewModel.swift */; };
-		E9835CC629CC9382008CF340 /* DebugListRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CAC29CC9382008CF340 /* DebugListRowViewModel.swift */; };
+		E9835CC629CC9382008CF340 /* ManagedObjectDebugRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CAC29CC9382008CF340 /* ManagedObjectDebugRowViewModel.swift */; };
 		E9835CC729CC9382008CF340 /* DebugPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9835CAD29CC9382008CF340 /* DebugPageViewModel.swift */; };
+		E996A1EB29D2811E00DD700D /* RowDisplayableEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E996A1EA29D2811E00DD700D /* RowDisplayableEntityView.swift */; };
+		E996A1EF29D2819700DD700D /* PisplayableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E996A1EE29D2819700DD700D /* PisplayableProtocol.swift */; };
+		E996A1F229D28F4800DD700D /* Mot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E996A1F029D28F4800DD700D /* Mot.swift */; };
+		E996A1FB29D57E2700DD700D /* FileExporterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E996A1FA29D57E2700DD700D /* FileExporterDelegate.swift */; };
+		E996A20229D5B32500DD700D /* EasyInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E996A20129D5B32500DD700D /* EasyInit.swift */; };
+		E997236929DF3C0A00FB64D6 /* MetaDataPickerSheeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997236829DF3C0A00FB64D6 /* MetaDataPickerSheeView.swift */; };
+		E997237629DFEECD00FB64D6 /* MetaDataEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997237529DFEECD00FB64D6 /* MetaDataEditView.swift */; };
+		E997237929E0178800FB64D6 /* CloudStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997237829E0178800FB64D6 /* CloudStorage.swift */; };
+		E997237C29E01FE000FB64D6 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997237B29E01FE000FB64D6 /* Settings.swift */; };
+		E997238129E02A4600FB64D6 /* SettingsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997238029E02A4600FB64D6 /* SettingsPageView.swift */; };
+		E997238329E02AE000FB64D6 /* LanguesSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997238229E02AE000FB64D6 /* LanguesSettingsView.swift */; };
+		E997238529E02B2600FB64D6 /* ShowSideMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997238429E02B2600FB64D6 /* ShowSideMenuButton.swift */; };
+		E9B1945429DC3693004EF30B /* JaponaisDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1945329DC3693004EF30B /* JaponaisDetailsView.swift */; };
+		E9B1945629DC3AC0004EF30B /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1945529DC3AC0004EF30B /* StringExtensions.swift */; };
+		E9B1945929DCF987004EF30B /* SenseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1945829DCF987004EF30B /* SenseDetailView.swift */; };
+		E9B1945B29DCF9AD004EF30B /* MetaDataDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1945A29DCF9AD004EF30B /* MetaDataDetailView.swift */; };
+		E9B1945E29DD593B004EF30B /* Traduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1945C29DD593B004EF30B /* Traduction.swift */; };
+		E9B1946129DD5ACB004EF30B /* Langue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1946029DD5ACB004EF30B /* Langue.swift */; };
+		E9B1946429DD6D89004EF30B /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9B1946229DD6D89004EF30B /* DataModel.xcdatamodeld */; };
+		E9B1946F29DD8B11004EF30B /* Exemple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1946D29DD8B10004EF30B /* Exemple.swift */; };
+		E9B1947229DDB1CB004EF30B /* DebugEntityListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947129DDB1CB004EF30B /* DebugEntityListWrapper.swift */; };
+		E9B1947629DE9B95004EF30B /* TraductionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947529DE9B95004EF30B /* TraductionDetailView.swift */; };
+		E9B1947929DEC125004EF30B /* TraductionEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947829DEC125004EF30B /* TraductionEditSheetView.swift */; };
+		E9B1947B29DEC989004EF30B /* SenseEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947A29DEC989004EF30B /* SenseEditSheetView.swift */; };
+		E9B1947E29DEF4FF004EF30B /* SheetDismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947D29DEF4FF004EF30B /* SheetDismissButton.swift */; };
+		E9B1948029DF02F2004EF30B /* ListClickableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947F29DF02F2004EF30B /* ListClickableText.swift */; };
+		E9B1948229DF2047004EF30B /* NavBarEditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1948129DF2047004EF30B /* NavBarEditButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E924BCC829E139F400D80708 /* Jisho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jisho.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E924BCCA29E2BAE600D80708 /* MetaDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataPicker.swift; sourceTree = "<group>"; };
+		E92D3CA029E3E6580051781D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E92D3CA229E3EA4D0051781D /* ModifiableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiableText.swift; sourceTree = "<group>"; };
+		E92D3CA429E447690051781D /* JaponaisEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaponaisEditSheetView.swift; sourceTree = "<group>"; };
+		E92D3CA629E4FCF60051781D /* MotEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotEditSheetView.swift; sourceTree = "<group>"; };
 		E92DE1C829D1C61600B5CB86 /* MetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaData.swift; sourceTree = "<group>"; };
 		E92DE1CC29D1C88200B5CB86 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
-		E92DE1D129D1CAF000B5CB86 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		E93D515129D9A36B00AAC780 /* Japonais.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Japonais.swift; sourceTree = "<group>"; };
+		E93D515529DA992500AAC780 /* ListDisplayableEntityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDisplayableEntityView.swift; sourceTree = "<group>"; };
+		E93D515729DAF1CA00AAC780 /* CoreDataEntityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataEntityType.swift; sourceTree = "<group>"; };
+		E93D515929DC0CB400AAC780 /* Sense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sense.swift; sourceTree = "<group>"; };
+		E93D515F29DC0F8900AAC780 /* MotDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotDetailView.swift; sourceTree = "<group>"; };
 		E9835C8429CC9382008CF340 /* SQLiteFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteFile.swift; sourceTree = "<group>"; };
 		E9835C8529CC9382008CF340 /* Jisho.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Jisho.entitlements; sourceTree = "<group>"; };
 		E9835C8629CC9382008CF340 /* JishoApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JishoApp.swift; sourceTree = "<group>"; };
-		E9835C8829CC9382008CF340 /* NSManagedObjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObjectType.swift; sourceTree = "<group>"; };
 		E9835C8929CC9382008CF340 /* SideMenuSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuSize.swift; sourceTree = "<group>"; };
 		E9835C8A29CC9382008CF340 /* InitType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitType.swift; sourceTree = "<group>"; };
 		E9835C8B29CC9382008CF340 /* AppPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppPage.swift; sourceTree = "<group>"; };
 		E9835C8D29CC9382008CF340 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		E9835C9329CC9382008CF340 /* MetaData_struct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaData_struct.swift; sourceTree = "<group>"; };
 		E9835C9729CC9382008CF340 /* SideMenuButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuButtonView.swift; sourceTree = "<group>"; };
 		E9835C9829CC9382008CF340 /* SideMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		E9835C9929CC9382008CF340 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E9835C9C29CC9382008CF340 /* SearchPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPageView.swift; sourceTree = "<group>"; };
 		E9835C9E29CC9382008CF340 /* DebugPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugPageView.swift; sourceTree = "<group>"; };
-		E9835CA129CC9382008CF340 /* DebugPageDetailMetaDataListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugPageDetailMetaDataListView.swift; sourceTree = "<group>"; };
-		E9835CA229CC9382008CF340 /* DebugPageDetailMetaDataListRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugPageDetailMetaDataListRowView.swift; sourceTree = "<group>"; };
-		E9835CA329CC9382008CF340 /* DebugPageDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugPageDetailView.swift; sourceTree = "<group>"; };
-		E9835CA429CC9382008CF340 /* DebugListRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugListRowView.swift; sourceTree = "<group>"; };
+		E9835CA429CC9382008CF340 /* ManagedObjectDebugRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectDebugRowView.swift; sourceTree = "<group>"; };
 		E9835CA629CC9382008CF340 /* ViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		E9835CA729CC9382008CF340 /* EnvironmentValueExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentValueExtensions.swift; sourceTree = "<group>"; };
 		E9835CA929CC9382008CF340 /* FileError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileError.swift; sourceTree = "<group>"; };
 		E9835CAB29CC9382008CF340 /* ContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
-		E9835CAC29CC9382008CF340 /* DebugListRowViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugListRowViewModel.swift; sourceTree = "<group>"; };
+		E9835CAC29CC9382008CF340 /* ManagedObjectDebugRowViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectDebugRowViewModel.swift; sourceTree = "<group>"; };
 		E9835CAD29CC9382008CF340 /* DebugPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugPageViewModel.swift; sourceTree = "<group>"; };
 		E9835CAE29CC9382008CF340 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E996A1E929D27E6000DD700D /* Jisho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Jisho.app; path = "/Users/thomas/Library/Mobile Documents/com~apple~CloudDocs/Xcode/Swift/Swift Projects/Crosplatform/Jisho/build/Debug-iphoneos/Jisho.app"; sourceTree = "<absolute>"; };
+		E996A1EA29D2811E00DD700D /* RowDisplayableEntityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowDisplayableEntityView.swift; sourceTree = "<group>"; };
+		E996A1EE29D2819700DD700D /* PisplayableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PisplayableProtocol.swift; sourceTree = "<group>"; };
+		E996A1F029D28F4800DD700D /* Mot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mot.swift; sourceTree = "<group>"; };
+		E996A1FA29D57E2700DD700D /* FileExporterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExporterDelegate.swift; sourceTree = "<group>"; };
+		E996A20129D5B32500DD700D /* EasyInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyInit.swift; sourceTree = "<group>"; };
+		E997236829DF3C0A00FB64D6 /* MetaDataPickerSheeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataPickerSheeView.swift; sourceTree = "<group>"; };
+		E997237529DFEECD00FB64D6 /* MetaDataEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataEditView.swift; sourceTree = "<group>"; };
+		E997237829E0178800FB64D6 /* CloudStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStorage.swift; sourceTree = "<group>"; };
+		E997237B29E01FE000FB64D6 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		E997238029E02A4600FB64D6 /* SettingsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageView.swift; sourceTree = "<group>"; };
+		E997238229E02AE000FB64D6 /* LanguesSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguesSettingsView.swift; sourceTree = "<group>"; };
+		E997238429E02B2600FB64D6 /* ShowSideMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSideMenuButton.swift; sourceTree = "<group>"; };
+		E9B1945329DC3693004EF30B /* JaponaisDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaponaisDetailsView.swift; sourceTree = "<group>"; };
+		E9B1945529DC3AC0004EF30B /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		E9B1945829DCF987004EF30B /* SenseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenseDetailView.swift; sourceTree = "<group>"; };
+		E9B1945A29DCF9AD004EF30B /* MetaDataDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataDetailView.swift; sourceTree = "<group>"; };
+		E9B1945C29DD593B004EF30B /* Traduction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Traduction.swift; sourceTree = "<group>"; };
+		E9B1946029DD5ACB004EF30B /* Langue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Langue.swift; sourceTree = "<group>"; };
+		E9B1946329DD6D89004EF30B /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		E9B1946D29DD8B10004EF30B /* Exemple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exemple.swift; sourceTree = "<group>"; };
+		E9B1947129DDB1CB004EF30B /* DebugEntityListWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugEntityListWrapper.swift; sourceTree = "<group>"; };
+		E9B1947529DE9B95004EF30B /* TraductionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraductionDetailView.swift; sourceTree = "<group>"; };
+		E9B1947829DEC125004EF30B /* TraductionEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraductionEditSheetView.swift; sourceTree = "<group>"; };
+		E9B1947A29DEC989004EF30B /* SenseEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenseEditSheetView.swift; sourceTree = "<group>"; };
+		E9B1947D29DEF4FF004EF30B /* SheetDismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetDismissButton.swift; sourceTree = "<group>"; };
+		E9B1947F29DF02F2004EF30B /* ListClickableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListClickableText.swift; sourceTree = "<group>"; };
+		E9B1948129DF2047004EF30B /* NavBarEditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarEditButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +144,28 @@
 			isa = PBXGroup;
 			children = (
 				E9835C8229CC9382008CF340 /* Jisho */,
+				E924BCC829E139F400D80708 /* Jisho.app */,
 			);
+			sourceTree = "<group>";
+		};
+		E93D515D29DC0F4400AAC780 /* EntityList */ = {
+			isa = PBXGroup;
+			children = (
+				E997237029DFCECA00FB64D6 /* DisplayableEntity */,
+			);
+			path = EntityList;
+			sourceTree = "<group>";
+		};
+		E93D515E29DC0F5900AAC780 /* EntityDetailsViews */ = {
+			isa = PBXGroup;
+			children = (
+				E93D515F29DC0F8900AAC780 /* MotDetailView.swift */,
+				E9B1945329DC3693004EF30B /* JaponaisDetailsView.swift */,
+				E9B1945829DCF987004EF30B /* SenseDetailView.swift */,
+				E9B1945A29DCF9AD004EF30B /* MetaDataDetailView.swift */,
+				E9B1947529DE9B95004EF30B /* TraductionDetailView.swift */,
+			);
+			path = EntityDetailsViews;
 			sourceTree = "<group>";
 		};
 		E9835C8229CC9382008CF340 /* Jisho */ = {
@@ -94,8 +177,13 @@
 				E9835C8C29CC9382008CF340 /* CoreData */,
 				E9835C8329CC9382008CF340 /* DocumentStructs */,
 				E9835CA529CC9382008CF340 /* Extensions */,
+				E9B1947C29DEF4CD004EF30B /* ViewModifiers */,
 				E9835C8729CC9382008CF340 /* Enums */,
 				E9835CA829CC9382008CF340 /* Errors */,
+				E996A1ED29D2817400DD700D /* Protocol */,
+				E997237729E0176F00FB64D6 /* PropertyWrappers */,
+				E997237A29E01FC400FB64D6 /* Classes */,
+				E92D3CA029E3E6580051781D /* Assets.xcassets */,
 				E9835C8529CC9382008CF340 /* Jisho.entitlements */,
 				E9835CAE29CC9382008CF340 /* Info.plist */,
 			);
@@ -113,10 +201,11 @@
 		E9835C8729CC9382008CF340 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				E9835C8829CC9382008CF340 /* NSManagedObjectType.swift */,
 				E9835C8929CC9382008CF340 /* SideMenuSize.swift */,
 				E9835C8A29CC9382008CF340 /* InitType.swift */,
 				E9835C8B29CC9382008CF340 /* AppPage.swift */,
+				E93D515729DAF1CA00AAC780 /* CoreDataEntityType.swift */,
+				E9B1946029DD5ACB004EF30B /* Langue.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -125,10 +214,9 @@
 			isa = PBXGroup;
 			children = (
 				E9835C9029CC9382008CF340 /* CoreDataClasses */,
-				E9835C9229CC9382008CF340 /* Structs */,
 				E9835C9429CC9382008CF340 /* SQLiteFiles */,
 				E9835C8D29CC9382008CF340 /* DataController.swift */,
-				E92DE1D029D1CAF000B5CB86 /* DataModel.xcdatamodeld */,
+				E9B1946229DD6D89004EF30B /* DataModel.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -137,17 +225,14 @@
 			isa = PBXGroup;
 			children = (
 				E92DE1CC29D1C88200B5CB86 /* Entity.swift */,
+				E996A1F029D28F4800DD700D /* Mot.swift */,
+				E93D515129D9A36B00AAC780 /* Japonais.swift */,
+				E93D515929DC0CB400AAC780 /* Sense.swift */,
+				E9B1945C29DD593B004EF30B /* Traduction.swift */,
 				E92DE1C829D1C61600B5CB86 /* MetaData.swift */,
+				E9B1946D29DD8B10004EF30B /* Exemple.swift */,
 			);
 			path = CoreDataClasses;
-			sourceTree = "<group>";
-		};
-		E9835C9229CC9382008CF340 /* Structs */ = {
-			isa = PBXGroup;
-			children = (
-				E9835C9329CC9382008CF340 /* MetaData_struct.swift */,
-			);
-			path = Structs;
 			sourceTree = "<group>";
 		};
 		E9835C9429CC9382008CF340 /* SQLiteFiles */ = {
@@ -161,8 +246,8 @@
 			isa = PBXGroup;
 			children = (
 				E9835C9929CC9382008CF340 /* ContentView.swift */,
-				E9835C9629CC9382008CF340 /* SideMenu */,
 				E9835C9A29CC9382008CF340 /* PagesViews */,
+				E996A1EC29D2812400DD700D /* OtherViews */,
 			);
 			path = SwiftUIViews;
 			sourceTree = "<group>";
@@ -180,6 +265,7 @@
 			isa = PBXGroup;
 			children = (
 				E9835C9B29CC9382008CF340 /* SearchPage */,
+				E997237D29E02A1B00FB64D6 /* SettingsPage */,
 				E9835C9D29CC9382008CF340 /* DebugPage */,
 			);
 			path = PagesViews;
@@ -197,28 +283,10 @@
 			isa = PBXGroup;
 			children = (
 				E9835C9E29CC9382008CF340 /* DebugPageView.swift */,
-				E9835CA429CC9382008CF340 /* DebugListRowView.swift */,
-				E9835C9F29CC9382008CF340 /* DetailView */,
+				E997238629E0307700FB64D6 /* DebugEntities */,
+				E997238729E0308500FB64D6 /* DebugSettings */,
 			);
 			path = DebugPage;
-			sourceTree = "<group>";
-		};
-		E9835C9F29CC9382008CF340 /* DetailView */ = {
-			isa = PBXGroup;
-			children = (
-				E9835CA329CC9382008CF340 /* DebugPageDetailView.swift */,
-				E9835CA029CC9382008CF340 /* MetaData */,
-			);
-			path = DetailView;
-			sourceTree = "<group>";
-		};
-		E9835CA029CC9382008CF340 /* MetaData */ = {
-			isa = PBXGroup;
-			children = (
-				E9835CA129CC9382008CF340 /* DebugPageDetailMetaDataListView.swift */,
-				E9835CA229CC9382008CF340 /* DebugPageDetailMetaDataListRowView.swift */,
-			);
-			path = MetaData;
 			sourceTree = "<group>";
 		};
 		E9835CA529CC9382008CF340 /* Extensions */ = {
@@ -226,6 +294,7 @@
 			children = (
 				E9835CA629CC9382008CF340 /* ViewExtensions.swift */,
 				E9835CA729CC9382008CF340 /* EnvironmentValueExtensions.swift */,
+				E9B1945529DC3AC0004EF30B /* StringExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -242,10 +311,115 @@
 			isa = PBXGroup;
 			children = (
 				E9835CAB29CC9382008CF340 /* ContentViewModel.swift */,
-				E9835CAC29CC9382008CF340 /* DebugListRowViewModel.swift */,
+				E9835CAC29CC9382008CF340 /* ManagedObjectDebugRowViewModel.swift */,
 				E9835CAD29CC9382008CF340 /* DebugPageViewModel.swift */,
 			);
 			path = SwiftUIViewModels;
+			sourceTree = "<group>";
+		};
+		E996A1EC29D2812400DD700D /* OtherViews */ = {
+			isa = PBXGroup;
+			children = (
+				E9835C9629CC9382008CF340 /* SideMenu */,
+				E93D515D29DC0F4400AAC780 /* EntityList */,
+				E93D515E29DC0F5900AAC780 /* EntityDetailsViews */,
+				E9B1947729DEC0F4004EF30B /* EditSheetViews */,
+				E997238C29E1369700FB64D6 /* MetaDataPickerViews */,
+			);
+			path = OtherViews;
+			sourceTree = "<group>";
+		};
+		E996A1ED29D2817400DD700D /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				E996A1EE29D2819700DD700D /* PisplayableProtocol.swift */,
+				E996A1FA29D57E2700DD700D /* FileExporterDelegate.swift */,
+				E996A20129D5B32500DD700D /* EasyInit.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		E997237029DFCECA00FB64D6 /* DisplayableEntity */ = {
+			isa = PBXGroup;
+			children = (
+				E996A1EA29D2811E00DD700D /* RowDisplayableEntityView.swift */,
+				E93D515529DA992500AAC780 /* ListDisplayableEntityView.swift */,
+			);
+			path = DisplayableEntity;
+			sourceTree = "<group>";
+		};
+		E997237729E0176F00FB64D6 /* PropertyWrappers */ = {
+			isa = PBXGroup;
+			children = (
+				E997237829E0178800FB64D6 /* CloudStorage.swift */,
+			);
+			path = PropertyWrappers;
+			sourceTree = "<group>";
+		};
+		E997237A29E01FC400FB64D6 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E997237B29E01FE000FB64D6 /* Settings.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		E997237D29E02A1B00FB64D6 /* SettingsPage */ = {
+			isa = PBXGroup;
+			children = (
+				E997238029E02A4600FB64D6 /* SettingsPageView.swift */,
+				E997238229E02AE000FB64D6 /* LanguesSettingsView.swift */,
+			);
+			path = SettingsPage;
+			sourceTree = "<group>";
+		};
+		E997238629E0307700FB64D6 /* DebugEntities */ = {
+			isa = PBXGroup;
+			children = (
+				E9835CA429CC9382008CF340 /* ManagedObjectDebugRowView.swift */,
+				E9B1947129DDB1CB004EF30B /* DebugEntityListWrapper.swift */,
+			);
+			path = DebugEntities;
+			sourceTree = "<group>";
+		};
+		E997238729E0308500FB64D6 /* DebugSettings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DebugSettings;
+			sourceTree = "<group>";
+		};
+		E997238C29E1369700FB64D6 /* MetaDataPickerViews */ = {
+			isa = PBXGroup;
+			children = (
+				E997236829DF3C0A00FB64D6 /* MetaDataPickerSheeView.swift */,
+			);
+			path = MetaDataPickerViews;
+			sourceTree = "<group>";
+		};
+		E9B1947729DEC0F4004EF30B /* EditSheetViews */ = {
+			isa = PBXGroup;
+			children = (
+				E92D3CA629E4FCF60051781D /* MotEditSheetView.swift */,
+				E92D3CA429E447690051781D /* JaponaisEditSheetView.swift */,
+				E9B1947A29DEC989004EF30B /* SenseEditSheetView.swift */,
+				E9B1947829DEC125004EF30B /* TraductionEditSheetView.swift */,
+				E997237529DFEECD00FB64D6 /* MetaDataEditView.swift */,
+			);
+			path = EditSheetViews;
+			sourceTree = "<group>";
+		};
+		E9B1947C29DEF4CD004EF30B /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				E9B1947D29DEF4FF004EF30B /* SheetDismissButton.swift */,
+				E9B1947F29DF02F2004EF30B /* ListClickableText.swift */,
+				E92D3CA229E3EA4D0051781D /* ModifiableText.swift */,
+				E9B1948129DF2047004EF30B /* NavBarEditButton.swift */,
+				E997238429E02B2600FB64D6 /* ShowSideMenuButton.swift */,
+				E924BCCA29E2BAE600D80708 /* MetaDataPicker.swift */,
+			);
+			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,7 +439,7 @@
 			);
 			name = Jisho;
 			productName = Jisho;
-			productReference = E996A1E929D27E6000DD700D /* Jisho.app */;
+			productReference = E924BCC829E139F400D80708 /* Jisho.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -285,11 +459,11 @@
 			};
 			buildConfigurationList = E914E96F27CF9CF800FA4B68 /* Build configuration list for PBXProject "Jisho" */;
 			compatibilityVersion = "Xcode 13.0";
-			developmentRegion = en;
+			developmentRegion = fr;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				fr,
 			);
 			mainGroup = E914E96B27CF9CF800FA4B68;
 			productRefGroup = E914E96B27CF9CF800FA4B68;
@@ -306,6 +480,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E92D3CA129E3E6580051781D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,32 +491,62 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9835CC129CC9382008CF340 /* DebugListRowView.swift in Sources */,
+				E9B1947229DDB1CB004EF30B /* DebugEntityListWrapper.swift in Sources */,
+				E9B1947B29DEC989004EF30B /* SenseEditSheetView.swift in Sources */,
+				E9B1947E29DEF4FF004EF30B /* SheetDismissButton.swift in Sources */,
+				E92D3CA729E4FCF60051781D /* MotEditSheetView.swift in Sources */,
+				E997237C29E01FE000FB64D6 /* Settings.swift in Sources */,
+				E997238529E02B2600FB64D6 /* ShowSideMenuButton.swift in Sources */,
+				E996A1F229D28F4800DD700D /* Mot.swift in Sources */,
+				E93D515829DAF1CA00AAC780 /* CoreDataEntityType.swift in Sources */,
+				E9B1945B29DCF9AD004EF30B /* MetaDataDetailView.swift in Sources */,
+				E9835CC129CC9382008CF340 /* ManagedObjectDebugRowView.swift in Sources */,
 				E9835CB529CC9382008CF340 /* DataController.swift in Sources */,
 				E92DE1CE29D1C88200B5CB86 /* Entity.swift in Sources */,
 				E9835CC329CC9382008CF340 /* EnvironmentValueExtensions.swift in Sources */,
+				E996A1EF29D2819700DD700D /* PisplayableProtocol.swift in Sources */,
 				E9835CB329CC9382008CF340 /* InitType.swift in Sources */,
-				E9835CB829CC9382008CF340 /* MetaData_struct.swift in Sources */,
+				E997238129E02A4600FB64D6 /* SettingsPageView.swift in Sources */,
+				E9B1946F29DD8B11004EF30B /* Exemple.swift in Sources */,
+				E9B1947929DEC125004EF30B /* TraductionEditSheetView.swift in Sources */,
+				E93D515629DA992500AAC780 /* ListDisplayableEntityView.swift in Sources */,
 				E9835CBD29CC9382008CF340 /* DebugPageView.swift in Sources */,
+				E996A1EB29D2811E00DD700D /* RowDisplayableEntityView.swift in Sources */,
 				E9835CB929CC9382008CF340 /* SideMenuButtonView.swift in Sources */,
+				E9B1946129DD5ACB004EF30B /* Langue.swift in Sources */,
+				E93D516029DC0F8900AAC780 /* MotDetailView.swift in Sources */,
+				E997237629DFEECD00FB64D6 /* MetaDataEditView.swift in Sources */,
 				E9835CBC29CC9382008CF340 /* SearchPageView.swift in Sources */,
-				E9835CB129CC9382008CF340 /* NSManagedObjectType.swift in Sources */,
-				E9835CC029CC9382008CF340 /* DebugPageDetailView.swift in Sources */,
 				E9835CBA29CC9382008CF340 /* SideMenuView.swift in Sources */,
 				E9835CC529CC9382008CF340 /* ContentViewModel.swift in Sources */,
+				E9B1945629DC3AC0004EF30B /* StringExtensions.swift in Sources */,
 				E9835CC729CC9382008CF340 /* DebugPageViewModel.swift in Sources */,
-				E9835CC629CC9382008CF340 /* DebugListRowViewModel.swift in Sources */,
+				E9B1945929DCF987004EF30B /* SenseDetailView.swift in Sources */,
+				E9B1948229DF2047004EF30B /* NavBarEditButton.swift in Sources */,
+				E9835CC629CC9382008CF340 /* ManagedObjectDebugRowViewModel.swift in Sources */,
+				E9B1947629DE9B95004EF30B /* TraductionDetailView.swift in Sources */,
+				E9B1945E29DD593B004EF30B /* Traduction.swift in Sources */,
+				E93D515329D9A36B00AAC780 /* Japonais.swift in Sources */,
+				E92D3CA529E447690051781D /* JaponaisEditSheetView.swift in Sources */,
 				E92DE1CA29D1C61600B5CB86 /* MetaData.swift in Sources */,
+				E93D515B29DC0CB400AAC780 /* Sense.swift in Sources */,
+				E997237929E0178800FB64D6 /* CloudStorage.swift in Sources */,
 				E9835CB429CC9382008CF340 /* AppPage.swift in Sources */,
 				E9835CAF29CC9382008CF340 /* SQLiteFile.swift in Sources */,
 				E9835CBB29CC9382008CF340 /* ContentView.swift in Sources */,
 				E9835CC429CC9382008CF340 /* FileError.swift in Sources */,
-				E9835CBF29CC9382008CF340 /* DebugPageDetailMetaDataListRowView.swift in Sources */,
+				E924BCCB29E2BAE600D80708 /* MetaDataPicker.swift in Sources */,
 				E9835CB229CC9382008CF340 /* SideMenuSize.swift in Sources */,
+				E996A1FB29D57E2700DD700D /* FileExporterDelegate.swift in Sources */,
 				E9835CB029CC9382008CF340 /* JishoApp.swift in Sources */,
-				E92DE1D229D1CAF000B5CB86 /* DataModel.xcdatamodeld in Sources */,
+				E92D3CA329E3EA4D0051781D /* ModifiableText.swift in Sources */,
+				E9B1946429DD6D89004EF30B /* DataModel.xcdatamodeld in Sources */,
 				E9835CC229CC9382008CF340 /* ViewExtensions.swift in Sources */,
-				E9835CBE29CC9382008CF340 /* DebugPageDetailMetaDataListView.swift in Sources */,
+				E997238329E02AE000FB64D6 /* LanguesSettingsView.swift in Sources */,
+				E9B1948029DF02F2004EF30B /* ListClickableText.swift in Sources */,
+				E996A20229D5B32500DD700D /* EasyInit.swift in Sources */,
+				E997236929DF3C0A00FB64D6 /* MetaDataPickerSheeView.swift in Sources */,
+				E9B1945429DC3693004EF30B /* JaponaisDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,7 +604,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -455,7 +660,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -481,13 +686,15 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Jisho/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -520,13 +727,15 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Jisho/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -568,12 +777,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		E92DE1D029D1CAF000B5CB86 /* DataModel.xcdatamodeld */ = {
+		E9B1946229DD6D89004EF30B /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				E92DE1D129D1CAF000B5CB86 /* DataModel.xcdatamodel */,
+				E9B1946329DD6D89004EF30B /* DataModel.xcdatamodel */,
 			);
-			currentVersion = E92DE1D129D1CAF000B5CB86 /* DataModel.xcdatamodel */;
+			currentVersion = E9B1946329DD6D89004EF30B /* DataModel.xcdatamodel */;
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
