@@ -214,7 +214,6 @@
 			isa = PBXGroup;
 			children = (
 				E9835C9029CC9382008CF340 /* CoreDataClasses */,
-				E9835C9429CC9382008CF340 /* SQLiteFiles */,
 				E9835C8D29CC9382008CF340 /* DataController.swift */,
 				E9B1946229DD6D89004EF30B /* DataModel.xcdatamodeld */,
 			);
@@ -233,13 +232,6 @@
 				E9B1946D29DD8B10004EF30B /* Exemple.swift */,
 			);
 			path = CoreDataClasses;
-			sourceTree = "<group>";
-		};
-		E9835C9429CC9382008CF340 /* SQLiteFiles */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SQLiteFiles;
 			sourceTree = "<group>";
 		};
 		E9835C9529CC9382008CF340 /* SwiftUIViews */ = {
