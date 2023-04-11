@@ -10,6 +10,7 @@ import SwiftUI
 struct MotDetailView: View {
 	
 	@ObservedObject var mot: Mot
+	@State var sheetIsShow: Bool = false
 	
 	init(_ mot: Mot) {
 		self.mot = mot
@@ -21,7 +22,6 @@ struct MotDetailView: View {
 				ForEach(mot.japonais ?? []) { jap in
 					JaponaisDetailsView(jap)
 				}
-				.onMove(perform: moveJap)
 			}
 			if let senses = mot.senses {
 				ForEach(0..<senses.count, id: \.self) { index in
@@ -36,11 +36,10 @@ struct MotDetailView: View {
 		.menuButton {
 			Text("Test")
 		}
+		.sheet(isPresented: $sheetIsShow) {
+			MotEditSheetView(mot)
+		}
     }
-	
-	func moveJap(from source: IndexSet, to destination: Int) {
-		mot.japonais?.move(fromOffsets: source, toOffset: destination)
-	}
 }
 
 struct MotDetailView_Previews: PreviewProvider {
