@@ -37,18 +37,12 @@ struct SenseDetailView: View {
 				}
 			}
 		}
-		.contextMenu {
-			Button {
-				showSheet.toggle()
-			}
-			label: { Label("Modifier", systemImage: "pencil.circle") }
-		}
 		.listRowInsets(EdgeInsets())
-		.sheet(isPresented: $showSheet) {
-			NavigationStack {
-				SenseEditSheetView(sense)
-			}
+		.contextMenu {
+			Button(action: { showSheet.toggle() },
+				   label: { Label("Modifier", systemImage: "pencil.circle") })
 		}
+		.editSheet(isPresented: $showSheet, entityToEdit: sense)
     }
 }
 

@@ -12,6 +12,7 @@
 		E92D3CA329E3EA4D0051781D /* ModifiableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA229E3EA4D0051781D /* ModifiableText.swift */; };
 		E92D3CA529E447690051781D /* JaponaisEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA429E447690051781D /* JaponaisEditSheetView.swift */; };
 		E92D3CA729E4FCF60051781D /* MotEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA629E4FCF60051781D /* MotEditSheetView.swift */; };
+		E92D3CA929E5540D0051781D /* EditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA829E5540D0051781D /* EditSheet.swift */; };
 		E92DE1CA29D1C61600B5CB86 /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DE1C829D1C61600B5CB86 /* MetaData.swift */; };
 		E92DE1CE29D1C88200B5CB86 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DE1CC29D1C88200B5CB86 /* Entity.swift */; };
 		E93D515329D9A36B00AAC780 /* Japonais.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D515129D9A36B00AAC780 /* Japonais.swift */; };
@@ -73,6 +74,7 @@
 		E92D3CA229E3EA4D0051781D /* ModifiableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiableText.swift; sourceTree = "<group>"; };
 		E92D3CA429E447690051781D /* JaponaisEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaponaisEditSheetView.swift; sourceTree = "<group>"; };
 		E92D3CA629E4FCF60051781D /* MotEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotEditSheetView.swift; sourceTree = "<group>"; };
+		E92D3CA829E5540D0051781D /* EditSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSheet.swift; sourceTree = "<group>"; };
 		E92DE1C829D1C61600B5CB86 /* MetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaData.swift; sourceTree = "<group>"; };
 		E92DE1CC29D1C88200B5CB86 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		E93D515129D9A36B00AAC780 /* Japonais.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Japonais.swift; sourceTree = "<group>"; };
@@ -146,6 +148,24 @@
 				E9835C8229CC9382008CF340 /* Jisho */,
 				E924BCC829E139F400D80708 /* Jisho.app */,
 			);
+			sourceTree = "<group>";
+		};
+		E92D3CAB29E555100051781D /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				E9B1947829DEC125004EF30B /* TraductionEditSheetView.swift */,
+				E997237529DFEECD00FB64D6 /* MetaDataEditView.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
+		E92D3CAC29E5551B0051781D /* SenseEditViews */ = {
+			isa = PBXGroup;
+			children = (
+				E9B1947A29DEC989004EF30B /* SenseEditSheetView.swift */,
+				E92D3CAB29E555100051781D /* SubViews */,
+			);
+			path = SenseEditViews;
 			sourceTree = "<group>";
 		};
 		E93D515D29DC0F4400AAC780 /* EntityList */ = {
@@ -394,9 +414,7 @@
 			children = (
 				E92D3CA629E4FCF60051781D /* MotEditSheetView.swift */,
 				E92D3CA429E447690051781D /* JaponaisEditSheetView.swift */,
-				E9B1947A29DEC989004EF30B /* SenseEditSheetView.swift */,
-				E9B1947829DEC125004EF30B /* TraductionEditSheetView.swift */,
-				E997237529DFEECD00FB64D6 /* MetaDataEditView.swift */,
+				E92D3CAC29E5551B0051781D /* SenseEditViews */,
 			);
 			path = EditSheetViews;
 			sourceTree = "<group>";
@@ -410,6 +428,7 @@
 				E9B1948129DF2047004EF30B /* NavBarEditButton.swift */,
 				E997238429E02B2600FB64D6 /* ShowSideMenuButton.swift */,
 				E924BCCA29E2BAE600D80708 /* MetaDataPicker.swift */,
+				E92D3CA829E5540D0051781D /* EditSheet.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -525,6 +544,7 @@
 				E997237929E0178800FB64D6 /* CloudStorage.swift in Sources */,
 				E9835CB429CC9382008CF340 /* AppPage.swift in Sources */,
 				E9835CAF29CC9382008CF340 /* SQLiteFile.swift in Sources */,
+				E92D3CA929E5540D0051781D /* EditSheet.swift in Sources */,
 				E9835CBB29CC9382008CF340 /* ContentView.swift in Sources */,
 				E9835CC429CC9382008CF340 /* FileError.swift in Sources */,
 				E924BCCB29E2BAE600D80708 /* MetaDataPicker.swift in Sources */,

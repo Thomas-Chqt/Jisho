@@ -34,11 +34,11 @@ struct MotDetailView: View {
 		.navigationBarTitleDisplayMode(.inline)
 		.listStyle(.grouped)
 		.menuButton {
-			Text("Test")
+			Button("Modifier") {
+				self.sheetIsShow = true
+			}
 		}
-		.sheet(isPresented: $sheetIsShow) {
-			MotEditSheetView(mot)
-		}
+		.editSheet(isPresented: $sheetIsShow, entityToEdit: mot)
     }
 }
 

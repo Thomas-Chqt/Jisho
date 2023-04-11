@@ -21,17 +21,11 @@ struct TraductionDetailView: View {
 			Text(traduction.langue.flag)
 			Text(traduction.text ?? "")
 		}
-			.contextMenu {
-				Button {
-					showSheet.toggle()
-				}
-			label: { Label("Modifier", systemImage: "pencil.circle") }
-			}
-			.sheet(isPresented: $showSheet) {
-				List {
-					TraductionEditSheetView(traduction: traduction)
-				}
-			}
+		.contextMenu {
+			Button(action: { showSheet.toggle() },
+				   label: { Label("Modifier", systemImage: "pencil.circle") })
+		}
+		.editSheet(isPresented: $showSheet, entityToEdit: traduction)
     }
 }
 

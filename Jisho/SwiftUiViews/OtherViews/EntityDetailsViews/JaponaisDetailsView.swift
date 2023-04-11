@@ -20,7 +20,7 @@ struct JaponaisDetailsView: View {
     var body: some View {
 		VStack(alignment: .leading) {
 			if (japonais.kanas?.count ?? 0) == 0 && (japonais.kanjis?.count ?? 0) == 0 {
-				Text("Pas de données")
+				Text("")
 					.font(.title)
 			}
 			if let kanas = japonais.kanas {
@@ -52,17 +52,11 @@ struct JaponaisDetailsView: View {
 			}
 		}
 		.contextMenu {
-			Button {
-				showSheet.toggle()
-			}
-		label: { Label("Modifier", systemImage: "pencil.circle") }
+			Button(action: { showSheet.toggle() },
+				   label: { Label("Modifier", systemImage: "pencil.circle") })
 		}
-		.sheet(isPresented: $showSheet) {
-			NavigationStack {
-				JaponaisEditSheetView(japonais)
-			}
-		}
-    }
+		.editSheet(isPresented: $showSheet, entityToEdit: japonais)
+	}
 }
 
 struct JaponaisDetailsView_Previews: PreviewProvider {
