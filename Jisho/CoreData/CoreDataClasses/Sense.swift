@@ -164,7 +164,7 @@ public class Sense: Entity {
 
 extension Sense: Displayable {
 	var primary: String? {
-		return traductions?.first?.text
+		return traductions?.firstMatch()?.text
 	}
 }
 
