@@ -28,7 +28,7 @@ struct MotEditSheetView: View {
 					.onDelete(perform: deleteJaponais)
 				}
 				
-				Section(header: Text("Senses test bite"), footer: Button("Ajouter", action: addSense)) {
+				Section(header: Text("Senses"), footer: Button("Ajouter", action: addSense)) {
 					ForEach(mot.senses ?? []) { sense in
 						NavigationLink(sense.primary ?? "") {
 							SenseEditSheetView(sense)
