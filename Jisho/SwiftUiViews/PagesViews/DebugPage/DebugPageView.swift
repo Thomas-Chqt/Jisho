@@ -33,6 +33,9 @@ struct DebugPageView: View {
 							print("Reset")
 						}
 					}
+					Section("JMdict") {
+						NavigationLink("JMdict settings", value: 1)
+					}
 				}
 				.navigationDestination(for: CoreDataEntityType.self) { type in
 					switch type {
@@ -48,6 +51,11 @@ struct DebugPageView: View {
 						DebugEntityListWrapper<MetaData>(selection: $vm.selection)
 					default:
 						EmptyView()
+					}
+				}
+				.navigationDestination(for: Int.self) { nbr in
+					if nbr == 1 {
+						JMdictSettingsView()
 					}
 				}
 				.fileExporter(vm)

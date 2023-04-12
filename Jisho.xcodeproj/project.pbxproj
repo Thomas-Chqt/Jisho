@@ -13,6 +13,8 @@
 		E92D3CA529E447690051781D /* JaponaisEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA429E447690051781D /* JaponaisEditSheetView.swift */; };
 		E92D3CA729E4FCF60051781D /* MotEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA629E4FCF60051781D /* MotEditSheetView.swift */; };
 		E92D3CA929E5540D0051781D /* EditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA829E5540D0051781D /* EditSheet.swift */; };
+		E92D3CAE29E69E750051781D /* JMdictFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CAD29E69E750051781D /* JMdictFile.swift */; };
+		E92D3CB129E6A1FD0051781D /* JMdictSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CB029E6A1FD0051781D /* JMdictSettingsView.swift */; };
 		E92DE1CA29D1C61600B5CB86 /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DE1C829D1C61600B5CB86 /* MetaData.swift */; };
 		E92DE1CE29D1C88200B5CB86 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DE1CC29D1C88200B5CB86 /* Entity.swift */; };
 		E93D515329D9A36B00AAC780 /* Japonais.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D515129D9A36B00AAC780 /* Japonais.swift */; };
@@ -75,6 +77,8 @@
 		E92D3CA429E447690051781D /* JaponaisEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaponaisEditSheetView.swift; sourceTree = "<group>"; };
 		E92D3CA629E4FCF60051781D /* MotEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotEditSheetView.swift; sourceTree = "<group>"; };
 		E92D3CA829E5540D0051781D /* EditSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSheet.swift; sourceTree = "<group>"; };
+		E92D3CAD29E69E750051781D /* JMdictFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMdictFile.swift; sourceTree = "<group>"; };
+		E92D3CB029E6A1FD0051781D /* JMdictSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMdictSettingsView.swift; sourceTree = "<group>"; };
 		E92DE1C829D1C61600B5CB86 /* MetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaData.swift; sourceTree = "<group>"; };
 		E92DE1CC29D1C88200B5CB86 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		E93D515129D9A36B00AAC780 /* Japonais.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Japonais.swift; sourceTree = "<group>"; };
@@ -168,6 +172,14 @@
 			path = SenseEditViews;
 			sourceTree = "<group>";
 		};
+		E92D3CAF29E6A1D90051781D /* JMdictSettings */ = {
+			isa = PBXGroup;
+			children = (
+				E92D3CB029E6A1FD0051781D /* JMdictSettingsView.swift */,
+			);
+			path = JMdictSettings;
+			sourceTree = "<group>";
+		};
 		E93D515D29DC0F4400AAC780 /* EntityList */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				E9835C8429CC9382008CF340 /* SQLiteFile.swift */,
+				E92D3CAD29E69E750051781D /* JMdictFile.swift */,
 			);
 			path = DocumentStructs;
 			sourceTree = "<group>";
@@ -296,7 +309,7 @@
 			children = (
 				E9835C9E29CC9382008CF340 /* DebugPageView.swift */,
 				E997238629E0307700FB64D6 /* DebugEntities */,
-				E997238729E0308500FB64D6 /* DebugSettings */,
+				E92D3CAF29E6A1D90051781D /* JMdictSettings */,
 			);
 			path = DebugPage;
 			sourceTree = "<group>";
@@ -392,13 +405,6 @@
 				E9B1947129DDB1CB004EF30B /* DebugEntityListWrapper.swift */,
 			);
 			path = DebugEntities;
-			sourceTree = "<group>";
-		};
-		E997238729E0308500FB64D6 /* DebugSettings */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DebugSettings;
 			sourceTree = "<group>";
 		};
 		E997238C29E1369700FB64D6 /* MetaDataPickerViews */ = {
@@ -531,6 +537,7 @@
 				E9835CBA29CC9382008CF340 /* SideMenuView.swift in Sources */,
 				E9835CC529CC9382008CF340 /* ContentViewModel.swift in Sources */,
 				E9B1945629DC3AC0004EF30B /* StringExtensions.swift in Sources */,
+				E92D3CB129E6A1FD0051781D /* JMdictSettingsView.swift in Sources */,
 				E9835CC729CC9382008CF340 /* DebugPageViewModel.swift in Sources */,
 				E9B1945929DCF987004EF30B /* SenseDetailView.swift in Sources */,
 				E9B1948229DF2047004EF30B /* NavBarEditButton.swift in Sources */,
@@ -552,6 +559,7 @@
 				E996A1FB29D57E2700DD700D /* FileExporterDelegate.swift in Sources */,
 				E9835CB029CC9382008CF340 /* JishoApp.swift in Sources */,
 				E92D3CA329E3EA4D0051781D /* ModifiableText.swift in Sources */,
+				E92D3CAE29E69E750051781D /* JMdictFile.swift in Sources */,
 				E9B1946429DD6D89004EF30B /* DataModel.xcdatamodeld in Sources */,
 				E9835CC229CC9382008CF340 /* ViewExtensions.swift in Sources */,
 				E997238329E02AE000FB64D6 /* LanguesSettingsView.swift in Sources */,
