@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MotDetailView: View {
 	
+	@FocusState var notesIsFocused: Bool
+	
 	@ObservedObject var mot: Mot
 	@State var sheetIsShow: Bool = false
 	
@@ -30,7 +32,15 @@ struct MotDetailView: View {
 					}
 				}
 			}
+			TextField("Notes", text: mot.bindingNotes, axis: .vertical)
+				.focused($notesIsFocused)
+				.lineLimit(3...)
+				.onSubmit {
+					mot.notes = (mot.notes ?? "") + "\n"
+					notesIsFocused = true
+				}
 		}
+		.scrollDismissesKeyboard(.interactively)
 		.navigationBarTitleDisplayMode(.inline)
 		.listStyle(.grouped)
 		.menuButton {

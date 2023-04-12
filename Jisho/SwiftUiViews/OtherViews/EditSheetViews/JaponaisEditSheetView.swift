@@ -39,6 +39,7 @@ struct JaponaisEditSheetView: View {
 				}
 			}
 		}
+		.scrollDismissesKeyboard(.interactively)
 		.navBarEditButton()
     }
 	

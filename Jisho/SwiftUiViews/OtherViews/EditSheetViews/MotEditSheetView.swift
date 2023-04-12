@@ -38,6 +38,7 @@ struct MotEditSheetView: View {
 					.onDelete(perform: deleteSense)
 				}
 			}
+			.scrollDismissesKeyboard(.interactively)
 			.navBarEditButton()
 			.onAppear { mot.objectWillChange.send() }
 		}

@@ -145,6 +145,7 @@ public class Sense: Entity {
 				if !(traductions.contains { $0.langue == newTraduction.langue }) {
 					traductions.insert(newTraduction)
 				}
+				else { newTraduction.delete() }
 			}
 			return traductions
 		}

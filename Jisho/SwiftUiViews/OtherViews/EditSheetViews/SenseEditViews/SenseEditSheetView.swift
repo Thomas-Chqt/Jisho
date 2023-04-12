@@ -42,6 +42,7 @@ struct SenseEditSheetView: View {
 				.onDelete(perform: deleteTraduction)
 			}
 		}
+		.scrollDismissesKeyboard(.interactively)
 		.navBarEditButton()
 		.metaDataPicker(replacedMetaData: $metaDataForSelector, excludedMetaData: sense.metaDatas?.map { $0.id })
     }

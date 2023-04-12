@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
 @objc(Mot)
 public class Mot: Entity {
@@ -85,6 +86,14 @@ public class Mot: Entity {
 			if newValue.trimmingCharacters(in: .whitespaces).isEmpty { notes_atb = nil ; return }
 			notes_atb = newValue
 		}
+	}
+	
+	var bindingNotes: Binding<String> {
+		return Binding(get: { self.notes ?? "" },
+					   set: {
+			self.notes = $0
+			DataController.shared.save()
+		})
 	}
 	
 	convenience init(id: UUID,
