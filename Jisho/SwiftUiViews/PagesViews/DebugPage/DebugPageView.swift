@@ -66,6 +66,7 @@ struct DebugPageView: View {
 					Button("Export SQLite file", action: vm.exportSQLiteFile)
 					Button("Export SQLite-shm file", action: vm.exportSQLiteSHMFile)
 					Button("Export SQLite-wal file", action: vm.exportSQLiteWALFile)
+					Button("Reset CoreData", action: vm.resetCoreData)
 				}
 			}
 		}

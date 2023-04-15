@@ -65,6 +65,8 @@ public class Japonais: Entity {
 					   set: {self.kanas![index] = $0})
 	}
 	
+	
+	
 	convenience init(id: UUID,
 					 kanjis: [String]? = nil,
 					 kanas: [String]? = nil,
@@ -90,6 +92,14 @@ public class Japonais: Entity {
 					  kanas: previewKanas.randomElement()!,
 					  context: context)
 		}
+	}
+	
+	convenience init(k_ele: json_K_ele, r_eles: [json_R_ele], context: NSManagedObjectContext) {
+		self.init(id: UUID(),
+				  kanjis: [k_ele.keb],
+				  kanas: r_eles.filter { $0.re_nokanji == false }
+								.filter { $0.re_restr.contains(k_ele.keb) || $0.re_restr.isEmpty }.map { $0.reb },
+				  context: context)
 	}
 }
 

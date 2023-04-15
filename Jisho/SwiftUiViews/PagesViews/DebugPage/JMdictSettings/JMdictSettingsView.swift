@@ -11,33 +11,58 @@ import UniformTypeIdentifiers
 struct JMdictSettingsView: View {
 	
 	@State var jmDictFile: JMdictFile? = nil
-	@State var fileImporterIsPresented: Bool = true
+	@State var fileImporterIsPresented: Bool = false
 	@State var loading: Bool = false
 	
     var body: some View {
 		if loading {
 			ProgressView()
 		}
-		else if let jmDictFile = jmDictFile {
+		else if jmDictFile != nil {
 			List {
-				Button("Parse") {
+				Button("Create Mots") {
 					Task {
 						self.loading = true
-						await jmDictFile.parse()
+						await self.jmDictFile?.createMots()
 						self.loading = false
 					}
-					
+				}
+				
+				Button("Test") {
+					Task {
+						self.loading = true
+						await self.jmDictFile?.test()
+						self.loading = false
+					}
 				}
 			}
 		}
 		else {
-			Button("Select File") {
-				fileImporterIsPresented.toggle()
+			VStack {
+				Button("Select File") {
+					fileImporterIsPresented.toggle()
+				}
+				.buttonStyle(.borderedProminent)
+				
+				Button("Use Bundle") {
+					guard let path = Bundle.main.path(forResource: "JMdict", ofType: "bundle") else { return }
+					let url = URL(fileURLWithPath: path + "/JMdict.json")
+					Task {
+						do {
+							self.loading = true
+							self.jmDictFile = try await JMdictFile(url)
+							self.loading = false
+						}
+						catch {
+							fatalError(error.localizedDescription)
+						}
+					}
+				}
+				.buttonStyle(.borderedProminent)
 			}
-			.buttonStyle(.borderedProminent)
 			.fileImporter(isPresented: $fileImporterIsPresented,
-						  allowedContentTypes: [.xml],
-						  allowsMultipleSelection: true,
+						  allowedContentTypes: [.json],
+						  allowsMultipleSelection: false,
 						  onCompletion: fileSelectorCompletion)
 		}
     }
@@ -46,7 +71,11 @@ struct JMdictSettingsView: View {
 		switch result {
 		case .success(let success):
 			if let url = success.first {
-				self.jmDictFile = JMdictFile(url)
+				Task {
+					self.loading = true
+					self.jmDictFile = try await JMdictFile(url)
+					self.loading = false
+				}
 			}
 		case .failure(let failure):
 			print(failure.localizedDescription)

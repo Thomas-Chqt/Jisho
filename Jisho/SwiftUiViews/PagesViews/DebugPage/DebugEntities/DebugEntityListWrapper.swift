@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct DebugEntityListWrapper<T: Entity>: View where T: Displayable, T: EasyInit {
 	@Environment(\.managedObjectContext) var context
@@ -14,16 +15,18 @@ struct DebugEntityListWrapper<T: Entity>: View where T: Displayable, T: EasyInit
 	
 	@Binding var selection: Entity?
 	
-	var sortedEntities: [T] {
-		entities.sorted {
-			$0.id.uuidString > $1.id.uuidString
-		}
-	}
 	
+	init(selection: Binding<Entity?>) {
+		self._selection = selection
+		let request = NSFetchRequest<T>(entityName: T.description())
+		request.fetchLimit = 1000
+		request.sortDescriptors = [NSSortDescriptor(key: "createTime_atb", ascending: true)]
+		self._entities = FetchRequest(fetchRequest: request, animation: .default)
+	}
 	
     var body: some View {
         ListDisplayableEntityView(selection: $selection,
-								  entities: sortedEntities,
+								  entities: entities.map {$0},
 								  onDelete: delete)
 			.menuButton {
 				Button("Add one") {
@@ -55,7 +58,7 @@ struct DebugEntityListWrapper<T: Entity>: View where T: Displayable, T: EasyInit
 	
 	func delete(_ indexSet: IndexSet) {
 		indexSet.forEach { index in
-			sortedEntities[index].delete()
+			entities[index].delete()
 		}
 		DataController.shared.save()
 	}

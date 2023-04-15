@@ -6,6 +6,7 @@
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal
+*.json
 
 ### macOS ###
 # General

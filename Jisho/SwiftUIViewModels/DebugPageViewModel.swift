@@ -20,6 +20,17 @@ class DebugPageViewModel: ObservableObject {
 							  type: UTType,
 							  filename: String,
 							  completion: (Result<URL, Error>) -> Void) = ( nil, UTType.text, "", {_ in} )
+	
+	func resetCoreData() {
+		do {
+			try FileManager.default.removeItem(at: DataController.localStoreLocationSQLite)
+			try FileManager.default.removeItem(at: DataController.localStoreLocationSQLiteSHM)
+			try FileManager.default.removeItem(at: DataController.localStoreLocationSQLiteWAL)
+		}
+		catch {
+			print(error.localizedDescription)
+		}
+	}
 }
 
 extension DebugPageViewModel: FileExporterDelegate {

@@ -21,7 +21,7 @@ public class Mot: Entity {
 	
 	@NSManaged private var japonais_atb: NSOrderedSet?
 	@NSManaged private var sense_atb: NSOrderedSet?
-	@NSManaged public var noSenseTrads_atb: NSSet?
+	@NSManaged private var noSenseTrads_atb: NSSet?
 
 	
 	@NSManaged private var notes_atb: String?
@@ -96,11 +96,26 @@ public class Mot: Entity {
 		})
 	}
 	
+	var noSenseTrads: Set<Traduction>? {
+		get {
+			guard let noSenseTrads_atb = noSenseTrads_atb else { return nil }
+			guard let noSenseTrads = noSenseTrads_atb as? Set<Traduction> else { return nil }
+			return noSenseTrads.isEmpty ? nil : noSenseTrads
+		}
+		set {
+			guard let newValue = newValue else { noSenseTrads_atb = nil ; return}
+			if newValue.isEmpty { noSenseTrads_atb = nil ; return}
+			noSenseTrads_atb = NSSet(set: newValue)
+		}
+	}
+	
+	
 	convenience init(id: UUID,
 					 jmDictId: Int? = nil,
 					 japonais: [Japonais]? = nil,
 					 sense: [Sense]? = nil,
 					 notes: String? = nil,
+					 noSenseTrads: Set<Traduction>? = nil,
 					 context: NSManagedObjectContext) {
 		self.init(id: id, context: context)
 		
@@ -108,6 +123,7 @@ public class Mot: Entity {
 		self.japonais = japonais
 		self.senses = sense
 		self.notes = notes
+		self.noSenseTrads = noSenseTrads
 	}
 	
 	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {
@@ -143,6 +159,33 @@ public class Mot: Entity {
 					  notes: previewNotes.randomElement()!,
 					  context: context)
 		}
+	}
+	
+	convenience init(entry: json_Entry, context: NSManagedObjectContext) {
+		
+		var japonais: [Japonais] = entry.k_eles.map {
+			Japonais(k_ele: $0, r_eles: entry.r_eles, context: context)
+		}
+		
+		if entry.k_eles.isEmpty {
+			japonais = japonais + entry.r_eles.filter { $0.re_nokanji == false }.map {
+				Japonais(id: UUID(), kanas: [ $0.reb ], context: context)
+			}
+		}
+		
+		japonais = japonais + entry.r_eles.filter { $0.re_nokanji == true }.map {
+			Japonais(id: UUID(), kanas: [ $0.reb ], context: context)
+		}
+		
+		
+//		guard
+		
+		self.init(id: UUID(),
+				  jmDictId: entry.ent_seq,
+				  japonais: japonais,
+				  sense: nil,
+				  noSenseTrads: nil,
+				  context: context)
 	}
 }
 

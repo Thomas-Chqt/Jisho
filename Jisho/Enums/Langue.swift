@@ -27,6 +27,20 @@ enum Langue: String, CaseIterable, Codable, Identifiable {
 		return allCases.filter { $0 != .none }
 	}
 	
+	static var JMdictLangues: [Langue] {
+		return [
+			.anglais,
+			.francais,
+			.espagnol,
+			.russe,
+			.neerlandais,
+			.allemand,
+			.hongrois,
+			.suedois,
+			.slovene,
+		]
+	}
+	
 	static var first: Langue {
 		Settings.shared.langueOrder.filter {
 			Settings.shared.selectedLangues.contains($0)

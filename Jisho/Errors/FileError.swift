@@ -9,11 +9,14 @@ import Foundation
 
 enum FileError: Error {
 	case readError
+//	case jsonParsingError
 	
 	var localizedDescription: String {
 		switch self {
 		case .readError:
 			return "Read error"
+//		case .jsonParsingError:
+//			return "Json parsing error"
 		}
 	}
 }

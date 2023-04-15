@@ -15,6 +15,7 @@
 		E92D3CA929E5540D0051781D /* EditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA829E5540D0051781D /* EditSheet.swift */; };
 		E92D3CAE29E69E750051781D /* JMdictFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CAD29E69E750051781D /* JMdictFile.swift */; };
 		E92D3CB129E6A1FD0051781D /* JMdictSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CB029E6A1FD0051781D /* JMdictSettingsView.swift */; };
+		E92D3CB729E7CD570051781D /* JMdict.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E92D3CB629E7CD570051781D /* JMdict.bundle */; };
 		E92DE1CA29D1C61600B5CB86 /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DE1C829D1C61600B5CB86 /* MetaData.swift */; };
 		E92DE1CE29D1C88200B5CB86 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DE1CC29D1C88200B5CB86 /* Entity.swift */; };
 		E93D515329D9A36B00AAC780 /* Japonais.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D515129D9A36B00AAC780 /* Japonais.swift */; };
@@ -70,7 +71,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E924BCC829E139F400D80708 /* Jisho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jisho.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E924BCC829E139F400D80708 /* Jisho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Jisho.app; path = "/Users/thomas/Library/Mobile Documents/com~apple~CloudDocs/Xcode/Swift/Swift Projects/Crosplatform/Jisho/build/Debug-iphoneos/Jisho.app"; sourceTree = "<absolute>"; };
 		E924BCCA29E2BAE600D80708 /* MetaDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataPicker.swift; sourceTree = "<group>"; };
 		E92D3CA029E3E6580051781D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E92D3CA229E3EA4D0051781D /* ModifiableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiableText.swift; sourceTree = "<group>"; };
@@ -79,6 +80,7 @@
 		E92D3CA829E5540D0051781D /* EditSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSheet.swift; sourceTree = "<group>"; };
 		E92D3CAD29E69E750051781D /* JMdictFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMdictFile.swift; sourceTree = "<group>"; };
 		E92D3CB029E6A1FD0051781D /* JMdictSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMdictSettingsView.swift; sourceTree = "<group>"; };
+		E92D3CB629E7CD570051781D /* JMdict.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JMdict.bundle; sourceTree = "<group>"; };
 		E92DE1C829D1C61600B5CB86 /* MetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaData.swift; sourceTree = "<group>"; };
 		E92DE1CC29D1C88200B5CB86 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		E93D515129D9A36B00AAC780 /* Japonais.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Japonais.swift; sourceTree = "<group>"; };
@@ -150,7 +152,6 @@
 			isa = PBXGroup;
 			children = (
 				E9835C8229CC9382008CF340 /* Jisho */,
-				E924BCC829E139F400D80708 /* Jisho.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -218,6 +219,7 @@
 				E92D3CA029E3E6580051781D /* Assets.xcassets */,
 				E9835C8529CC9382008CF340 /* Jisho.entitlements */,
 				E9835CAE29CC9382008CF340 /* Info.plist */,
+				E92D3CB629E7CD570051781D /* JMdict.bundle */,
 			);
 			path = Jisho;
 			sourceTree = "<group>";
@@ -497,6 +499,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E92D3CB729E7CD570051781D /* JMdict.bundle in Resources */,
 				E92D3CA129E3E6580051781D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
