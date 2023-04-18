@@ -71,7 +71,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E924BCC829E139F400D80708 /* Jisho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Jisho.app; path = "/Users/thomas/Library/Mobile Documents/com~apple~CloudDocs/Xcode/Swift/Swift Projects/Crosplatform/Jisho/build/Debug-iphoneos/Jisho.app"; sourceTree = "<absolute>"; };
+		E9033B0E29ED17B700F41C02 /* Jisho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Jisho.app; path = "/Users/thomas/Library/Mobile Documents/com~apple~CloudDocs/Xcode/Swift/Swift Projects/Crosplatform/Jisho/build/Debug-iphoneos/Jisho.app"; sourceTree = "<absolute>"; };
 		E924BCCA29E2BAE600D80708 /* MetaDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataPicker.swift; sourceTree = "<group>"; };
 		E92D3CA029E3E6580051781D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E92D3CA229E3EA4D0051781D /* ModifiableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiableText.swift; sourceTree = "<group>"; };
@@ -217,9 +217,9 @@
 				E997237729E0176F00FB64D6 /* PropertyWrappers */,
 				E997237A29E01FC400FB64D6 /* Classes */,
 				E92D3CA029E3E6580051781D /* Assets.xcassets */,
+				E92D3CB629E7CD570051781D /* JMdict.bundle */,
 				E9835C8529CC9382008CF340 /* Jisho.entitlements */,
 				E9835CAE29CC9382008CF340 /* Info.plist */,
-				E92D3CB629E7CD570051781D /* JMdict.bundle */,
 			);
 			path = Jisho;
 			sourceTree = "<group>";
@@ -458,7 +458,7 @@
 			);
 			name = Jisho;
 			productName = Jisho;
-			productReference = E924BCC829E139F400D80708 /* Jisho.app */;
+			productReference = E9033B0E29ED17B700F41C02 /* Jisho.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

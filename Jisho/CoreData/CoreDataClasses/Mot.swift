@@ -21,7 +21,7 @@ public class Mot: Entity {
 	
 	@NSManaged private var japonais_atb: NSOrderedSet?
 	@NSManaged private var sense_atb: NSOrderedSet?
-	@NSManaged private var noSenseTrads_atb: NSSet?
+	@NSManaged private var noSenseTrads_atb: NSOrderedSet?
 
 	
 	@NSManaged private var notes_atb: String?
@@ -96,16 +96,17 @@ public class Mot: Entity {
 		})
 	}
 	
-	var noSenseTrads: Set<Traduction>? {
+	var noSenseTrads: [Traduction]? {
 		get {
 			guard let noSenseTrads_atb = noSenseTrads_atb else { return nil }
-			guard let noSenseTrads = noSenseTrads_atb as? Set<Traduction> else { return nil }
-			return noSenseTrads.isEmpty ? nil : noSenseTrads
+			let noSenseTrads = noSenseTrads_atb.array as! [Traduction]
+			if noSenseTrads.isEmpty { return nil }
+			return noSenseTrads
 		}
 		set {
 			guard let newValue = newValue else { noSenseTrads_atb = nil ; return}
 			if newValue.isEmpty { noSenseTrads_atb = nil ; return}
-			noSenseTrads_atb = NSSet(set: newValue)
+			noSenseTrads_atb = NSOrderedSet(array: newValue)
 		}
 	}
 	
@@ -115,7 +116,7 @@ public class Mot: Entity {
 					 japonais: [Japonais]? = nil,
 					 sense: [Sense]? = nil,
 					 notes: String? = nil,
-					 noSenseTrads: Set<Traduction>? = nil,
+					 noSenseTrads: [Traduction]? = nil,
 					 context: NSManagedObjectContext) {
 		self.init(id: id, context: context)
 		
@@ -178,12 +179,40 @@ public class Mot: Entity {
 		}
 		
 		
-//		guard
+		var senses: [[json_Sense]] = []
+		var tradSense: [json_Sense] = []
+		
+		if let enSenses = entry.senseDict[.anglais] {
+			for sense in enSenses {
+				senses.append([sense])
+			}
+			for langue in Langue.JMdictLangues.filter({ $0 != .anglais }) {
+				if let langSenses = entry.senseDict[langue] {
+					if langSenses.count == enSenses.count {
+						for (i, sense) in langSenses.enumerated() {
+							senses[i].append(sense)
+						}
+					}
+					else {
+						for sense in langSenses {
+							tradSense.append(sense)
+						}
+					}
+				}
+			}
+		}
+		
+		
+//		print("\n\n\n\n\n\n\n\n\n\n\n\n\(senses.map { $0.map { "\(Langue(rawValue: $0.gloss.first?.lang ?? "")?.flag ?? "") \($0.gloss.map { "\($0.value)" }.joined(separator: ", "))" }.joined(separator: "\n") }.joined(separator: "\n-----------\n")) \n\n\n")
+		
+//		print("\(tradSense.map{"\(Langue(rawValue: $0.gloss.first?.lang ?? "")?.flag ?? "") \($0.gloss.map{$0.value}.joined(separator: ", "))"}.joined(separator: "\n"))")
+		
+		
 		
 		self.init(id: UUID(),
 				  jmDictId: entry.ent_seq,
 				  japonais: japonais,
-				  sense: nil,
+				  sense: senses.isEmpty ? nil : senses.map { Sense(jsonSenses: $0, context: context) },
 				  noSenseTrads: nil,
 				  context: context)
 	}

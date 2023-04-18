@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E252" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Entity" representedClassName="Entity" syncable="YES">
         <attribute name="createTime_atb" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="editTime_atb" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -23,7 +23,7 @@
         <attribute name="jmDictID_atb" optional="YES" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="notes_atb" optional="YES" attributeType="String"/>
         <relationship name="japonais_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Japonais" inverseName="parent_atb" inverseEntity="Japonais"/>
-        <relationship name="noSenseTrads_atb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Traduction" inverseName="parentMot_atb" inverseEntity="Traduction"/>
+        <relationship name="noSenseTrads_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Traduction" inverseName="parentMot_atb" inverseEntity="Traduction"/>
         <relationship name="sense_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Sense" inverseName="parent_atb" inverseEntity="Sense"/>
     </entity>
     <entity name="Sense" representedClassName="Sense" parentEntity="Entity" syncable="YES">

@@ -45,27 +45,21 @@ struct JMdictFile: FileDocument {
 	}
 	
 	func test() async {
-//		for entry in jsonData {
-//			for sense in entry.senses {
-//				for glos in sense.gloss {
-//					if glos.value == nil {
-//						print(entry.ent_seq)
-//					}
-//				}
-//			}
-//		}
+		
 	}
+	
+	
 }
 
 
-struct json_Gloss: Codable {
+struct json_Gloss: Codable, Equatable {
 	var g_type: String?
 	var g_gend: String?
 	var lang: String?
 	var value: String
 }
 
-struct json_Lsource: Codable {
+struct json_Lsource: Codable, Equatable {
 	var lang: String?
 	var ls_type: String?
 	var ls_wasei: String?
@@ -80,6 +74,7 @@ struct json_Sense: Codable {
 	var pos: [String]
 	var field: [String]
 	var misc: [String]
+	var dial: [String]
 	var s_inf: [String]
 	var lsource: [json_Lsource]
 	var gloss: [json_Gloss]

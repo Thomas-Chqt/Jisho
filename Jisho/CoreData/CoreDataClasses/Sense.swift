@@ -161,6 +161,50 @@ public class Sense: Entity {
 					  context: context)
 		}
 	}
+	
+	convenience init(jsonSenses: [json_Sense], context: NSManagedObjectContext) {
+		
+		var communMetaData: [String] = []
+		var linkMetaData: [String] = []
+		var uniqueMetaData: [String] = []
+		
+		var lsource: [json_Lsource] = []
+		var traductionDict: [Langue:String] = [:]
+		
+		for sense in jsonSenses {
+			uniqueMetaData.append(contentsOf: sense.stagk.filter { !uniqueMetaData.contains($0) })
+			uniqueMetaData.append(contentsOf: sense.stagr.filter { !uniqueMetaData.contains($0) })
+			
+			linkMetaData.append(contentsOf: sense.xref.filter { !linkMetaData.contains($0) })
+			linkMetaData.append(contentsOf: sense.ant.filter { !linkMetaData.contains($0) })
+			
+			communMetaData.append(contentsOf: sense.pos.filter { !communMetaData.contains($0) })
+			communMetaData.append(contentsOf: sense.field.filter { !communMetaData.contains($0) })
+			communMetaData.append(contentsOf: sense.misc.filter { !communMetaData.contains($0) })
+			communMetaData.append(contentsOf: sense.dial.filter { !communMetaData.contains($0) })
+			
+			uniqueMetaData.append(contentsOf: sense.s_inf	.filter { !uniqueMetaData.contains($0) })
+			
+			lsource.append(contentsOf: sense.lsource.filter{ !lsource.contains($0) })
+			
+			for gloss in sense.gloss {
+				if let previousGlosses = traductionDict[Langue(rawValue: gloss.lang ?? "") ?? .none] {
+					traductionDict[Langue(rawValue: gloss.lang ?? "") ?? .none] =
+					([traductionDict[Langue(rawValue: gloss.lang ?? "") ?? .none] ?? ""] + [gloss.value]).joined(separator: ", ")
+				}
+				else {
+					traductionDict[Langue(rawValue: gloss.lang ?? "") ?? .none] = gloss.value
+				}
+			}
+		}
+		
+		
+		self.init(id: UUID(),
+				  metaDatas: nil,
+				  traductions: nil,
+				  exemples: nil,
+				  context: context)
+	}
 }
 
 extension Sense: Displayable {
