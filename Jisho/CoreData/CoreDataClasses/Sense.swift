@@ -198,10 +198,42 @@ public class Sense: Entity {
 			}
 		}
 		
+		var metaDatas: [MetaData] = []
+		
+		for metaData in communMetaData {
+			if let cachedVersion = MetaData.cache.object(forKey: NSString(string: metaData)) {
+				metaDatas.append(cachedVersion)
+			} else {
+				do {
+					let request:NSFetchRequest<MetaData> = MetaData.fetchRequest()
+					request.predicate = NSPredicate(format: "ANY traductions_atb.text_atb == %@", metaData)
+					let results = try context.fetch(request)
+					if results.count == 1 {
+						metaDatas.append(results[0])
+						MetaData.cache.setObject(results[0], forKey: NSString(string: metaData))
+					}
+					else {
+						fatalError(results.count > 1 ? "Multiple metaData for same text : \"\(metaData)\"" : "No metaData for this text : \"\(metaData)\"" )
+					}
+				}
+				catch {
+					fatalError(error.localizedDescription)
+				}
+			}
+		}
+		
+		var traductions: Set<Traduction> = []
+		
+		for langue in Langue.JMdictLangues {
+			if let traduction = traductionDict[langue] {
+				traductions.insert(Traduction(id: UUID(), langue: langue, text: traduction, context: context))
+			}
+		}
+		
 		
 		self.init(id: UUID(),
-				  metaDatas: nil,
-				  traductions: nil,
+				  metaDatas: metaDatas,
+				  traductions: traductions,
 				  exemples: nil,
 				  context: context)
 	}

@@ -203,12 +203,6 @@ public class Mot: Entity {
 		}
 		
 		
-//		print("\n\n\n\n\n\n\n\n\n\n\n\n\(senses.map { $0.map { "\(Langue(rawValue: $0.gloss.first?.lang ?? "")?.flag ?? "") \($0.gloss.map { "\($0.value)" }.joined(separator: ", "))" }.joined(separator: "\n") }.joined(separator: "\n-----------\n")) \n\n\n")
-		
-//		print("\(tradSense.map{"\(Langue(rawValue: $0.gloss.first?.lang ?? "")?.flag ?? "") \($0.gloss.map{$0.value}.joined(separator: ", "))"}.joined(separator: "\n"))")
-		
-		
-		
 		self.init(id: UUID(),
 				  jmDictId: entry.ent_seq,
 				  japonais: japonais,

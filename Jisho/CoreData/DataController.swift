@@ -76,33 +76,38 @@ class DataController: ObservableObject {
 	}
 	
 	
-//	func save() async throws {
-//
-//		try await mainQueueManagedObjectContext.perform {
-//			if self.mainQueueManagedObjectContext.hasChanges {
-//				try self.mainQueueManagedObjectContext.save()
-//			}
-//		}
-//
-//		try await privateQueueManagedObjectContext.perform {
-//			if self.privateQueueManagedObjectContext.hasChanges {
-//				try self.privateQueueManagedObjectContext.save()
-//			}
-//		}
-//	}
 	
 	func save() {
 		Task {
-			try await mainQueueManagedObjectContext.perform {
-				if self.mainQueueManagedObjectContext.hasChanges {
-					try self.mainQueueManagedObjectContext.save()
+			do {
+				try await mainQueueManagedObjectContext.perform {
+					if self.mainQueueManagedObjectContext.hasChanges {
+						try self.mainQueueManagedObjectContext.save()
+					}
+				}
+				
+				try await privateQueueManagedObjectContext.perform {
+					if self.privateQueueManagedObjectContext.hasChanges {
+						try self.privateQueueManagedObjectContext.save()
+					}
 				}
 			}
-			
-			try await privateQueueManagedObjectContext.perform {
-				if self.privateQueueManagedObjectContext.hasChanges {
-					try self.privateQueueManagedObjectContext.save()
-				}
+			catch {
+				fatalError(error.localizedDescription)
+			}
+		}
+	}
+	
+	func save() async throws {
+		try await mainQueueManagedObjectContext.perform {
+			if self.mainQueueManagedObjectContext.hasChanges {
+				try self.mainQueueManagedObjectContext.save()
+			}
+		}
+		
+		try await privateQueueManagedObjectContext.perform {
+			if self.privateQueueManagedObjectContext.hasChanges {
+				try self.privateQueueManagedObjectContext.save()
 			}
 		}
 	}

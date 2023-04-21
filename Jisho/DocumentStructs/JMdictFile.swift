@@ -32,16 +32,17 @@ struct JMdictFile: FileDocument {
 		return FileWrapper(regularFileWithContents: data)
 	}
 	
-	func createMots() async {
-		await DataController.shared.privateQueueManagedObjectContext.perform {
-			for (i, entry) in jsonData.enumerated() {
+	func createMots() async throws {
+		for (i, entry) in jsonData.enumerated() {
+			await DataController.shared.privateQueueManagedObjectContext.perform {
 				_ = Mot(entry: entry, context: DataController.shared.privateQueueManagedObjectContext)
-				if (i + 1) % (jsonData.count / 100) == 0 {
-					print("\((i + 1) / (jsonData.count / 100))")
-				}
 			}
-			DataController.shared.save()
+			if (i + 1) % (jsonData.count / 100) == 0 {
+				print("\((i + 1) / (jsonData.count / 100))")
+				try await DataController.shared.save()
+			}
 		}
+		try await DataController.shared.save()
 	}
 	
 	func test() async {

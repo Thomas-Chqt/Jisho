@@ -118,6 +118,10 @@ extension MetaData?: Identifiable {
 	}
 }
 
+extension MetaData {
+	static let cache = NSCache<NSString, MetaData>()
+}
+
 extension Array where Element == MetaData {
 	func filtered(by filter: String) -> [MetaData] {
 		return self.filter { metaData in

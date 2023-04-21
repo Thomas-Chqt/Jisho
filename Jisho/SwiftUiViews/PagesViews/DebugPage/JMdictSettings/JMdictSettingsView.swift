@@ -28,9 +28,12 @@ struct JMdictSettingsView: View {
 					if let jmDictFile = jmDictFile {
 						Button("Create Mots") {
 							Task {
-								self.loading = true
-								await jmDictFile.createMots()
-								self.loading = false
+								do {
+									self.loading = true
+									try await jmDictFile.createMots()
+									self.loading = false
+								} catch { fatalError(error.localizedDescription) }
+								
 							}
 						}
 						
