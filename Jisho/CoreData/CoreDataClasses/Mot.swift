@@ -13,20 +13,21 @@ import SwiftUI
 @objc(Mot)
 public class Mot: Entity {
 	
+	//MARK: FetchRequests
 	@nonobjc public class func fetchRequest() -> NSFetchRequest<Mot> {
 		return NSFetchRequest<Mot>(entityName: "Mot")
 	}
 	
-	@NSManaged private var jmDictID_atb: Int32
 	
+	//MARK: NSManaged attributs
+	@NSManaged private var jmDictID_atb: Int32
 	@NSManaged private var japonais_atb: NSOrderedSet?
 	@NSManaged private var sense_atb: NSOrderedSet?
 	@NSManaged private var noSenseTrads_atb: NSOrderedSet?
-
-	
 	@NSManaged private var notes_atb: String?
 	
 	
+	//MARK: Computed variables
 	var jmDictId: Int? {
 		get {
 			if jmDictID_atb > 0 {
@@ -47,93 +48,76 @@ public class Mot: Entity {
 		}
 	}
 	
-	var japonais: [Japonais]? {
+	var japonais: [Japonais] {
 		get {
-			guard let japonais_atb = japonais_atb else { return nil }
-			let jap = japonais_atb.array as! [Japonais]
-			if jap.isEmpty { return nil }
+			guard let japonais_atb = japonais_atb else { return [] }
+			guard let jap = japonais_atb.array as? [Japonais] else { return [] }
 			return jap
 		}
 		set {
-			guard let newValue = newValue else { japonais_atb = nil ; return}
 			if newValue.isEmpty { japonais_atb = nil ; return}
 			japonais_atb = NSOrderedSet(array: newValue)
 		}
 	}
 	
-	var senses: [Sense]? {
+	var senses: [Sense] {
 		get {
-			guard let sense_atb = sense_atb else { return nil }
-			let senses = sense_atb.array as! [Sense]
-			if senses.isEmpty { return nil }
+			guard let sense_atb = sense_atb else { return [] }
+			guard let senses = sense_atb.array as? [Sense] else { return [] }
 			return senses
 		}
 		set {
-			guard let newValue = newValue else { sense_atb = nil ; return}
 			if newValue.isEmpty { sense_atb = nil ; return}
 			sense_atb = NSOrderedSet(array: newValue)
 		}
 	}
 	
-	var notes: String? {
+	var notes: String {
 		get {
-			guard let notes_atb = notes_atb else { return nil }
-			if notes_atb.trimmingCharacters(in: .whitespaces).isEmpty { return nil }
-			return notes_atb
+			return notes_atb ?? ""
 		}
 		set {
-			guard let newValue = newValue else { notes_atb = nil ; return }
-			if newValue.trimmingCharacters(in: .whitespaces).isEmpty { notes_atb = nil ; return }
 			notes_atb = newValue
 		}
 	}
 	
-	var bindingNotes: Binding<String> {
-		return Binding(get: { self.notes ?? "" },
-					   set: {
-			self.notes = $0
-			DataController.shared.save()
-		})
-	}
-	
-	var noSenseTrads: [Traduction]? {
+	var noSenseTrads: [Traduction] {
 		get {
-			guard let noSenseTrads_atb = noSenseTrads_atb else { return nil }
-			let noSenseTrads = noSenseTrads_atb.array as! [Traduction]
-			if noSenseTrads.isEmpty { return nil }
+			guard let noSenseTrads_atb = noSenseTrads_atb else { return [] }
+			guard let noSenseTrads = noSenseTrads_atb.array as? [Traduction] else { return [] }
 			return noSenseTrads
 		}
 		set {
-			guard let newValue = newValue else { noSenseTrads_atb = nil ; return}
 			if newValue.isEmpty { noSenseTrads_atb = nil ; return}
 			noSenseTrads_atb = NSOrderedSet(array: newValue)
 		}
 	}
 	
 	
-	convenience init(id: UUID,
+	//MARK: inits
+	convenience init(id: UUID? = nil,
 					 jmDictId: Int? = nil,
 					 japonais: [Japonais]? = nil,
 					 sense: [Sense]? = nil,
 					 notes: String? = nil,
 					 noSenseTrads: [Traduction]? = nil,
-					 context: NSManagedObjectContext) {
+					 context: NSManagedObjectContext? = nil) {
 		self.init(id: id, context: context)
 		
 		self.jmDictId = jmDictId
-		self.japonais = japonais
-		self.senses = sense
-		self.notes = notes
-		self.noSenseTrads = noSenseTrads
+		self.japonais = japonais ?? []
+		self.senses = sense ?? []
+		self.notes = notes ?? ""
+		self.noSenseTrads = noSenseTrads ?? []
 	}
 	
+	//MARK: EasyInit's init
 	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {
-		let context:NSManagedObjectContext = context ?? DataController.shared.mainQueueManagedObjectContext
 
-		let previewJmdictID = [10000, 13404, 53794, 31908, 45478, 64358, nil]
-		let previewNotes = ["Pas de notes", "Note test 1", "Hello world", "Yolo yolo", nil]
+		let previewJmdictID = [10000, 13404, 53794, 31908, 45478, 64358]
+		let previewNotes = ["Pas de notes", "Note test 1", "Hello world"]
 		
-		var previewJaponais: [Japonais]? {
+		var previewJaponais: [Japonais] {
 			var japonais: [Japonais] = []
 			for _ in 1...Int.random(in: 1...4) {
 				japonais.append(Japonais(.preview, context: context))
@@ -141,7 +125,7 @@ public class Mot: Entity {
 			return japonais
 		}
 		
-		var previewSenses: [Sense]? {
+		var previewSenses: [Sense] {
 			var senses: [Sense] = []
 			for _ in 1...Int.random(in: 1...4) {
 				senses.append(Sense(.preview, context: context))
@@ -151,10 +135,9 @@ public class Mot: Entity {
 		
 		switch type {
 		case .empty:
-			self.init(id: UUID(), context: context)
+			self.init(context: context)
 		case .preview:
-			self.init(id: UUID(),
-					  jmDictId: previewJmdictID.randomElement()!,
+			self.init(jmDictId: previewJmdictID.randomElement()!,
 					  japonais: previewJaponais,
 					  sense: previewSenses,
 					  notes: previewNotes.randomElement()!,
@@ -162,10 +145,15 @@ public class Mot: Entity {
 		}
 	}
 	
+	//MARK: Import init
 	convenience init(entry: json_Entry, context: NSManagedObjectContext) {
 		
-		var japonais: [Japonais] = entry.k_eles.map {
-			Japonais(k_ele: $0, r_eles: entry.r_eles, context: context)
+		var japonais: [Japonais] = entry.k_eles.map { k_ele in
+			Japonais(kanjis: [k_ele.keb],
+					 kanas: entry.r_eles.filter {
+							($0.re_nokanji == false) && ($0.re_restr.contains(k_ele.keb) || $0.re_restr.isEmpty)
+					}.map { $0.reb },
+					 context: context)
 		}
 		
 		if entry.k_eles.isEmpty {
@@ -212,21 +200,23 @@ public class Mot: Entity {
 	}
 }
 
+
+//MARK: Protocole extentions
 extension Mot: Displayable {
 	var primary: String? {
-		return japonais?.first?.kanjis?.first
+		return japonais.first?.primary
 	}
 	var secondary: String? {
-		return japonais?.first?.kanas?.first
+		return japonais.first?.secondary
 	}
 	var details: String? {
-		return senses?.first?.traductions?.firstMatch()?.text
+		return senses.first?.traductions.firstMatch()?.text
 	}
 }
 
-extension Mot: EasyInit {
-	
-}
+extension Mot: EasyInit {}
+
+
 
 // MARK: Generated accessors for japonais_atb
 extension Mot {

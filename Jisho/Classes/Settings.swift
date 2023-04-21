@@ -19,6 +19,10 @@ class Settings: ObservableObject {
 	@CloudStorage("selectedLangues") var selectedLangues: Set<Langue> = defaulSselectedLangues
 	@CloudStorage("langueOrder") var langueOrder: [Langue] = defaulLangueOrder
 	
+	var orderedSelectedLangues: [Langue] {
+		langueOrder.filter { selectedLangues.contains($0) }
+	}
+	
 	@objc func onUbiquitousKeyValueStoreDidChangeExternally(notification: Notification)
 	{
 		print("onUbiquitousKeyValueStoreDidChangeExternally")

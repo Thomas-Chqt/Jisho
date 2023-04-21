@@ -31,10 +31,7 @@ struct DisplayableEntityListView_Previews: PreviewProvider {
 	static var previews: some View {
 		NavigationSplitView(columnVisibility: .constant(.all)) {
 			ListDisplayableEntityView(selection: .constant(nil),
-									  entities: [
-										Mot(.preview),
-										Mot(.preview)
-									  ])
+									  entities: [ Mot(.preview), Mot(.preview) ])
 			.navigationTitle("List")
 		} detail: {
 			EmptyView()

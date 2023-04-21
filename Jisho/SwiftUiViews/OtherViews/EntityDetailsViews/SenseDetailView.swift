@@ -20,21 +20,15 @@ struct SenseDetailView: View {
 	
     var body: some View {
 		VStack(alignment: .leading, spacing: 0) {
-			if let metaDatas = sense.metaDatas {
-				ForEach(Array(metaDatas.enumerated()), id :\.element.id) { offset, metaData in
-					if offset != 0 { Divider() }
-					MetaDataDetailView(metaData)
-				}
+			ForEach(Array(sense.metaDatas.enumerated()), id :\.element.id) { offset, metaData in
+				if offset != 0 { Divider() }
+				MetaDataDetailView(metaData)
 			}
-			if sense.metaDatas?.count ?? 0 > 0 || sense.traductions?.count ?? 0 > 0 {
-				Divider()
-			}
-			if let traductions = sense.traductions?.fitToSettings(using: settings) {
-				ForEach(Array(traductions.enumerated()), id :\.element.id) { offset, traduction in
-					if offset != 0 { Divider() }
-					TraductionDetailView(traduction)
-						.padding(9)
-				}
+
+			ForEach(Array(sense.traductions.fitToSettings(using: settings).enumerated()), id :\.element.id) { offset, traduction in
+				if offset != 0 || sense.metaDatas.count > 0 { Divider() }
+				TraductionDetailView(traduction)
+					.padding(9)
 			}
 		}
 		.listRowInsets(EdgeInsets())
@@ -42,11 +36,12 @@ struct SenseDetailView: View {
 			Button(action: { showSheet.toggle() },
 				   label: { Label("Modifier", systemImage: "pencil.circle") })
 		}
-		.editSheet(isPresented: $showSheet, entityToEdit: sense)
     }
 }
 
 struct SenseDetailView_Previews: PreviewProvider {
+	
+	static var sense = Sense(.preview)
 	
     static var previews: some View {
 		NavigationSplitView(columnVisibility: .constant(.all)) {
@@ -54,8 +49,20 @@ struct SenseDetailView_Previews: PreviewProvider {
 				.navigationTitle("side")
 		} detail: {
 			List {
-				SenseDetailView(Sense(.preview))
+				SenseDetailView(sense)
 			}
+			.menuButton {
+				Button("add commun metaData") {
+					sense.metaDatas.append(CommunMetaData(.preview))
+				}
+				Button("add unique metaData") {
+					sense.metaDatas.append(UniqueMetaData(.preview))
+				}
+				Button("add link metaData") {
+					sense.metaDatas.append(LinkMetaData(.preview))
+				}
+			}
+
 		}
 		.navigationSplitViewStyle(.balanced)
 		.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
@@ -64,7 +71,19 @@ struct SenseDetailView_Previews: PreviewProvider {
 		
 		NavigationSplitView(columnVisibility: .constant(.all)) {
 			List {
-				SenseDetailView(Sense(.preview))
+				SenseDetailView(sense)
+			}
+			.listStyle(.grouped)
+			.menuButton {
+				Button("add commun metaData") {
+					sense.metaDatas.append(CommunMetaData(.preview))
+				}
+				Button("add unique metaData") {
+					sense.metaDatas.append(UniqueMetaData(.preview))
+				}
+				Button("add link metaData") {
+					sense.metaDatas.append(LinkMetaData(.preview))
+				}
 			}
 		} detail: {
 			EmptyView()

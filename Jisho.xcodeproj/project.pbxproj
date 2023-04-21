@@ -10,12 +10,7 @@
 		E909770529F2BFC8000A4CBF /* CommunMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90976FB29F2BFC8000A4CBF /* CommunMetaData.swift */; };
 		E909770729F2BFC8000A4CBF /* LinkMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90976FD29F2BFC8000A4CBF /* LinkMetaData.swift */; };
 		E909770929F2BFC8000A4CBF /* UniqueMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90976FF29F2BFC8000A4CBF /* UniqueMetaData.swift */; };
-		E924BCCB29E2BAE600D80708 /* MetaDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E924BCCA29E2BAE600D80708 /* MetaDataPicker.swift */; };
 		E92D3CA129E3E6580051781D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E92D3CA029E3E6580051781D /* Assets.xcassets */; };
-		E92D3CA329E3EA4D0051781D /* ModifiableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA229E3EA4D0051781D /* ModifiableText.swift */; };
-		E92D3CA529E447690051781D /* JaponaisEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA429E447690051781D /* JaponaisEditSheetView.swift */; };
-		E92D3CA729E4FCF60051781D /* MotEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA629E4FCF60051781D /* MotEditSheetView.swift */; };
-		E92D3CA929E5540D0051781D /* EditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA829E5540D0051781D /* EditSheet.swift */; };
 		E92D3CAE29E69E750051781D /* JMdictFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CAD29E69E750051781D /* JMdictFile.swift */; };
 		E92D3CB129E6A1FD0051781D /* JMdictSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CB029E6A1FD0051781D /* JMdictSettingsView.swift */; };
 		E92D3CB729E7CD570051781D /* JMdict.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E92D3CB629E7CD570051781D /* JMdict.bundle */; };
@@ -49,8 +44,6 @@
 		E996A1F229D28F4800DD700D /* Mot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E996A1F029D28F4800DD700D /* Mot.swift */; };
 		E996A1FB29D57E2700DD700D /* FileExporterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E996A1FA29D57E2700DD700D /* FileExporterDelegate.swift */; };
 		E996A20229D5B32500DD700D /* EasyInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E996A20129D5B32500DD700D /* EasyInit.swift */; };
-		E997236929DF3C0A00FB64D6 /* MetaDataPickerSheeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997236829DF3C0A00FB64D6 /* MetaDataPickerSheeView.swift */; };
-		E997237629DFEECD00FB64D6 /* MetaDataEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997237529DFEECD00FB64D6 /* MetaDataEditView.swift */; };
 		E997237929E0178800FB64D6 /* CloudStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997237829E0178800FB64D6 /* CloudStorage.swift */; };
 		E997237C29E01FE000FB64D6 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997237B29E01FE000FB64D6 /* Settings.swift */; };
 		E997238129E02A4600FB64D6 /* SettingsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997238029E02A4600FB64D6 /* SettingsPageView.swift */; };
@@ -66,8 +59,6 @@
 		E9B1946F29DD8B11004EF30B /* Exemple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1946D29DD8B10004EF30B /* Exemple.swift */; };
 		E9B1947229DDB1CB004EF30B /* DebugEntityListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947129DDB1CB004EF30B /* DebugEntityListWrapper.swift */; };
 		E9B1947629DE9B95004EF30B /* TraductionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947529DE9B95004EF30B /* TraductionDetailView.swift */; };
-		E9B1947929DEC125004EF30B /* TraductionEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947829DEC125004EF30B /* TraductionEditSheetView.swift */; };
-		E9B1947B29DEC989004EF30B /* SenseEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947A29DEC989004EF30B /* SenseEditSheetView.swift */; };
 		E9B1947E29DEF4FF004EF30B /* SheetDismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947D29DEF4FF004EF30B /* SheetDismissButton.swift */; };
 		E9B1948029DF02F2004EF30B /* ListClickableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947F29DF02F2004EF30B /* ListClickableText.swift */; };
 		E9B1948229DF2047004EF30B /* NavBarEditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1948129DF2047004EF30B /* NavBarEditButton.swift */; };
@@ -78,12 +69,7 @@
 		E90976FB29F2BFC8000A4CBF /* CommunMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunMetaData.swift; sourceTree = "<group>"; };
 		E90976FD29F2BFC8000A4CBF /* LinkMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetaData.swift; sourceTree = "<group>"; };
 		E90976FF29F2BFC8000A4CBF /* UniqueMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueMetaData.swift; sourceTree = "<group>"; };
-		E924BCCA29E2BAE600D80708 /* MetaDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataPicker.swift; sourceTree = "<group>"; };
 		E92D3CA029E3E6580051781D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E92D3CA229E3EA4D0051781D /* ModifiableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiableText.swift; sourceTree = "<group>"; };
-		E92D3CA429E447690051781D /* JaponaisEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaponaisEditSheetView.swift; sourceTree = "<group>"; };
-		E92D3CA629E4FCF60051781D /* MotEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotEditSheetView.swift; sourceTree = "<group>"; };
-		E92D3CA829E5540D0051781D /* EditSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSheet.swift; sourceTree = "<group>"; };
 		E92D3CAD29E69E750051781D /* JMdictFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMdictFile.swift; sourceTree = "<group>"; };
 		E92D3CB029E6A1FD0051781D /* JMdictSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMdictSettingsView.swift; sourceTree = "<group>"; };
 		E92D3CB629E7CD570051781D /* JMdict.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JMdict.bundle; sourceTree = "<group>"; };
@@ -119,8 +105,6 @@
 		E996A1F029D28F4800DD700D /* Mot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mot.swift; sourceTree = "<group>"; };
 		E996A1FA29D57E2700DD700D /* FileExporterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExporterDelegate.swift; sourceTree = "<group>"; };
 		E996A20129D5B32500DD700D /* EasyInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyInit.swift; sourceTree = "<group>"; };
-		E997236829DF3C0A00FB64D6 /* MetaDataPickerSheeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataPickerSheeView.swift; sourceTree = "<group>"; };
-		E997237529DFEECD00FB64D6 /* MetaDataEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataEditView.swift; sourceTree = "<group>"; };
 		E997237829E0178800FB64D6 /* CloudStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStorage.swift; sourceTree = "<group>"; };
 		E997237B29E01FE000FB64D6 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		E997238029E02A4600FB64D6 /* SettingsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageView.swift; sourceTree = "<group>"; };
@@ -136,8 +120,6 @@
 		E9B1946D29DD8B10004EF30B /* Exemple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exemple.swift; sourceTree = "<group>"; };
 		E9B1947129DDB1CB004EF30B /* DebugEntityListWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugEntityListWrapper.swift; sourceTree = "<group>"; };
 		E9B1947529DE9B95004EF30B /* TraductionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraductionDetailView.swift; sourceTree = "<group>"; };
-		E9B1947829DEC125004EF30B /* TraductionEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraductionEditSheetView.swift; sourceTree = "<group>"; };
-		E9B1947A29DEC989004EF30B /* SenseEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenseEditSheetView.swift; sourceTree = "<group>"; };
 		E9B1947D29DEF4FF004EF30B /* SheetDismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetDismissButton.swift; sourceTree = "<group>"; };
 		E9B1947F29DF02F2004EF30B /* ListClickableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListClickableText.swift; sourceTree = "<group>"; };
 		E9B1948129DF2047004EF30B /* NavBarEditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarEditButton.swift; sourceTree = "<group>"; };
@@ -173,24 +155,6 @@
 				E9835C8229CC9382008CF340 /* Jisho */,
 				E9F7760229F123C300FC11D4 /* Jisho.app */,
 			);
-			sourceTree = "<group>";
-		};
-		E92D3CAB29E555100051781D /* SubViews */ = {
-			isa = PBXGroup;
-			children = (
-				E9B1947829DEC125004EF30B /* TraductionEditSheetView.swift */,
-				E997237529DFEECD00FB64D6 /* MetaDataEditView.swift */,
-			);
-			path = SubViews;
-			sourceTree = "<group>";
-		};
-		E92D3CAC29E5551B0051781D /* SenseEditViews */ = {
-			isa = PBXGroup;
-			children = (
-				E9B1947A29DEC989004EF30B /* SenseEditSheetView.swift */,
-				E92D3CAB29E555100051781D /* SubViews */,
-			);
-			path = SenseEditViews;
 			sourceTree = "<group>";
 		};
 		E92D3CAF29E6A1D90051781D /* JMdictSettings */ = {
@@ -371,8 +335,6 @@
 				E9835C9629CC9382008CF340 /* SideMenu */,
 				E93D515D29DC0F4400AAC780 /* EntityList */,
 				E93D515E29DC0F5900AAC780 /* EntityDetailsViews */,
-				E9B1947729DEC0F4004EF30B /* EditSheetViews */,
-				E997238C29E1369700FB64D6 /* MetaDataPickerViews */,
 			);
 			path = OtherViews;
 			sourceTree = "<group>";
@@ -430,34 +392,13 @@
 			path = DebugEntities;
 			sourceTree = "<group>";
 		};
-		E997238C29E1369700FB64D6 /* MetaDataPickerViews */ = {
-			isa = PBXGroup;
-			children = (
-				E997236829DF3C0A00FB64D6 /* MetaDataPickerSheeView.swift */,
-			);
-			path = MetaDataPickerViews;
-			sourceTree = "<group>";
-		};
-		E9B1947729DEC0F4004EF30B /* EditSheetViews */ = {
-			isa = PBXGroup;
-			children = (
-				E92D3CA629E4FCF60051781D /* MotEditSheetView.swift */,
-				E92D3CA429E447690051781D /* JaponaisEditSheetView.swift */,
-				E92D3CAC29E5551B0051781D /* SenseEditViews */,
-			);
-			path = EditSheetViews;
-			sourceTree = "<group>";
-		};
 		E9B1947C29DEF4CD004EF30B /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
 				E9B1947D29DEF4FF004EF30B /* SheetDismissButton.swift */,
 				E9B1947F29DF02F2004EF30B /* ListClickableText.swift */,
-				E92D3CA229E3EA4D0051781D /* ModifiableText.swift */,
 				E9B1948129DF2047004EF30B /* NavBarEditButton.swift */,
 				E997238429E02B2600FB64D6 /* ShowSideMenuButton.swift */,
-				E924BCCA29E2BAE600D80708 /* MetaDataPicker.swift */,
-				E92D3CA829E5540D0051781D /* EditSheet.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -534,9 +475,7 @@
 			files = (
 				E9B1947229DDB1CB004EF30B /* DebugEntityListWrapper.swift in Sources */,
 				E909770929F2BFC8000A4CBF /* UniqueMetaData.swift in Sources */,
-				E9B1947B29DEC989004EF30B /* SenseEditSheetView.swift in Sources */,
 				E9B1947E29DEF4FF004EF30B /* SheetDismissButton.swift in Sources */,
-				E92D3CA729E4FCF60051781D /* MotEditSheetView.swift in Sources */,
 				E997237C29E01FE000FB64D6 /* Settings.swift in Sources */,
 				E997238529E02B2600FB64D6 /* ShowSideMenuButton.swift in Sources */,
 				E996A1F229D28F4800DD700D /* Mot.swift in Sources */,
@@ -552,7 +491,6 @@
 				E9835CB329CC9382008CF340 /* InitType.swift in Sources */,
 				E997238129E02A4600FB64D6 /* SettingsPageView.swift in Sources */,
 				E9B1946F29DD8B11004EF30B /* Exemple.swift in Sources */,
-				E9B1947929DEC125004EF30B /* TraductionEditSheetView.swift in Sources */,
 				E93D515629DA992500AAC780 /* ListDisplayableEntityView.swift in Sources */,
 				E9835CBD29CC9382008CF340 /* DebugPageView.swift in Sources */,
 				E996A1EB29D2811E00DD700D /* RowDisplayableEntityView.swift in Sources */,
@@ -560,7 +498,6 @@
 				E9F7760429F12AFB00FC11D4 /* MetaDatasFile.swift in Sources */,
 				E9B1946129DD5ACB004EF30B /* Langue.swift in Sources */,
 				E93D516029DC0F8900AAC780 /* MotDetailView.swift in Sources */,
-				E997237629DFEECD00FB64D6 /* MetaDataEditView.swift in Sources */,
 				E9835CBC29CC9382008CF340 /* SearchPageView.swift in Sources */,
 				E9835CBA29CC9382008CF340 /* SideMenuView.swift in Sources */,
 				E9835CC529CC9382008CF340 /* ContentViewModel.swift in Sources */,
@@ -573,27 +510,22 @@
 				E9B1947629DE9B95004EF30B /* TraductionDetailView.swift in Sources */,
 				E9B1945E29DD593B004EF30B /* Traduction.swift in Sources */,
 				E93D515329D9A36B00AAC780 /* Japonais.swift in Sources */,
-				E92D3CA529E447690051781D /* JaponaisEditSheetView.swift in Sources */,
 				E92DE1CA29D1C61600B5CB86 /* MetaData.swift in Sources */,
 				E93D515B29DC0CB400AAC780 /* Sense.swift in Sources */,
 				E997237929E0178800FB64D6 /* CloudStorage.swift in Sources */,
 				E9835CB429CC9382008CF340 /* AppPage.swift in Sources */,
 				E9835CAF29CC9382008CF340 /* SQLiteFile.swift in Sources */,
-				E92D3CA929E5540D0051781D /* EditSheet.swift in Sources */,
 				E9835CBB29CC9382008CF340 /* ContentView.swift in Sources */,
 				E9835CC429CC9382008CF340 /* FileError.swift in Sources */,
-				E924BCCB29E2BAE600D80708 /* MetaDataPicker.swift in Sources */,
 				E9835CB229CC9382008CF340 /* SideMenuSize.swift in Sources */,
 				E996A1FB29D57E2700DD700D /* FileExporterDelegate.swift in Sources */,
 				E9835CB029CC9382008CF340 /* JishoApp.swift in Sources */,
-				E92D3CA329E3EA4D0051781D /* ModifiableText.swift in Sources */,
 				E92D3CAE29E69E750051781D /* JMdictFile.swift in Sources */,
 				E9B1946429DD6D89004EF30B /* DataModel.xcdatamodeld in Sources */,
 				E9835CC229CC9382008CF340 /* ViewExtensions.swift in Sources */,
 				E997238329E02AE000FB64D6 /* LanguesSettingsView.swift in Sources */,
 				E9B1948029DF02F2004EF30B /* ListClickableText.swift in Sources */,
 				E996A20229D5B32500DD700D /* EasyInit.swift in Sources */,
-				E997236929DF3C0A00FB64D6 /* MetaDataPickerSheeView.swift in Sources */,
 				E9B1945429DC3693004EF30B /* JaponaisDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

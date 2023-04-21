@@ -129,29 +129,6 @@ public class Sense: Entity {
 		return nil
 	}
 	
-	
-//	func metaDataBinding(for index: Int) -> Binding<MetaData?>? {
-//		guard let metaDatas = self.metaDatas else { return nil }
-//		guard metaDatas.indices.contains(index) else { return nil }
-//
-//		return Binding {
-//			metaDatas[index]
-//		} set: {
-//			guard let newValue = $0 else { return }
-//			self.metaDatas![index] = newValue
-//		}
-//	}
-//
-//	func metaDataBinding(for index: Int) -> Binding<MetaData>? {
-//		guard let metaDatas = self.metaDatas else { return nil }
-//		guard metaDatas.indices.contains(index) else { return nil }
-//
-//		return Binding {
-//			metaDatas[index]
-//		} set: {
-//			self.metaDatas![index] = $0
-//		}
-//	}
 
 	//MARK: inits
 	convenience init(id: UUID? = nil,
@@ -168,12 +145,11 @@ public class Sense: Entity {
 	
 	//MARK: EasyInit's init
 	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {
-		let context:NSManagedObjectContext = context ?? DataController.shared.mainQueueManagedObjectContext
 		
 		var previewMetaData: [MetaData]? {
 			let request:NSFetchRequest<MetaData> = MetaData.fetchRequest()
 			do {
-				let allMetaDatas = try context.fetch(request)
+				let allMetaDatas = try (context ?? DataController.shared.mainQueueManagedObjectContext).fetch(request)
 				if allMetaDatas.isEmpty { return nil }
 				var output: [MetaData] = []
 				for _ in 1...Int.random(in: 1...5) {

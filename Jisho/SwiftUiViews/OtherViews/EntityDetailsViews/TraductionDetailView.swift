@@ -19,13 +19,12 @@ struct TraductionDetailView: View {
     var body: some View {
 		HStack(alignment: .top) {
 			Text(traduction.langue.flag)
-			Text(traduction.text ?? "")
+			Text(traduction.text)
 		}
 		.contextMenu {
 			Button(action: { showSheet.toggle() },
 				   label: { Label("Modifier", systemImage: "pencil.circle") })
 		}
-		.editSheet(isPresented: $showSheet, entityToEdit: traduction)
     }
 }
 

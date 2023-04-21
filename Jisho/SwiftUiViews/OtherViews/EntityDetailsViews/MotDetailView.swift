@@ -21,22 +21,21 @@ struct MotDetailView: View {
     var body: some View {
 		List {
 			Section("Japonais") {
-				ForEach(mot.japonais ?? []) { jap in
+				ForEach(mot.japonais) { jap in
 					JaponaisDetailsView(jap)
 				}
 			}
-			if let senses = mot.senses {
-				ForEach(0..<senses.count, id: \.self) { index in
-					Section("Sense \(index + 1)") {
-						SenseDetailView(senses[index])
-					}
+			
+			ForEach(Array(mot.senses.enumerated()), id: \.element) { index, sense in
+				Section("Sense \(index + 1)") {
+					SenseDetailView(sense)
 				}
 			}
-			TextField("Notes", text: mot.bindingNotes, axis: .vertical)
+			TextField("Notes", text: $mot.notes, axis: .vertical)
 				.focused($notesIsFocused)
 				.lineLimit(3...)
 				.onSubmit {
-					mot.notes = (mot.notes ?? "") + "\n"
+					mot.notes += "\n"
 					notesIsFocused = true
 				}
 		}
@@ -48,7 +47,6 @@ struct MotDetailView: View {
 				self.sheetIsShow = true
 			}
 		}
-		.editSheet(isPresented: $sheetIsShow, entityToEdit: mot)
     }
 }
 

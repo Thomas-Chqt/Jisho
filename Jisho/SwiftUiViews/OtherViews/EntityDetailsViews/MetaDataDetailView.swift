@@ -9,21 +9,34 @@ import SwiftUI
 
 struct MetaDataDetailView: View {
 	
-	@ObservedObject var metaData: CommunMetaData
+	@ObservedObject var metaData: MetaData
 	
-	init(_ metaData: CommunMetaData) {
+	init(_ metaData: MetaData) {
 		self.metaData = metaData
 	}
 	
     var body: some View {
-		HStack(alignment: .top) {
-			Image(systemName: "info.circle")
-			Text(metaData.text)
+		Group {
+			if metaData is LinkMetaData {
+				NavigationLink(value: nil as Int?) {
+					label
+				}
+			}
+			else {
+				label
+			}
 		}
 		.font(.caption)
 		.padding(.vertical, 3.5)
 		.padding(.horizontal, 10)
     }
+	
+	var label: some View {
+		HStack(alignment: .top) {
+			Image(systemName: "info.circle")
+			Text(metaData.text)
+		}
+	}
 }
 
 struct MetaDataDetailView_Previews: PreviewProvider {

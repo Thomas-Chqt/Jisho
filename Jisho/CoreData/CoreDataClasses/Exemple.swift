@@ -11,47 +11,43 @@ import CoreData
 
 @objc(Exemple)
 public class Exemple: Entity {
+	
+	//MARK: FetchRequests
 	@nonobjc public class func fetchRequest() -> NSFetchRequest<Exemple> {
 		return NSFetchRequest<Exemple>(entityName: "Exemple")
 	}
 	
+	//MARK: NSManaged attributs
 	@NSManaged private var parent_atb: NSOrderedSet?
-
 	@NSManaged private var japonais_atb: String?
 	@NSManaged public var traductions_atb: NSSet?
 
-	var japonais: String? {
+	
+	//MARK: Computed variables
+	var japonais: String {
 		get {
-			guard let japonais_atb = japonais_atb else { return nil }
-			if japonais_atb.trimmingCharacters(in: .whitespaces).isEmpty { return nil }
-			return japonais_atb
+			return japonais_atb ?? ""
 		}
 		set {
-			guard let newValue = newValue else { japonais_atb = nil ; return }
-			if newValue.trimmingCharacters(in: .whitespaces).isEmpty { japonais_atb = nil ; return }
 			japonais_atb = newValue
 		}
 	}
 	
-	var traductions: Set<Traduction>? {
+	var traductions: Set<Traduction> {
 		get {
-			guard let traductions_atb = traductions_atb else { return nil }
-			guard let traductions = traductions_atb as? Set<Traduction> else { return nil }
-			return traductions.isEmpty ? nil : traductions
+			guard let traductions_atb = traductions_atb else { return [] }
+			guard let traductions = traductions_atb as? Set<Traduction> else { return [] }
+			return traductions
 		}
 		set {
-			guard let newValue = newValue else { traductions_atb = nil ; return}
 			if newValue.isEmpty { traductions_atb = nil ; return}
 			traductions_atb = NSSet(set: newValue)
 		}
 	}
 	
+	
+	//MARK: Functions
 	func addTraduction(_ traduction: Traduction) -> Traduction? {
-		guard let traductions = self.traductions else {
-			addToTraductions_atb(traduction)
-			return traduction
-		}
-		
 		if !(traductions.contains { $0.langue == traduction.langue }) {
 			addToTraductions_atb(traduction)
 			return traduction
@@ -60,16 +56,15 @@ public class Exemple: Entity {
 	}
 
 
-	convenience init(id: UUID, japonais: String? = nil, traductions: Set<Traduction>? = nil, context: NSManagedObjectContext) {
+
+	convenience init(id: UUID? = nil, japonais: String? = nil, traductions: Set<Traduction>? = nil, context: NSManagedObjectContext? = nil) {
 		self.init(id: id, context: context)
 		
-		self.japonais = japonais
-		self.traductions = traductions
+		self.japonais = japonais ?? ""
+		self.traductions = traductions ?? []
 	}
 	
 	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {
-		let context:NSManagedObjectContext = context ?? DataController.shared.mainQueueManagedObjectContext
-
 		let previewJaponais = ["私の名前はトーマスです", "私は猫が好き", "晴香が可愛い", "お前はバカだなぁ"]
 		
 		var previewTraductions: Set<Traduction> {
@@ -105,7 +100,7 @@ extension Exemple: Displayable {
 	}
 	
 	var secondary: String? {
-		return traductions?.first?.text
+		return traductions.first?.text
 	}
 }
 

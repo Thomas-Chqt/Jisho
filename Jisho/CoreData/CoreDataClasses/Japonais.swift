@@ -13,108 +13,81 @@ import SwiftUI
 @objc(Japonais)
 public class Japonais: Entity {
 	
+	//MARK: FetchRequests
 	@nonobjc public class func fetchRequest() -> NSFetchRequest<Japonais> {
 		return NSFetchRequest<Japonais>(entityName: "Japonais")
 	}
 	
+	
+	//MARK: NSManaged attributs
 	@NSManaged private var kanjis_atb: String?
 	@NSManaged private var kanas_atb: String?
-
 	@NSManaged private var parent_atb: Mot?
 	
 	
-	var kanjis: [String]? {
+	//MARK: Computed variables
+	var kanjis: [String] {
 		get {
-			guard let kanjis_atb = kanjis_atb else { return nil }
-//			if kanjis_atb.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return nil }
+			guard let kanjis_atb = kanjis_atb else { return [] }
 			let kanjis = kanjis_atb.split(separator: "␚", omittingEmptySubsequences: false)
-			if kanjis.isEmpty { return nil }
 			return kanjis.map { subString in String(subString) }
 		}
 		set {
-			guard let newValue = newValue else { kanjis_atb = nil ; return }
 			if newValue.isEmpty { kanjis_atb = nil ; return }
 			kanjis_atb = newValue.joined(separator: "␚")
 		}
 	}
 	
-	var kanas: [String]? {
+	var kanas: [String] {
 		get {
-			guard let kanas_atb = kanas_atb else { return nil }
-//			if kanas_atb.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return nil }
+			guard let kanas_atb = kanas_atb else { return [] }
 			let kanas = kanas_atb.split(separator: "␚", omittingEmptySubsequences: false)
-			if kanas.isEmpty { return nil }
 			return kanas.map { subString in String(subString) }
 		}
 		set {
-			guard let newValue = newValue else { kanas_atb = nil ; return }
 			if newValue.isEmpty { kanas_atb = nil ; return }
 			kanas_atb = newValue.joined(separator: "␚")
 		}
 	}
 	
-	func kanjiBinding(for index: Int) -> Binding<String>? {
-		if self.kanjis == nil { return nil }
-		return Binding(get: {self.kanjis![index]},
-					   set: {self.kanjis![index] = $0})
-	}
 	
-	func kanaBinding(for index: Int) -> Binding<String>? {
-		if self.kanas == nil { return nil }
-		return Binding(get: {self.kanas![index]},
-					   set: {self.kanas![index] = $0})
-	}
-	
-	
-	
-	convenience init(id: UUID,
+	//MARK: inits
+	convenience init(id: UUID? = nil,
 					 kanjis: [String]? = nil,
 					 kanas: [String]? = nil,
-					 context: NSManagedObjectContext) {
+					 context: NSManagedObjectContext? = nil) {
 		self.init(id: id, context: context)
 		
-		self.kanjis = kanjis
-		self.kanas = kanas
+		self.kanjis = kanjis ?? []
+		self.kanas = kanas ?? []
 	}
 	
+	//MARK: EasyInit's init
 	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {
-		let context:NSManagedObjectContext = context ?? DataController.shared.mainQueueManagedObjectContext
-		
 		let previewKanjis = [["猫"], ["犬"], ["私", "俺"], ["馬"]]
 		let previewKanas = [["ねこ"], ["いぬ"], ["わたし", "おれ"], ["うま"]]
 		
 		switch type {
 		case .empty:
-			self.init(id: UUID(), context: context)
+			self.init(context: context)
 		case .preview:
-			self.init(id: UUID(),
-					  kanjis: previewKanjis.randomElement()!,
+			self.init(kanjis: previewKanjis.randomElement()!,
 					  kanas: previewKanas.randomElement()!,
 					  context: context)
 		}
 	}
-	
-	convenience init(k_ele: json_K_ele, r_eles: [json_R_ele], context: NSManagedObjectContext) {
-		self.init(id: UUID(),
-				  kanjis: [k_ele.keb],
-				  kanas: r_eles.filter { $0.re_nokanji == false }
-								.filter { $0.re_restr.contains(k_ele.keb) || $0.re_restr.isEmpty }.map { $0.reb },
-				  context: context)
-	}
 }
 
 
+//MARK: Protocole extentions
 extension Japonais: Displayable {
 	var primary: String? {
-		return kanjis?.first
+		return kanjis.first
 	}
 	
 	var secondary: String? {
-		return kanas?.first
+		return kanas.first
 	}
 }
 
-
-extension Japonais: EasyInit {
-	
-}
+extension Japonais: EasyInit { }

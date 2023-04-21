@@ -19,45 +19,40 @@ struct JaponaisDetailsView: View {
 	
     var body: some View {
 		VStack(alignment: .leading) {
-			if (japonais.kanas?.count ?? 0) == 0 && (japonais.kanjis?.count ?? 0) == 0 {
-				Text("")
-					.font(.title)
-			}
-			if let kanas = japonais.kanas {
+			if japonais.kanas.count > 0 {
 				ScrollView(.horizontal) {
 					HStack {
-						ForEach(0..<kanas.count, id: \.self) { index in
-							if index != 0 {
-								Divider().frame(height: 15)
-							}
-							Text(japonais.kanas?[index] ?? "")
+						ForEach(Array(japonais.kanas.enumerated()), id: \.element) { index, kana in
+							if index != 0 { Divider().frame(height: 15) }
+							Text(kana).font(japonais.kanjis.isEmpty ? .largeTitle : .footnote)
 						}
 					}
 				}
 				.scrollIndicators(.hidden)
 			}
-			if let kanjis = japonais.kanjis {
+			
+			if japonais.kanjis.count > 0 {
 				ScrollView(.horizontal) {
 					HStack {
-						ForEach(0..<kanjis.count, id: \.self) { index in
-							if index != 0 {
-								Divider().frame(height: 30)
-							}
-							Text(japonais.kanjis?[index] ?? "")
-								.font(.title)
+						ForEach(Array(japonais.kanjis.enumerated()), id: \.element) { index, kanji in
+							if index != 0 { Divider().frame(height: 30) }
+							Text(kanji).font(japonais.kanas.isEmpty ? .largeTitle : .title)
 						}
 					}
 				}
 				.scrollIndicators(.hidden)
 			}
 		}
+		.frame(height: 50)
 		.contextMenu {
 			Button(action: { showSheet.toggle() },
 				   label: { Label("Modifier", systemImage: "pencil.circle") })
 		}
-		.editSheet(isPresented: $showSheet, entityToEdit: japonais)
 	}
 }
+
+
+
 
 struct JaponaisDetailsView_Previews: PreviewProvider {
 	
@@ -69,6 +64,9 @@ struct JaponaisDetailsView_Previews: PreviewProvider {
 		} detail: {
 			List {
 				JaponaisDetailsView(Japonais(.preview))
+				JaponaisDetailsView(Japonais(kanjis: ["猫"]))
+				JaponaisDetailsView(Japonais(kanas: ["ねこ"]))
+
 			}
 		}
 		.navigationSplitViewStyle(.balanced)
@@ -78,7 +76,10 @@ struct JaponaisDetailsView_Previews: PreviewProvider {
 		NavigationSplitView(columnVisibility: .constant(.all)) {
 			List {
 				JaponaisDetailsView(Japonais(.preview))
+				JaponaisDetailsView(Japonais(kanjis: ["猫"]))
+				JaponaisDetailsView(Japonais(kanas: ["ねこ"]))
 			}
+			.listStyle(.grouped)
 		} detail: {
 			EmptyView()
 		}
@@ -86,3 +87,4 @@ struct JaponaisDetailsView_Previews: PreviewProvider {
 		.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
 	}
 }
+

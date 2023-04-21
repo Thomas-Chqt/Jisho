@@ -12,51 +12,47 @@ import Combine
 
 @objc(Traduction)
 public class Traduction: Entity {
+	
+	//MARK: FetchRequests
 	@nonobjc public class func fetchRequest() -> NSFetchRequest<Traduction> {
 		return NSFetchRequest<Traduction>(entityName: "Traduction")
 	}
 	
+	
+	//MARK: NSManaged attributs
 	@NSManaged private var parentMot_atb: Mot?
 	@NSManaged private var parentSense_atb: Sense?
 	@NSManaged private var parentMetaData_atb: MetaData?
 	@NSManaged private var parentExemple_atb: Exemple?
 
-	
-	
 	@NSManaged public var langue_atb: String?
 	@NSManaged public var text_atb: String?
 	
+	
+	//MARK: Computed variables
 	var langue: Langue {
 		get {
 			guard let langue_atb = langue_atb else { return .none }
 			return Langue(rawValue: langue_atb) ?? Langue.none
 		}
 		set {
+			self.parentSense_atb?.objectWillChange.send()
 			langue_atb = newValue.rawValue
 		}
 	}
 		
-	var text: String? {
+	var text: String {
 		get {
-			guard let text_atb = text_atb else { return nil }
-			if text_atb.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return nil }
-			return text_atb
+			return text_atb ?? ""
 		}
 		set {
-			guard let newValue = newValue else { text_atb = nil ; return }
-			if newValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { text_atb = nil ; return }
+			self.parentMetaData_atb?.objectWillChange.send()
 			text_atb = newValue
 		}
 	}
 	
-	func parentObjectWillChange() -> ObservableObjectPublisher {
-		if let objWillChange = parentMot_atb?.objectWillChange { return objWillChange }
-		if let objWillChange = parentSense_atb?.objectWillChange { return objWillChange }
-		if let objWillChange = parentMetaData_atb?.objectWillChange { return objWillChange }
-		if let objWillChange = parentExemple_atb?.objectWillChange { return objWillChange }
-		fatalError("Traduction has no parent")
-	}
 	
+	//MARK: inits
 	convenience init(id: UUID? = nil,
 					 langue: Langue = .none,
 					 text: String? = nil,
@@ -64,12 +60,11 @@ public class Traduction: Entity {
 		self.init(id: id, context: context)
 		
 		self.langue = langue
-		self.text = text
+		self.text = text ?? ""
 	}
 	
+	//MARK: EasyInit's init
 	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {
-		let context:NSManagedObjectContext = context ?? DataController.shared.mainQueueManagedObjectContext
-
 		let previewLangues:[Langue] = [.francais, .anglais, .espagnol, .allemand]
 		
 		let previewTexts:[String?] = [
@@ -91,7 +86,7 @@ public class Traduction: Entity {
 }
 
 
-
+//MARK: Protocole extentions
 extension Traduction: Displayable {
 	var primary: String? {
 		text
@@ -102,10 +97,10 @@ extension Traduction: Displayable {
 	}
 }
 
-extension Traduction: EasyInit {
-	
-}
+extension Traduction: EasyInit { }
 
+
+//MARK: Array extentions
 extension Set where Element == Traduction {
 	
 	func filter(using selectedLangues: Set<Langue> = Settings.shared.selectedLangues) -> Set<Element> {
@@ -133,20 +128,6 @@ extension Set where Element == Traduction {
 	
 	//can only return a trad of the first langue in selected langues
 	func firstLangue(using settings: Settings = Settings.shared) -> Element? {
-		guard let firstMatch = self.firstMatch(using: settings) else { return nil }
-		let sortedSelectedLangue = settings.langueOrder.compactMap {
-			if settings.selectedLangues.contains($0) {
-				return $0
-			}
-			else {
-				return nil as Langue?
-			}
-		}
-		if firstMatch.langue == sortedSelectedLangue.first {
-			return firstMatch
-		}
-		else {
-			return nil
-		}
+		return self.filter { $0.langue == Langue.first }.first
 	}
 }
