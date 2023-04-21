@@ -57,10 +57,10 @@ public class Traduction: Entity {
 		fatalError("Traduction has no parent")
 	}
 	
-	convenience init(id: UUID,
+	convenience init(id: UUID? = nil,
 					 langue: Langue = .none,
 					 text: String? = nil,
-					 context: NSManagedObjectContext) {
+					 context: NSManagedObjectContext? = nil) {
 		self.init(id: id, context: context)
 		
 		self.langue = langue
@@ -90,6 +90,8 @@ public class Traduction: Entity {
 	}
 }
 
+
+
 extension Traduction: Displayable {
 	var primary: String? {
 		text
@@ -103,7 +105,6 @@ extension Traduction: Displayable {
 extension Traduction: EasyInit {
 	
 }
-
 
 extension Set where Element == Traduction {
 	

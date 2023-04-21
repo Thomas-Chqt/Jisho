@@ -24,7 +24,7 @@ struct DebugPageView: View {
 						ManagedObjectDebugRowView<Japonais>()
 						ManagedObjectDebugRowView<Sense>()
 						ManagedObjectDebugRowView<Traduction>()
-						ManagedObjectDebugRowView<MetaData>()
+						ManagedObjectDebugRowView<CommunMetaData>()
 					}
 					Section("Settings") {
 						Text("Reset Settings").clickable {
@@ -48,7 +48,7 @@ struct DebugPageView: View {
 					case .traduction(_):
 						DebugEntityListWrapper<Traduction>(selection: $vm.selection)
 					case .metaData(_):
-						DebugEntityListWrapper<MetaData>(selection: $vm.selection)
+						DebugEntityListWrapper<CommunMetaData>(selection: $vm.selection)
 					default:
 						EmptyView()
 					}
@@ -84,7 +84,7 @@ struct DebugPageView: View {
 					SenseDetailView(sense)
 				}
 			}
-			if let metaData = vm.selection as? MetaData {
+			if let metaData = vm.selection as? CommunMetaData {
 				List {
 					MetaDataDetailView(metaData)
 				}

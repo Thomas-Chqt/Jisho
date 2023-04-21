@@ -28,7 +28,7 @@ struct ManagedObjectDebugRowView_Previews: PreviewProvider {
     static var previews: some View {
 		NavigationSplitView(columnVisibility: .constant(.all)) {
 			List {
-				ManagedObjectDebugRowView<MetaData>()
+				ManagedObjectDebugRowView<CommunMetaData>()
 			}
 			.listStyle(.plain)
 			.navigationTitle("Title")

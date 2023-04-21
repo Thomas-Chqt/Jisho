@@ -47,10 +47,10 @@ public class Entity: NSManagedObject, Identifiable {
 		self.objectContext.delete(self)
 	}
 	
-	convenience init(id: UUID, context: NSManagedObjectContext) {
-		self.init(context: context)
+	convenience init(id: UUID? = nil, context: NSManagedObjectContext? = nil) {
+		self.init(context: context ?? DataController.shared.mainQueueManagedObjectContext)
 		
-		self.id = id
+		self.id = id ?? UUID()
 		createTime = Date()
 	}
 	

@@ -8,57 +8,52 @@
 
 import Foundation
 import CoreData
-import SwiftUI
 
 @objc(MetaData)
 public class MetaData: Entity {
+	
+	//MARK: FetchRequests
 	@nonobjc public class func fetchRequest() -> NSFetchRequest<MetaData> {
 		return NSFetchRequest<MetaData>(entityName: "MetaData")
 	}
 	
-	@NSManaged public var sensesIn_atb: NSOrderedSet?
+	//MARK: NSManaged attributs
 	@NSManaged public var traductions_atb: NSSet?
 	
-	var traductions: Set<Traduction>? {
+	
+	//MARK: Computed variables
+	var traductions: Set<Traduction> {
 		get {
-			guard let traductions_atb = traductions_atb else { return nil }
-			guard let traductions = traductions_atb as? Set<Traduction> else { return nil }
-			return traductions.isEmpty ? nil : traductions
+			guard let traductions_atb = traductions_atb else { return [] }
+			guard let traductions = traductions_atb as? Set<Traduction> else { return [] }
+			return traductions
 		}
 		set {
-			guard let newValue = newValue else { traductions_atb = nil ; return}
 			if newValue.isEmpty { traductions_atb = nil ; return}
 			traductions_atb = NSSet(set: newValue)
 		}
 	}
 	
-	var text: String? {
+	var text: String {
 		get {
-			return traductions?.firstMatch()?.text
+			return traductions.firstMatch()?.text ?? ""
 		}
 		set {
-//			if newValue?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true { return }
-			self.objectWillChange.send()
-			guard let traduction = traductions?.firstLangue() ??
-									addTraduction(Traduction(id: UUID(), langue: .first, context: self.objectContext)) else {
+			if let traduction = traductions.firstLangue() ?? addTraduction(Traduction(id: UUID(),
+																						 langue: .first,
+																						 context: self.objectContext)) {
+				traduction.text = newValue
+			}
+			else {
 				print("Error, no trad for selected langue and unable to create one")
 				return
 			}
-			traduction.text = newValue
 		}
 	}
 	
-	var bindingText: Binding<String> {
-		return Binding( get: { self.text ?? ""},
-						set: { self.text = $0 })
-	}
 	
+	//MARK: Functions
 	func addTraduction(_ traduction: Traduction) -> Traduction? {
-		guard let traductions = self.traductions else {
-			addToTraductions_atb(traduction)
-			return traduction
-		}
-		
 		if !(traductions.contains { $0.langue == traduction.langue }) {
 			addToTraductions_atb(traduction)
 			return traduction
@@ -66,50 +61,32 @@ public class MetaData: Entity {
 		return nil
 	}
 	
-	convenience init(id: UUID, traductions: Set<Traduction>? = nil, context: NSManagedObjectContext) {
+	
+	//MARK: inits
+	convenience init(id: UUID? = nil, traductions: Set<Traduction>? = nil, context: NSManagedObjectContext? = nil) {
 		self.init(id: id, context: context)
 
-		self.traductions = traductions
+		self.traductions = traductions ?? []
 	}
 	
-	convenience init(id: UUID, text: String? = nil, context: NSManagedObjectContext) {
+	convenience init(id: UUID? = nil, langue: Langue? = nil, text: String? = nil, context: NSManagedObjectContext? = nil) {
 		self.init(id: id, context: context)
 		
-		self.text = text
-	}
-
-	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {
-		let previewTexts = ["Nom commun", "Verbe", "Adjectif", "Nom propre"]
-		
-		let context:NSManagedObjectContext = context ?? DataController.shared.mainQueueManagedObjectContext
-		
-		switch type {
-		case .empty:
-			self.init(id: UUID(), context: context)
-		case .preview:
-			self.init(id: UUID(),
-					  text: previewTexts.randomElement()!,
-					  context: context)
+		if let langue = langue {
+			self.traductions = [ Traduction(langue: langue, text: text, context: context) ]
+		}
+		else {
+			self.text = text ?? ""
 		}
 	}
-	
-	convenience init(jsonMetaData: json_MetaData, context: NSManagedObjectContext) {
-		self.init(id: UUID(),
-				  traductions: [Traduction(id: UUID(), langue: .francais,
-										   text: jsonMetaData.fr, context: context),
-								Traduction(id: UUID(), langue: .anglais,
-										   text: jsonMetaData.en, context: context)],
-				  context: context)
-	}
 }
 
+
+//MARK: Protocole extentions
 extension MetaData: Displayable {
 	var primary: String? {
-		return text
+		return text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : text
 	}
-}
-
-extension MetaData: EasyInit {
 }
 
 extension MetaData?: Identifiable {
@@ -118,24 +95,6 @@ extension MetaData?: Identifiable {
 	}
 }
 
-extension MetaData {
-	static let cache = NSCache<NSString, MetaData>()
-}
-
-extension Array where Element == MetaData {
-	func filtered(by filter: String) -> [MetaData] {
-		return self.filter { metaData in
-			if filter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return true }
-			return metaData.text?.localizedStandardContains(filter) ?? false
-		}
-	}
-}
-
-extension FetchedResults where Result == MetaData {
-	func filtered(by filter: String) -> [MetaData] {
-		return self.map { $0 }.filtered(by: filter)
-	}
-}
 
 // MARK: Generated accessors for sensesIn_atb
 extension MetaData {
@@ -171,7 +130,6 @@ extension MetaData {
 	@NSManaged public func removeFromSensesIn_atb(_ values: NSOrderedSet)
 	
 }
-
 
 // MARK: Generated accessors for traductions_atb
 extension MetaData {

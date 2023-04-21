@@ -12,67 +12,116 @@ import SwiftUI
 
 @objc(Sense)
 public class Sense: Entity {
+	
+	//MARK: FetchRequests
 	@nonobjc public class func fetchRequest() -> NSFetchRequest<Sense> {
 		return NSFetchRequest<Sense>(entityName: "Sense")
 	}
-	@NSManaged private var parent_atb: Mot?
 	
-	@NSManaged private var metaDatas_atb: NSOrderedSet?
+	
+	//MARK: NSManaged attributs
+	@NSManaged public var communMetaDatas_atb: NSOrderedSet?
+	@NSManaged public var uniqueMetaDatas_atb: NSOrderedSet?
+	@NSManaged public var linkMetaData_atb: NSOrderedSet?
+	
 	@NSManaged public var traductions_atb: NSSet?
-	@NSManaged private var exemples_atb: NSOrderedSet?
+
+	@NSManaged public var exemples_atb: NSOrderedSet?
+
+	@NSManaged public var backLink_atb: NSSet?
+	@NSManaged public var parent_atb: Mot?
 	
-	var metaDatas: [MetaData]? {
+	
+	//MARK: Computed variables
+	var communMetaDatas: [CommunMetaData] {
 		get {
-			guard let metaDatas_atb = metaDatas_atb else { return nil }
-			let metaData = metaDatas_atb.array as! [MetaData]
-			if metaData.isEmpty { return nil }
-			return metaData
+			guard let communMetaDatas_atb = communMetaDatas_atb else { return [] }
+			guard let communMetaDatas = communMetaDatas_atb.array as? [CommunMetaData] else { return [] }
+			return communMetaDatas
 		}
 		set {
-			guard let newValue = newValue else { metaDatas_atb = nil ; return}
-			if newValue.isEmpty { metaDatas_atb = nil ; return}
-			metaDatas_atb = NSOrderedSet(array: newValue)
+			if newValue.isEmpty { communMetaDatas_atb = nil ; return }
+			communMetaDatas_atb = NSOrderedSet(array: newValue)
 		}
 	}
 	
-	var traductions: Set<Traduction>? {
+	var uniqueMetaDatas: [UniqueMetaData] {
 		get {
-			guard let traductions_atb = traductions_atb else { return nil }
-			guard let traductions = traductions_atb as? Set<Traduction> else { return nil }
-			return traductions.isEmpty ? nil : traductions
+			guard let uniqueMetaDatas_atb = uniqueMetaDatas_atb else { return [] }
+			guard let uniqueMetaDatas = uniqueMetaDatas_atb.array as? [UniqueMetaData] else { return [] }
+			return uniqueMetaDatas
 		}
 		set {
-			guard let newValue = newValue else { traductions_atb = nil ; return}
+			if newValue.isEmpty { uniqueMetaDatas_atb = nil ; return }
+			uniqueMetaDatas_atb = NSOrderedSet(array: newValue)
+		}
+	}
+	
+	var linkMetaData: [LinkMetaData] {
+		get {
+			guard let linkMetaData_atb = linkMetaData_atb else { return [] }
+			guard let linkMetaData = linkMetaData_atb.array as? [LinkMetaData] else { return [] }
+			return linkMetaData
+		}
+		set {
+			if newValue.isEmpty { linkMetaData_atb = nil ; return }
+			linkMetaData_atb = NSOrderedSet(array: newValue)
+		}
+	}
+	
+	var metaDatas: [MetaData] {
+		get {
+			return self.communMetaDatas + self.uniqueMetaDatas + self.linkMetaData
+		}
+		set {
+			self.communMetaDatas = newValue.compactMap { $0 as? CommunMetaData }
+			self.uniqueMetaDatas = newValue.compactMap { $0 as? UniqueMetaData }
+			self.linkMetaData 	 = newValue.compactMap { $0 as? LinkMetaData }
+		}
+	}
+	
+	var traductions: Set<Traduction> {
+		get {
+			guard let traductions_atb = traductions_atb else { return [] }
+			guard let traductions = traductions_atb as? Set<Traduction> else { return [] }
+			return traductions
+		}
+		set {
 			if newValue.isEmpty { traductions_atb = nil ; return}
 			traductions_atb = NSSet(set: newValue)
 		}
 	}
 	
-	var exemples: [Exemple]? {
+	var exemples: [Exemple] {
 		get {
-			guard let exemples_atb = exemples_atb else { return nil }
-			let exemples = exemples_atb.array as! [Exemple]
-			if exemples.isEmpty { return nil }
+			guard let exemples_atb = exemples_atb else { return [] }
+			guard let exemples = exemples_atb.array as? [Exemple] else { return [] }
 			return exemples
 		}
 		set {
-			guard let newValue = newValue else { exemples_atb = nil ; return}
 			if newValue.isEmpty { exemples_atb = nil ; return}
 			exemples_atb = NSOrderedSet(array: newValue)
 		}
 	}
 	
 	
+	//MARK: Functions
 	func removeMetaData(_ metaData: MetaData) {
-		self.removeFromMetaDatas_atb(metaData)
+		if let communMetaData = metaData as? CommunMetaData {
+			self.removeFromCommunMetaDatas_atb(communMetaData)
+			return
+		}
+		if let uniqueMetaData = metaData as? UniqueMetaData {
+			self.removeFromUniqueMetaDatas_atb(uniqueMetaData)
+			return
+		}
+		if let linkMetaData = metaData as? LinkMetaData {
+			self.removeFromLinkMetaData_atb(linkMetaData)
+			return
+		}
 	}
 	
 	func addTraduction(_ traduction: Traduction) -> Traduction? {
-		guard let traductions = self.traductions else {
-			addToTraductions_atb(traduction)
-			return traduction
-		}
-		
 		if !(traductions.contains { $0.langue == traduction.langue }) {
 			addToTraductions_atb(traduction)
 			return traduction
@@ -81,41 +130,43 @@ public class Sense: Entity {
 	}
 	
 	
-	func metaDataBinding(for index: Int) -> Binding<MetaData?>? {
-		guard let metaDatas = self.metaDatas else { return nil }
-		guard metaDatas.indices.contains(index) else { return nil }
-		
-		return Binding {
-			metaDatas[index]
-		} set: {
-			guard let newValue = $0 else { return }
-			self.metaDatas![index] = newValue
-		}
-	}
-	
-	func metaDataBinding(for index: Int) -> Binding<MetaData>? {
-		guard let metaDatas = self.metaDatas else { return nil }
-		guard metaDatas.indices.contains(index) else { return nil }
-		
-		return Binding {
-			metaDatas[index]
-		} set: {
-			self.metaDatas![index] = $0
-		}
-	}
-	
-	convenience init(id: UUID,
+//	func metaDataBinding(for index: Int) -> Binding<MetaData?>? {
+//		guard let metaDatas = self.metaDatas else { return nil }
+//		guard metaDatas.indices.contains(index) else { return nil }
+//
+//		return Binding {
+//			metaDatas[index]
+//		} set: {
+//			guard let newValue = $0 else { return }
+//			self.metaDatas![index] = newValue
+//		}
+//	}
+//
+//	func metaDataBinding(for index: Int) -> Binding<MetaData>? {
+//		guard let metaDatas = self.metaDatas else { return nil }
+//		guard metaDatas.indices.contains(index) else { return nil }
+//
+//		return Binding {
+//			metaDatas[index]
+//		} set: {
+//			self.metaDatas![index] = $0
+//		}
+//	}
+
+	//MARK: inits
+	convenience init(id: UUID? = nil,
 					 metaDatas: [MetaData]? = nil,
 					 traductions: Set<Traduction>? = nil,
 					 exemples: [Exemple]? = nil,
-					 context: NSManagedObjectContext) {
+					 context: NSManagedObjectContext? = nil) {
 		self.init(id: id, context: context)
 		
-		self.metaDatas = metaDatas
-		self.traductions = traductions
-		self.exemples = exemples
+		self.metaDatas = metaDatas ?? []
+		self.traductions = traductions ?? []
+		self.exemples = exemples ?? []
 	}
 	
+	//MARK: EasyInit's init
 	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {
 		let context:NSManagedObjectContext = context ?? DataController.shared.mainQueueManagedObjectContext
 		
@@ -152,7 +203,7 @@ public class Sense: Entity {
 		
 		switch type {
 		case .empty:
-			self.init(id: UUID(), context: context)
+			self.init(context: context)
 		case .preview:
 			self.init(id: UUID(),
 					  metaDatas: previewMetaData,
@@ -162,11 +213,12 @@ public class Sense: Entity {
 		}
 	}
 	
+	//MARK: Import init
 	convenience init(jsonSenses: [json_Sense], context: NSManagedObjectContext) {
 		
 		var communMetaData: [String] = []
-		var linkMetaData: [String] = []
 		var uniqueMetaData: [String] = []
+		var linkMetaData: [String] = []
 		
 		var lsource: [json_Lsource] = []
 		var traductionDict: [Langue:String] = [:]
@@ -201,16 +253,16 @@ public class Sense: Entity {
 		var metaDatas: [MetaData] = []
 		
 		for metaData in communMetaData {
-			if let cachedVersion = MetaData.cache.object(forKey: NSString(string: metaData)) {
+			if let cachedVersion = CommunMetaData.cache.object(forKey: NSString(string: metaData)) {
 				metaDatas.append(cachedVersion)
 			} else {
 				do {
-					let request:NSFetchRequest<MetaData> = MetaData.fetchRequest()
+					let request:NSFetchRequest<CommunMetaData> = CommunMetaData.fetchRequest()
 					request.predicate = NSPredicate(format: "ANY traductions_atb.text_atb == %@", metaData)
 					let results = try context.fetch(request)
 					if results.count == 1 {
 						metaDatas.append(results[0])
-						MetaData.cache.setObject(results[0], forKey: NSString(string: metaData))
+						CommunMetaData.cache.setObject(results[0], forKey: NSString(string: metaData))
 					}
 					else {
 						fatalError(results.count > 1 ? "Multiple metaData for same text : \"\(metaData)\"" : "No metaData for this text : \"\(metaData)\"" )
@@ -222,11 +274,19 @@ public class Sense: Entity {
 			}
 		}
 		
+		for metaData in uniqueMetaData {
+			metaDatas.append(UniqueMetaData(langue: .francais, text: metaData, context: context))
+		}
+		
+		for metaData in linkMetaData {
+			metaDatas.append(LinkMetaData(langue: .francais, text: metaData, context: context))
+		}
+		
 		var traductions: Set<Traduction> = []
 		
 		for langue in Langue.JMdictLangues {
 			if let traduction = traductionDict[langue] {
-				traductions.insert(Traduction(id: UUID(), langue: langue, text: traduction, context: context))
+				traductions.insert(Traduction(langue: langue, text: traduction, context: context))
 			}
 		}
 		
@@ -239,16 +299,139 @@ public class Sense: Entity {
 	}
 }
 
+
+//MARK: Protocole extentions
 extension Sense: Displayable {
 	var primary: String? {
-		return traductions?.firstMatch()?.text
+		return traductions.firstMatch()?.text
 	}
 }
 
-extension Sense: EasyInit {
+extension Sense: EasyInit {}
+
+
+
+// MARK: Generated accessors for communMetaDatas_atb
+extension Sense {
+	
+	@objc(insertObject:inCommunMetaDatas_atbAtIndex:)
+	@NSManaged public func insertIntoCommunMetaDatas_atb(_ value: CommunMetaData, at idx: Int)
+	
+	@objc(removeObjectFromCommunMetaDatas_atbAtIndex:)
+	@NSManaged public func removeFromCommunMetaDatas_atb(at idx: Int)
+	
+	@objc(insertCommunMetaDatas_atb:atIndexes:)
+	@NSManaged public func insertIntoCommunMetaDatas_atb(_ values: [CommunMetaData], at indexes: NSIndexSet)
+	
+	@objc(removeCommunMetaDatas_atbAtIndexes:)
+	@NSManaged public func removeFromCommunMetaDatas_atb(at indexes: NSIndexSet)
+	
+	@objc(replaceObjectInCommunMetaDatas_atbAtIndex:withObject:)
+	@NSManaged public func replaceCommunMetaDatas_atb(at idx: Int, with value: CommunMetaData)
+	
+	@objc(replaceCommunMetaDatas_atbAtIndexes:withCommunMetaDatas_atb:)
+	@NSManaged public func replaceCommunMetaDatas_atb(at indexes: NSIndexSet, with values: [CommunMetaData])
+	
+	@objc(addCommunMetaDatas_atbObject:)
+	@NSManaged public func addToCommunMetaDatas_atb(_ value: CommunMetaData)
+	
+	@objc(removeCommunMetaDatas_atbObject:)
+	@NSManaged public func removeFromCommunMetaDatas_atb(_ value: CommunMetaData)
+	
+	@objc(addCommunMetaDatas_atb:)
+	@NSManaged public func addToCommunMetaDatas_atb(_ values: NSOrderedSet)
+	
+	@objc(removeCommunMetaDatas_atb:)
+	@NSManaged public func removeFromCommunMetaDatas_atb(_ values: NSOrderedSet)
 	
 }
 
+// MARK: Generated accessors for uniqueMetaDatas_atb
+extension Sense {
+	
+	@objc(insertObject:inUniqueMetaDatas_atbAtIndex:)
+	@NSManaged public func insertIntoUniqueMetaDatas_atb(_ value: UniqueMetaData, at idx: Int)
+	
+	@objc(removeObjectFromUniqueMetaDatas_atbAtIndex:)
+	@NSManaged public func removeFromUniqueMetaDatas_atb(at idx: Int)
+	
+	@objc(insertUniqueMetaDatas_atb:atIndexes:)
+	@NSManaged public func insertIntoUniqueMetaDatas_atb(_ values: [UniqueMetaData], at indexes: NSIndexSet)
+	
+	@objc(removeUniqueMetaDatas_atbAtIndexes:)
+	@NSManaged public func removeFromUniqueMetaDatas_atb(at indexes: NSIndexSet)
+	
+	@objc(replaceObjectInUniqueMetaDatas_atbAtIndex:withObject:)
+	@NSManaged public func replaceUniqueMetaDatas_atb(at idx: Int, with value: UniqueMetaData)
+	
+	@objc(replaceUniqueMetaDatas_atbAtIndexes:withUniqueMetaDatas_atb:)
+	@NSManaged public func replaceUniqueMetaDatas_atb(at indexes: NSIndexSet, with values: [UniqueMetaData])
+	
+	@objc(addUniqueMetaDatas_atbObject:)
+	@NSManaged public func addToUniqueMetaDatas_atb(_ value: UniqueMetaData)
+	
+	@objc(removeUniqueMetaDatas_atbObject:)
+	@NSManaged public func removeFromUniqueMetaDatas_atb(_ value: UniqueMetaData)
+	
+	@objc(addUniqueMetaDatas_atb:)
+	@NSManaged public func addToUniqueMetaDatas_atb(_ values: NSOrderedSet)
+	
+	@objc(removeUniqueMetaDatas_atb:)
+	@NSManaged public func removeFromUniqueMetaDatas_atb(_ values: NSOrderedSet)
+	
+}
+
+// MARK: Generated accessors for linkMetaData_atb
+extension Sense {
+	
+	@objc(insertObject:inLinkMetaData_atbAtIndex:)
+	@NSManaged public func insertIntoLinkMetaData_atb(_ value: LinkMetaData, at idx: Int)
+	
+	@objc(removeObjectFromLinkMetaData_atbAtIndex:)
+	@NSManaged public func removeFromLinkMetaData_atb(at idx: Int)
+	
+	@objc(insertLinkMetaData_atb:atIndexes:)
+	@NSManaged public func insertIntoLinkMetaData_atb(_ values: [LinkMetaData], at indexes: NSIndexSet)
+	
+	@objc(removeLinkMetaData_atbAtIndexes:)
+	@NSManaged public func removeFromLinkMetaData_atb(at indexes: NSIndexSet)
+	
+	@objc(replaceObjectInLinkMetaData_atbAtIndex:withObject:)
+	@NSManaged public func replaceLinkMetaData_atb(at idx: Int, with value: LinkMetaData)
+	
+	@objc(replaceLinkMetaData_atbAtIndexes:withLinkMetaData_atb:)
+	@NSManaged public func replaceLinkMetaData_atb(at indexes: NSIndexSet, with values: [LinkMetaData])
+	
+	@objc(addLinkMetaData_atbObject:)
+	@NSManaged public func addToLinkMetaData_atb(_ value: LinkMetaData)
+	
+	@objc(removeLinkMetaData_atbObject:)
+	@NSManaged public func removeFromLinkMetaData_atb(_ value: LinkMetaData)
+	
+	@objc(addLinkMetaData_atb:)
+	@NSManaged public func addToLinkMetaData_atb(_ values: NSOrderedSet)
+	
+	@objc(removeLinkMetaData_atb:)
+	@NSManaged public func removeFromLinkMetaData_atb(_ values: NSOrderedSet)
+	
+}
+
+// MARK: Generated accessors for traductions_atb
+extension Sense {
+	
+	@objc(addTraductions_atbObject:)
+	@NSManaged public func addToTraductions_atb(_ value: Traduction)
+	
+	@objc(removeTraductions_atbObject:)
+	@NSManaged public func removeFromTraductions_atb(_ value: Traduction)
+	
+	@objc(addTraductions_atb:)
+	@NSManaged public func addToTraductions_atb(_ values: NSSet)
+	
+	@objc(removeTraductions_atb:)
+	@NSManaged public func removeFromTraductions_atb(_ values: NSSet)
+	
+}
 
 // MARK: Generated accessors for exemples_atb
 extension Sense {
@@ -285,54 +468,19 @@ extension Sense {
 	
 }
 
-// MARK: Generated accessors for metaDatas_atb
+// MARK: Generated accessors for backLink_atb
 extension Sense {
 	
-	@objc(insertObject:inMetaDatas_atbAtIndex:)
-	@NSManaged public func insertIntoMetaDatas_atb(_ value: MetaData, at idx: Int)
+	@objc(addBackLink_atbObject:)
+	@NSManaged public func addToBackLink_atb(_ value: LinkMetaData)
 	
-	@objc(removeObjectFromMetaDatas_atbAtIndex:)
-	@NSManaged public func removeFromMetaDatas_atb(at idx: Int)
+	@objc(removeBackLink_atbObject:)
+	@NSManaged public func removeFromBackLink_atb(_ value: LinkMetaData)
 	
-	@objc(insertMetaDatas_atb:atIndexes:)
-	@NSManaged public func insertIntoMetaDatas_atb(_ values: [MetaData], at indexes: NSIndexSet)
+	@objc(addBackLink_atb:)
+	@NSManaged public func addToBackLink_atb(_ values: NSSet)
 	
-	@objc(removeMetaDatas_atbAtIndexes:)
-	@NSManaged public func removeFromMetaDatas_atb(at indexes: NSIndexSet)
-	
-	@objc(replaceObjectInMetaDatas_atbAtIndex:withObject:)
-	@NSManaged public func replaceMetaDatas_atb(at idx: Int, with value: MetaData)
-	
-	@objc(replaceMetaDatas_atbAtIndexes:withMetaDatas_atb:)
-	@NSManaged public func replaceMetaDatas_atb(at indexes: NSIndexSet, with values: [MetaData])
-	
-	@objc(addMetaDatas_atbObject:)
-	@NSManaged public func addToMetaDatas_atb(_ value: MetaData)
-	
-	@objc(removeMetaDatas_atbObject:)
-	@NSManaged public func removeFromMetaDatas_atb(_ value: MetaData)
-	
-	@objc(addMetaDatas_atb:)
-	@NSManaged public func addToMetaDatas_atb(_ values: NSOrderedSet)
-	
-	@objc(removeMetaDatas_atb:)
-	@NSManaged public func removeFromMetaDatas_atb(_ values: NSOrderedSet)
-	
-}
-
-// MARK: Generated accessors for traductions_atb
-extension Sense {
-	
-	@objc(addTraductions_atbObject:)
-	@NSManaged public func addToTraductions_atb(_ value: Traduction)
-	
-	@objc(removeTraductions_atbObject:)
-	@NSManaged public func removeFromTraductions_atb(_ value: Traduction)
-	
-	@objc(addTraductions_atb:)
-	@NSManaged public func addToTraductions_atb(_ values: NSSet)
-	
-	@objc(removeTraductions_atb:)
-	@NSManaged public func removeFromTraductions_atb(_ values: NSSet)
+	@objc(removeBackLink_atb:)
+	@NSManaged public func removeFromBackLink_atb(_ values: NSSet)
 	
 }

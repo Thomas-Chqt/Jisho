@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E909770529F2BFC8000A4CBF /* CommunMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90976FB29F2BFC8000A4CBF /* CommunMetaData.swift */; };
+		E909770729F2BFC8000A4CBF /* LinkMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90976FD29F2BFC8000A4CBF /* LinkMetaData.swift */; };
+		E909770929F2BFC8000A4CBF /* UniqueMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90976FF29F2BFC8000A4CBF /* UniqueMetaData.swift */; };
 		E924BCCB29E2BAE600D80708 /* MetaDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E924BCCA29E2BAE600D80708 /* MetaDataPicker.swift */; };
 		E92D3CA129E3E6580051781D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E92D3CA029E3E6580051781D /* Assets.xcassets */; };
 		E92D3CA329E3EA4D0051781D /* ModifiableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92D3CA229E3EA4D0051781D /* ModifiableText.swift */; };
@@ -72,6 +75,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E90976FB29F2BFC8000A4CBF /* CommunMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunMetaData.swift; sourceTree = "<group>"; };
+		E90976FD29F2BFC8000A4CBF /* LinkMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetaData.swift; sourceTree = "<group>"; };
+		E90976FF29F2BFC8000A4CBF /* UniqueMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueMetaData.swift; sourceTree = "<group>"; };
 		E924BCCA29E2BAE600D80708 /* MetaDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataPicker.swift; sourceTree = "<group>"; };
 		E92D3CA029E3E6580051781D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E92D3CA229E3EA4D0051781D /* ModifiableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiableText.swift; sourceTree = "<group>"; };
@@ -150,6 +156,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E909770B29F2C07E000A4CBF /* MetaData */ = {
+			isa = PBXGroup;
+			children = (
+				E92DE1C829D1C61600B5CB86 /* MetaData.swift */,
+				E90976FB29F2BFC8000A4CBF /* CommunMetaData.swift */,
+				E90976FF29F2BFC8000A4CBF /* UniqueMetaData.swift */,
+				E90976FD29F2BFC8000A4CBF /* LinkMetaData.swift */,
+			);
+			path = MetaData;
+			sourceTree = "<group>";
+		};
 		E914E96B27CF9CF800FA4B68 = {
 			isa = PBXGroup;
 			children = (
@@ -266,8 +283,8 @@
 				E996A1F029D28F4800DD700D /* Mot.swift */,
 				E93D515129D9A36B00AAC780 /* Japonais.swift */,
 				E93D515929DC0CB400AAC780 /* Sense.swift */,
+				E909770B29F2C07E000A4CBF /* MetaData */,
 				E9B1945C29DD593B004EF30B /* Traduction.swift */,
-				E92DE1C829D1C61600B5CB86 /* MetaData.swift */,
 				E9B1946D29DD8B10004EF30B /* Exemple.swift */,
 			);
 			path = CoreDataClasses;
@@ -516,6 +533,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9B1947229DDB1CB004EF30B /* DebugEntityListWrapper.swift in Sources */,
+				E909770929F2BFC8000A4CBF /* UniqueMetaData.swift in Sources */,
 				E9B1947B29DEC989004EF30B /* SenseEditSheetView.swift in Sources */,
 				E9B1947E29DEF4FF004EF30B /* SheetDismissButton.swift in Sources */,
 				E92D3CA729E4FCF60051781D /* MotEditSheetView.swift in Sources */,
@@ -527,8 +545,10 @@
 				E9835CC129CC9382008CF340 /* ManagedObjectDebugRowView.swift in Sources */,
 				E9835CB529CC9382008CF340 /* DataController.swift in Sources */,
 				E92DE1CE29D1C88200B5CB86 /* Entity.swift in Sources */,
+				E909770729F2BFC8000A4CBF /* LinkMetaData.swift in Sources */,
 				E9835CC329CC9382008CF340 /* EnvironmentValueExtensions.swift in Sources */,
 				E996A1EF29D2819700DD700D /* PisplayableProtocol.swift in Sources */,
+				E909770529F2BFC8000A4CBF /* CommunMetaData.swift in Sources */,
 				E9835CB329CC9382008CF340 /* InitType.swift in Sources */,
 				E997238129E02A4600FB64D6 /* SettingsPageView.swift in Sources */,
 				E9B1946F29DD8B11004EF30B /* Exemple.swift in Sources */,

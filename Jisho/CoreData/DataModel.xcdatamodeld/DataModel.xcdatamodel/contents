@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CommunMetaData" representedClassName="CommunMetaData" parentEntity="MetaData" syncable="YES">
+        <relationship name="senseIn_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Sense" inverseName="communMetaDatas_atb" inverseEntity="Sense"/>
+    </entity>
     <entity name="Entity" representedClassName="Entity" syncable="YES">
         <attribute name="createTime_atb" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="editTime_atb" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -15,8 +18,11 @@
         <attribute name="kanjis_atb" optional="YES" attributeType="String"/>
         <relationship name="parent_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mot" inverseName="japonais_atb" inverseEntity="Mot"/>
     </entity>
+    <entity name="LinkMetaData" representedClassName="LinkMetaData" parentEntity="MetaData" syncable="YES">
+        <relationship name="linkedSense_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sense" inverseName="backLink_atb" inverseEntity="Sense"/>
+        <relationship name="parent_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sense" inverseName="linkMetaData_atb" inverseEntity="Sense"/>
+    </entity>
     <entity name="MetaData" representedClassName="MetaData" parentEntity="Entity" syncable="YES">
-        <relationship name="sensesIn_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Sense" inverseName="metaDatas_atb" inverseEntity="Sense"/>
         <relationship name="traductions_atb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Traduction" inverseName="parentMetaData_atb" inverseEntity="Traduction"/>
     </entity>
     <entity name="Mot" representedClassName="Mot" parentEntity="Entity" syncable="YES">
@@ -27,10 +33,13 @@
         <relationship name="sense_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Sense" inverseName="parent_atb" inverseEntity="Sense"/>
     </entity>
     <entity name="Sense" representedClassName="Sense" parentEntity="Entity" syncable="YES">
+        <relationship name="backLink_atb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="LinkMetaData" inverseName="linkedSense_atb" inverseEntity="LinkMetaData"/>
+        <relationship name="communMetaDatas_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="CommunMetaData" inverseName="senseIn_atb" inverseEntity="CommunMetaData"/>
         <relationship name="exemples_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Exemple" inverseName="parent_atb" inverseEntity="Exemple"/>
-        <relationship name="metaDatas_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="MetaData" inverseName="sensesIn_atb" inverseEntity="MetaData"/>
+        <relationship name="linkMetaData_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="LinkMetaData" inverseName="parent_atb" inverseEntity="LinkMetaData"/>
         <relationship name="parent_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mot" inverseName="sense_atb" inverseEntity="Mot"/>
         <relationship name="traductions_atb" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Traduction" inverseName="parentSense_atb" inverseEntity="Traduction"/>
+        <relationship name="uniqueMetaDatas_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="UniqueMetaData" inverseName="parent_atb" inverseEntity="UniqueMetaData"/>
     </entity>
     <entity name="Traduction" representedClassName="Traduction" parentEntity="Entity" syncable="YES">
         <attribute name="langue_atb" optional="YES" attributeType="String"/>
@@ -39,5 +48,8 @@
         <relationship name="parentMetaData_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MetaData" inverseName="traductions_atb" inverseEntity="MetaData"/>
         <relationship name="parentMot_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mot" inverseName="noSenseTrads_atb" inverseEntity="Mot"/>
         <relationship name="parentSense_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sense" inverseName="traductions_atb" inverseEntity="Sense"/>
+    </entity>
+    <entity name="UniqueMetaData" representedClassName="UniqueMetaData" parentEntity="MetaData" syncable="YES">
+        <relationship name="parent_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sense" inverseName="uniqueMetaDatas_atb" inverseEntity="Sense"/>
     </entity>
 </model>

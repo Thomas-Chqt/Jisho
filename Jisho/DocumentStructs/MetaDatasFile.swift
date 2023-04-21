@@ -37,7 +37,7 @@ struct MetaDatasFile: FileDocument {
 	func createMetaData() async {
 		await DataController.shared.privateQueueManagedObjectContext.perform {
 			for (i, metaData) in jsonData.enumerated() {
-				_ = MetaData(jsonMetaData: metaData, context: DataController.shared.privateQueueManagedObjectContext)
+				_ = CommunMetaData(jsonMetaData: metaData, context: DataController.shared.privateQueueManagedObjectContext)
 				if (i + 1) % (jsonData.count / 100) == 0 {
 					print("\((i + 1) / (jsonData.count / 100))")
 				}

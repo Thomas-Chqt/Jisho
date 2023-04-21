@@ -11,7 +11,7 @@ enum CoreDataEntityType: Hashable {
 	case mot(Mot?)
 	case japonais(Japonais?)
 	case sense(Sense?)
-	case metaData(MetaData?)
+	case metaData(CommunMetaData?)
 	case traduction(Traduction?)
 	case exemple(Exemple?)
 	
@@ -23,7 +23,7 @@ enum CoreDataEntityType: Hashable {
 			self = .japonais(nil)
 		case Sense.description():
 			self = .sense(nil)
-		case MetaData.description():
+		case CommunMetaData.description():
 			self = .metaData(nil)
 		case Traduction.description():
 			self = .traduction(nil)
@@ -47,7 +47,7 @@ enum CoreDataEntityType: Hashable {
 			self = .sense(sense)
 			return
 		}
-		if let metaData = entity as? MetaData {
+		if let metaData = entity as? CommunMetaData {
 			self = .metaData(metaData)
 			return
 		}

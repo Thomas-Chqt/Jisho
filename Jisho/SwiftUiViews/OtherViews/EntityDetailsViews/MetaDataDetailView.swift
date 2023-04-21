@@ -9,16 +9,16 @@ import SwiftUI
 
 struct MetaDataDetailView: View {
 	
-	@ObservedObject var metaData: MetaData
+	@ObservedObject var metaData: CommunMetaData
 	
-	init(_ metaData: MetaData) {
+	init(_ metaData: CommunMetaData) {
 		self.metaData = metaData
 	}
 	
     var body: some View {
 		HStack(alignment: .top) {
 			Image(systemName: "info.circle")
-			Text(metaData.text ?? "")
+			Text(metaData.text)
 		}
 		.font(.caption)
 		.padding(.vertical, 3.5)
@@ -34,7 +34,7 @@ struct MetaDataDetailView_Previews: PreviewProvider {
 				.navigationTitle("side")
 		} detail: {
 			List {
-				MetaDataDetailView(MetaData(.preview))
+				MetaDataDetailView(CommunMetaData(.preview))
 			}
 		}
 		.navigationSplitViewStyle(.balanced)
@@ -43,7 +43,7 @@ struct MetaDataDetailView_Previews: PreviewProvider {
 		
 		NavigationSplitView(columnVisibility: .constant(.all)) {
 			List {
-				MetaDataDetailView(MetaData(.preview))
+				MetaDataDetailView(CommunMetaData(.preview))
 			}
 		} detail: {
 			EmptyView()

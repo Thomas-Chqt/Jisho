@@ -60,7 +60,7 @@ struct ModifiableText_Preview: PreviewProvider {
 		
 		@State var editState: UUID?
 		
-		let metaDatas: [MetaData] = [MetaData(.preview), MetaData(.preview), MetaData(.preview)]
+		let metaDatas: [CommunMetaData] = [CommunMetaData(.preview), CommunMetaData(.preview), CommunMetaData(.preview)]
 						
 		var body: some View {
 			List {
