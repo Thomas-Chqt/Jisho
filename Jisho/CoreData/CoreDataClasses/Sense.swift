@@ -200,7 +200,7 @@ public class Sense: Entity {
 		
 		
 		self.init(id: UUID(),
-				  metaDatas: nil,
+				  metaDatas:  nil,
 				  traductions: nil,
 				  exemples: nil,
 				  context: context)
