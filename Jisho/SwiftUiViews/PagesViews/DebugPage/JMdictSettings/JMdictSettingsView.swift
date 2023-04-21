@@ -11,76 +11,160 @@ import UniformTypeIdentifiers
 struct JMdictSettingsView: View {
 	
 	@State var jmDictFile: JMdictFile? = nil
-	@State var fileImporterIsPresented: Bool = false
+	@State var metaDataFile: MetaDatasFile? = nil
+	
+	@State var jmDictFilePickerIsShow: Bool = false
+	@State var metaDataFilePickerIsShow: Bool = false
 	@State var loading: Bool = false
 	
     var body: some View {
 		if loading {
 			ProgressView()
 		}
-		else if jmDictFile != nil {
+		else
+		{
 			List {
-				Button("Create Mots") {
-					Task {
-						self.loading = true
-						await self.jmDictFile?.createMots()
-						self.loading = false
+				Section("JMdict File") {
+					if let jmDictFile = jmDictFile {
+						Button("Create Mots") {
+							Task {
+								self.loading = true
+								await jmDictFile.createMots()
+								self.loading = false
+							}
+						}
+						
+						Button("Test") {
+							Task {
+								self.loading = true
+								await self.jmDictFile?.test()
+								self.loading = false
+							}
+						}
+					}
+					else {
+						HStack {
+							Button("File Picker") {
+								jmDictFilePickerIsShow.toggle()
+							}
+							.buttonStyle(.borderedProminent)
+							
+							Spacer()
+							
+							Button("Use Bundle") {
+								guard let path = Bundle.main.path(forResource: "JMdict", ofType: "bundle") else { return }
+								let url = URL(fileURLWithPath: path + "/JMdict_FR.json")
+								Task {
+									do {
+										self.loading = true
+										self.jmDictFile = try await JMdictFile(url)
+										self.loading = false
+									}
+									catch {
+										fatalError(error.localizedDescription)
+									}
+								}
+							}
+							.buttonStyle(.borderedProminent)
+						}
+						.padding(.horizontal)
 					}
 				}
 				
-				Button("Test") {
-					Task {
-						self.loading = true
-						await self.jmDictFile?.test()
-						self.loading = false
+				Section("MetaDatas File") {
+					if let metaDataFile = metaDataFile {
+						Button("Create MetaDatas") {
+							Task {
+								self.loading = true
+								await metaDataFile.createMetaData()
+								self.loading = false
+							}
+						}
+					}
+					else {
+						HStack {
+							Button("File Picker") {
+								metaDataFilePickerIsShow.toggle()
+							}
+							.buttonStyle(.borderedProminent)
+							
+							Spacer()
+							
+							Button("Use Bundle") {
+								guard let path = Bundle.main.path(forResource: "JMdict", ofType: "bundle") else { return }
+								let url = URL(fileURLWithPath: path + "/MetaDatas.json")
+								Task {
+									do {
+										self.loading = true
+										self.metaDataFile = try await MetaDatasFile(url)
+										self.loading = false
+									}
+									catch {
+										fatalError(error.localizedDescription)
+									}
+								}
+							}
+							.buttonStyle(.borderedProminent)
+						}
+						.padding(.horizontal)
 					}
 				}
 			}
-		}
-		else {
-			VStack {
-				Button("Select File") {
-					fileImporterIsPresented.toggle()
-				}
-				.buttonStyle(.borderedProminent)
-				
-				Button("Use Bundle") {
-					guard let path = Bundle.main.path(forResource: "JMdict", ofType: "bundle") else { return }
-					let url = URL(fileURLWithPath: path + "/JMdict.json")
-					Task {
-						do {
-							self.loading = true
-							self.jmDictFile = try await JMdictFile(url)
-							self.loading = false
-						}
-						catch {
-							fatalError(error.localizedDescription)
-						}
-					}
-				}
-				.buttonStyle(.borderedProminent)
-			}
-			.fileImporter(isPresented: $fileImporterIsPresented,
+			.fileImporter(isPresented: $jmDictFilePickerIsShow,
 						  allowedContentTypes: [.json],
 						  allowsMultipleSelection: false,
-						  onCompletion: fileSelectorCompletion)
+						  onCompletion: jmdictFilePickerCompletion)
+			
+			.fileImporter(isPresented: $metaDataFilePickerIsShow,
+						  allowedContentTypes: [.json],
+						  allowsMultipleSelection: false,
+						  onCompletion: metaDataFilePickerCompletion)
 		}
     }
 	
-	func fileSelectorCompletion(result: Result<[URL], Error>) {
+	func jmdictFilePickerCompletion(result: Result<[URL], Error>) {
 		switch result {
 		case .success(let success):
 			if let url = success.first {
 				Task {
-					self.loading = true
-					self.jmDictFile = try await JMdictFile(url)
-					self.loading = false
+					do {
+						self.loading = true
+						self.jmDictFile = try await JMdictFile(url)
+						self.loading = false
+					}
+					catch {
+						fatalError(error.localizedDescription)
+					}
 				}
 			}
 		case .failure(let failure):
 			print(failure.localizedDescription)
 		}
 	}
+	
+	
+	func metaDataFilePickerCompletion(result: Result<[URL], Error>) {
+		switch result {
+		case .success(let success):
+			if let url = success.first {
+				Task {
+					do {
+						self.loading = true
+						self.metaDataFile = try await MetaDatasFile(url)
+						self.loading = false
+					}
+					catch {
+						fatalError(error.localizedDescription)
+					}
+				}
+			}
+		case .failure(let failure):
+			print(failure.localizedDescription)
+		}
+	}
+	
+	
+	
 }
 
 struct JMdictSettingsView_Previews: PreviewProvider {

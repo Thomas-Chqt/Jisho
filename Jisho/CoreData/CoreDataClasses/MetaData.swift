@@ -92,6 +92,15 @@ public class MetaData: Entity {
 					  context: context)
 		}
 	}
+	
+	convenience init(jsonMetaData: json_MetaData, context: NSManagedObjectContext) {
+		self.init(id: UUID(),
+				  traductions: [Traduction(id: UUID(), langue: .francais,
+										   text: jsonMetaData.fr, context: context),
+								Traduction(id: UUID(), langue: .anglais,
+										   text: jsonMetaData.en, context: context)],
+				  context: context)
+	}
 }
 
 extension MetaData: Displayable {

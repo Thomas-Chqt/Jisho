@@ -188,7 +188,7 @@ public class Sense: Entity {
 			lsource.append(contentsOf: sense.lsource.filter{ !lsource.contains($0) })
 			
 			for gloss in sense.gloss {
-				if let previousGlosses = traductionDict[Langue(rawValue: gloss.lang ?? "") ?? .none] {
+				if traductionDict[Langue(rawValue: gloss.lang ?? "") ?? .none] != nil {
 					traductionDict[Langue(rawValue: gloss.lang ?? "") ?? .none] =
 					([traductionDict[Langue(rawValue: gloss.lang ?? "") ?? .none] ?? ""] + [gloss.value]).joined(separator: ", ")
 				}
