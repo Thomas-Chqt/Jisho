@@ -25,8 +25,8 @@ public class Traduction: Entity {
 	@NSManaged private var parentMetaData_atb: MetaData?
 	@NSManaged private var parentExemple_atb: Exemple?
 
-	@NSManaged public var langue_atb: String?
-	@NSManaged public var text_atb: String?
+	@NSManaged private var langue_atb: String?
+	@NSManaged private var text_atb: String?
 	
 	
 	//MARK: Computed variables

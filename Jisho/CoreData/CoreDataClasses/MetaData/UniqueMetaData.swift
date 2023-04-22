@@ -18,7 +18,7 @@ public class UniqueMetaData: MetaData {
 	}
 	
 	//MARK: NSManaged attributs
-	@NSManaged public var parent_atb: Sense?
+	@NSManaged private var parent_atb: Sense?
 	
 	//MARK: EasyInit's init
 	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {

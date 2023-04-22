@@ -36,6 +36,9 @@ struct SenseDetailView: View {
 			Button(action: { showSheet.toggle() },
 				   label: { Label("Modifier", systemImage: "pencil.circle") })
 		}
+		.sheet(isPresented: $showSheet, onDismiss: DataController.shared.save) {
+			SenseEditView(sense: sense)
+		}
     }
 }
 

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E907276D29F3E1C900669D4F /* MetaDataPickerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E907276C29F3E1C900669D4F /* MetaDataPickerRow.swift */; };
+		E907277329F42C7E00669D4F /* SenseEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E907277229F42C7E00669D4F /* SenseEditView.swift */; };
+		E907277529F42DBB00669D4F /* MetaDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E907277429F42DBB00669D4F /* MetaDataPicker.swift */; };
 		E909770529F2BFC8000A4CBF /* CommunMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90976FB29F2BFC8000A4CBF /* CommunMetaData.swift */; };
 		E909770729F2BFC8000A4CBF /* LinkMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90976FD29F2BFC8000A4CBF /* LinkMetaData.swift */; };
 		E909770929F2BFC8000A4CBF /* UniqueMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90976FF29F2BFC8000A4CBF /* UniqueMetaData.swift */; };
@@ -72,6 +74,8 @@
 
 /* Begin PBXFileReference section */
 		E907276C29F3E1C900669D4F /* MetaDataPickerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataPickerRow.swift; sourceTree = "<group>"; };
+		E907277229F42C7E00669D4F /* SenseEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenseEditView.swift; sourceTree = "<group>"; };
+		E907277429F42DBB00669D4F /* MetaDataPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaDataPicker.swift; sourceTree = "<group>"; };
 		E90976FB29F2BFC8000A4CBF /* CommunMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunMetaData.swift; sourceTree = "<group>"; };
 		E90976FD29F2BFC8000A4CBF /* LinkMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetaData.swift; sourceTree = "<group>"; };
 		E90976FF29F2BFC8000A4CBF /* UniqueMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueMetaData.swift; sourceTree = "<group>"; };
@@ -420,6 +424,7 @@
 				E9B1947F29DF02F2004EF30B /* ListClickableText.swift */,
 				E9B1948129DF2047004EF30B /* NavBarEditButton.swift */,
 				E997238429E02B2600FB64D6 /* ShowSideMenuButton.swift */,
+				E907277429F42DBB00669D4F /* MetaDataPicker.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -427,6 +432,7 @@
 		E9FFBAD329F3753B00168F09 /* EditViews */ = {
 			isa = PBXGroup;
 			children = (
+				E907277229F42C7E00669D4F /* SenseEditView.swift */,
 				E9FFBAD629F3762E00168F09 /* MetaDataEditViews */,
 				E9FFBAD429F3755C00168F09 /* TraductionEditView.swift */,
 			);
@@ -562,11 +568,13 @@
 				E92DE1CA29D1C61600B5CB86 /* MetaData.swift in Sources */,
 				E93D515B29DC0CB400AAC780 /* Sense.swift in Sources */,
 				E997237929E0178800FB64D6 /* CloudStorage.swift in Sources */,
+				E907277329F42C7E00669D4F /* SenseEditView.swift in Sources */,
 				E9835CB429CC9382008CF340 /* AppPage.swift in Sources */,
 				E9835CAF29CC9382008CF340 /* SQLiteFile.swift in Sources */,
 				E9835CBB29CC9382008CF340 /* ContentView.swift in Sources */,
 				E9835CC429CC9382008CF340 /* FileError.swift in Sources */,
 				E9835CB229CC9382008CF340 /* SideMenuSize.swift in Sources */,
+				E907277529F42DBB00669D4F /* MetaDataPicker.swift in Sources */,
 				E996A1FB29D57E2700DD700D /* FileExporterDelegate.swift in Sources */,
 				E9835CB029CC9382008CF340 /* JishoApp.swift in Sources */,
 				E9FFBAD929F378D800168F09 /* CommunMetaDataEditView.swift in Sources */,

@@ -30,36 +30,34 @@ struct MetaDataPickerView: View {
 		
 		self._metaDatas = FetchRequest<CommunMetaData>(sortDescriptors: [sortDescriptor], predicate: predicate, animation: .default)
 	}
-
-	init(selectedMetaData: Binding<CommunMetaData?>, inSense: Sense? = nil) {
-		self.init(selectedMetaData: selectedMetaData, excludedIDs: inSense?.communMetaDatas.map { $0.id })
-	}
 	
     var body: some View {
-		List {
-			if selectedMetaData != nil {
-				Section("Selection") {
-					TextField("MetaData", text: Binding(get: { selectedMetaData?.text ?? "" },
-														set: { selectedMetaData?.text = $0}))
-						.focused($isFocus)
-						.onAppear { isFocus = true }
-						.onSubmit { dismiss() }
+		NavigationStack {
+			List {
+				if selectedMetaData != nil {
+					Section("Selection") {
+						TextField("MetaData", text: Binding(get: { selectedMetaData?.text ?? "" },
+															set: { selectedMetaData?.text = $0}))
+							.focused($isFocus)
+							.onAppear { isFocus = true }
+							.onSubmit { dismiss() }
+					}
 				}
-			}
-			ForEach(metaDatas.filtered(by: searchedText)) { metaData in
-				MetaDataPickerRow(metaData: metaData, editState: $editState) {
-					selectedMetaData = metaData
-					dismiss()
+				ForEach(metaDatas.filtered(by: searchedText)) { metaData in
+					MetaDataPickerRow(metaData: metaData, editState: $editState) {
+						selectedMetaData = metaData
+						dismiss()
+					}
 				}
+				.onDelete(perform: deleteMetaData)
 			}
-			.onDelete(perform: deleteMetaData)
-		}
-		.searchable(text: $searchedText, placement: .navigationBarDrawer)
-		.toolbar {
-			ToolbarItem(placement: .navigationBarTrailing) {
-				Button(action: { addMetaData() },
-					   label: { Image(systemName: "plus") })
-				.padding()
+			.searchable(text: $searchedText, placement: .navigationBarDrawer)
+			.toolbar {
+				ToolbarItem(placement: .navigationBarTrailing) {
+					Button(action: { addMetaData() },
+						   label: { Image(systemName: "plus") })
+					.padding()
+				}
 			}
 		}
     }
@@ -99,12 +97,7 @@ struct MetaDataPickerView_Previews: PreviewProvider {
 					}
 				}
 			}
-			.sheet(item: $metaDataForPicker) { binding in
-				NavigationStack {
-					MetaDataPickerView(selectedMetaData: binding,
-									   excludedIDs: metaDatas.map { $0.id })
-				}
-			}
+			.metaDataPicker(selectedMetaData: $metaDataForPicker, excludedIDs: metaDatas.map{ $0.id })
 			.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
 		}
 	}

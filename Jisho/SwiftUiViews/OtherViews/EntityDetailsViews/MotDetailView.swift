@@ -12,7 +12,7 @@ struct MotDetailView: View {
 	@FocusState var notesIsFocused: Bool
 	
 	@ObservedObject var mot: Mot
-	@State var sheetIsShow: Bool = false
+	@State var showSheet: Bool = false
 	
 	init(_ mot: Mot) {
 		self.mot = mot
@@ -44,7 +44,7 @@ struct MotDetailView: View {
 		.listStyle(.grouped)
 		.menuButton {
 			Button("Modifier") {
-				self.sheetIsShow = true
+				self.showSheet = true
 			}
 		}
     }

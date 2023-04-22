@@ -20,16 +20,16 @@ public class Sense: Entity {
 	
 	
 	//MARK: NSManaged attributs
-	@NSManaged public var communMetaDatas_atb: NSOrderedSet?
-	@NSManaged public var uniqueMetaDatas_atb: NSOrderedSet?
-	@NSManaged public var linkMetaData_atb: NSOrderedSet?
+	@NSManaged private var communMetaDatas_atb: NSOrderedSet?
+	@NSManaged private var uniqueMetaDatas_atb: NSOrderedSet?
+	@NSManaged private var linkMetaData_atb: NSOrderedSet?
 	
-	@NSManaged public var traductions_atb: NSSet?
+	@NSManaged private var traductions_atb: NSSet?
 
-	@NSManaged public var exemples_atb: NSOrderedSet?
+	@NSManaged private var exemples_atb: NSOrderedSet?
 
-	@NSManaged public var backLink_atb: NSSet?
-	@NSManaged public var parent_atb: Mot?
+	@NSManaged private var backLink_atb: NSSet?
+	@NSManaged private var parent_atb: Mot?
 	
 	
 	//MARK: Computed variables
@@ -106,19 +106,8 @@ public class Sense: Entity {
 	
 	
 	//MARK: Functions
-	func removeMetaData(_ metaData: MetaData) {
-		if let communMetaData = metaData as? CommunMetaData {
-			self.removeFromCommunMetaDatas_atb(communMetaData)
-			return
-		}
-		if let uniqueMetaData = metaData as? UniqueMetaData {
-			self.removeFromUniqueMetaDatas_atb(uniqueMetaData)
-			return
-		}
-		if let linkMetaData = metaData as? LinkMetaData {
-			self.removeFromLinkMetaData_atb(linkMetaData)
-			return
-		}
+	func removeCommunMetaData(_ metaData: CommunMetaData) {
+		self.removeFromCommunMetaDatas_atb(metaData)
 	}
 	
 	func addTraduction(_ traduction: Traduction) -> Traduction? {

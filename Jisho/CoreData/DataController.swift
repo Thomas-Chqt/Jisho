@@ -80,17 +80,7 @@ class DataController: ObservableObject {
 	func save() {
 		Task {
 			do {
-				try await mainQueueManagedObjectContext.perform {
-					if self.mainQueueManagedObjectContext.hasChanges {
-						try self.mainQueueManagedObjectContext.save()
-					}
-				}
-				
-				try await privateQueueManagedObjectContext.perform {
-					if self.privateQueueManagedObjectContext.hasChanges {
-						try self.privateQueueManagedObjectContext.save()
-					}
-				}
+				try await save()
 			}
 			catch {
 				fatalError(error.localizedDescription)
@@ -99,6 +89,7 @@ class DataController: ObservableObject {
 	}
 	
 	func save() async throws {
+		print("Saving...")
 		try await mainQueueManagedObjectContext.perform {
 			if self.mainQueueManagedObjectContext.hasChanges {
 				try self.mainQueueManagedObjectContext.save()
@@ -110,6 +101,7 @@ class DataController: ObservableObject {
 				try self.privateQueueManagedObjectContext.save()
 			}
 		}
+		print("Saved!")
 	}
 	
 }

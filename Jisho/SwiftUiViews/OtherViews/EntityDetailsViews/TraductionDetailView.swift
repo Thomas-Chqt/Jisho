@@ -10,7 +10,6 @@ import SwiftUI
 struct TraductionDetailView: View {
 	
 	@ObservedObject var traduction: Traduction
-	@State var showSheet: Bool = false
 	
 	init(_ traduction: Traduction) {
 		self.traduction = traduction
@@ -20,10 +19,6 @@ struct TraductionDetailView: View {
 		HStack(alignment: .top) {
 			Text(traduction.langue.flag)
 			Text(traduction.text)
-		}
-		.contextMenu {
-			Button(action: { showSheet.toggle() },
-				   label: { Label("Modifier", systemImage: "pencil.circle") })
 		}
     }
 }

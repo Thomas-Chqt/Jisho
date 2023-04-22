@@ -20,7 +20,7 @@ public class Exemple: Entity {
 	//MARK: NSManaged attributs
 	@NSManaged private var parent_atb: NSOrderedSet?
 	@NSManaged private var japonais_atb: String?
-	@NSManaged public var traductions_atb: NSSet?
+	@NSManaged private var traductions_atb: NSSet?
 
 	
 	//MARK: Computed variables

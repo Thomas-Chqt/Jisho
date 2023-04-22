@@ -18,7 +18,7 @@ public class MetaData: Entity {
 	}
 	
 	//MARK: NSManaged attributs
-	@NSManaged public var traductions_atb: NSSet?
+	@NSManaged private var traductions_atb: NSSet?
 	
 	
 	//MARK: Computed variables

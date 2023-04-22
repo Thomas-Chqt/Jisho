@@ -19,7 +19,7 @@ public class CommunMetaData: MetaData {
 	}
 	
 	//MARK: NSManaged attributs
-	@NSManaged public var senseIn_atb: NSOrderedSet?
+	@NSManaged private var senseIn_atb: NSOrderedSet?
 	
 	//MARK: EasyInit's init
 	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {
