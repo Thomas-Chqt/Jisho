@@ -10,6 +10,7 @@
 		E907276D29F3E1C900669D4F /* MetaDataPickerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E907276C29F3E1C900669D4F /* MetaDataPickerRow.swift */; };
 		E907277329F42C7E00669D4F /* SenseEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E907277229F42C7E00669D4F /* SenseEditView.swift */; };
 		E907277529F42DBB00669D4F /* MetaDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E907277429F42DBB00669D4F /* MetaDataPicker.swift */; };
+		E907277729F43A1A00669D4F /* JaponaisEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E907277629F43A1A00669D4F /* JaponaisEditView.swift */; };
 		E909770529F2BFC8000A4CBF /* CommunMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90976FB29F2BFC8000A4CBF /* CommunMetaData.swift */; };
 		E909770729F2BFC8000A4CBF /* LinkMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90976FD29F2BFC8000A4CBF /* LinkMetaData.swift */; };
 		E909770929F2BFC8000A4CBF /* UniqueMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90976FF29F2BFC8000A4CBF /* UniqueMetaData.swift */; };
@@ -76,6 +77,7 @@
 		E907276C29F3E1C900669D4F /* MetaDataPickerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataPickerRow.swift; sourceTree = "<group>"; };
 		E907277229F42C7E00669D4F /* SenseEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenseEditView.swift; sourceTree = "<group>"; };
 		E907277429F42DBB00669D4F /* MetaDataPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaDataPicker.swift; sourceTree = "<group>"; };
+		E907277629F43A1A00669D4F /* JaponaisEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaponaisEditView.swift; sourceTree = "<group>"; };
 		E90976FB29F2BFC8000A4CBF /* CommunMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunMetaData.swift; sourceTree = "<group>"; };
 		E90976FD29F2BFC8000A4CBF /* LinkMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetaData.swift; sourceTree = "<group>"; };
 		E90976FF29F2BFC8000A4CBF /* UniqueMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueMetaData.swift; sourceTree = "<group>"; };
@@ -432,6 +434,7 @@
 		E9FFBAD329F3753B00168F09 /* EditViews */ = {
 			isa = PBXGroup;
 			children = (
+				E907277629F43A1A00669D4F /* JaponaisEditView.swift */,
 				E907277229F42C7E00669D4F /* SenseEditView.swift */,
 				E9FFBAD629F3762E00168F09 /* MetaDataEditViews */,
 				E9FFBAD429F3755C00168F09 /* TraductionEditView.swift */,
@@ -577,6 +580,7 @@
 				E907277529F42DBB00669D4F /* MetaDataPicker.swift in Sources */,
 				E996A1FB29D57E2700DD700D /* FileExporterDelegate.swift in Sources */,
 				E9835CB029CC9382008CF340 /* JishoApp.swift in Sources */,
+				E907277729F43A1A00669D4F /* JaponaisEditView.swift in Sources */,
 				E9FFBAD929F378D800168F09 /* CommunMetaDataEditView.swift in Sources */,
 				E92D3CAE29E69E750051781D /* JMdictFile.swift in Sources */,
 				E9B1946429DD6D89004EF30B /* DataModel.xcdatamodeld in Sources */,
