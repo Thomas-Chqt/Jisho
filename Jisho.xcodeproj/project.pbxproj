@@ -63,6 +63,7 @@
 		E9B1948029DF02F2004EF30B /* ListClickableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947F29DF02F2004EF30B /* ListClickableText.swift */; };
 		E9B1948229DF2047004EF30B /* NavBarEditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1948129DF2047004EF30B /* NavBarEditButton.swift */; };
 		E9F7760429F12AFB00FC11D4 /* MetaDatasFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F7760329F12AFB00FC11D4 /* MetaDatasFile.swift */; };
+		E9FFBAD529F3755C00168F09 /* TraductionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FFBAD429F3755C00168F09 /* TraductionEditView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +126,7 @@
 		E9B1948129DF2047004EF30B /* NavBarEditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarEditButton.swift; sourceTree = "<group>"; };
 		E9F7760229F123C300FC11D4 /* Jisho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jisho.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9F7760329F12AFB00FC11D4 /* MetaDatasFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDatasFile.swift; sourceTree = "<group>"; };
+		E9FFBAD429F3755C00168F09 /* TraductionEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraductionEditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +337,7 @@
 				E9835C9629CC9382008CF340 /* SideMenu */,
 				E93D515D29DC0F4400AAC780 /* EntityList */,
 				E93D515E29DC0F5900AAC780 /* EntityDetailsViews */,
+				E9FFBAD329F3753B00168F09 /* EditViews */,
 			);
 			path = OtherViews;
 			sourceTree = "<group>";
@@ -401,6 +404,22 @@
 				E997238429E02B2600FB64D6 /* ShowSideMenuButton.swift */,
 			);
 			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
+		E9FFBAD329F3753B00168F09 /* EditViews */ = {
+			isa = PBXGroup;
+			children = (
+				E9FFBAD629F3762E00168F09 /* MetaDataEditViews */,
+				E9FFBAD429F3755C00168F09 /* TraductionEditView.swift */,
+			);
+			path = EditViews;
+			sourceTree = "<group>";
+		};
+		E9FFBAD629F3762E00168F09 /* MetaDataEditViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MetaDataEditViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -480,6 +499,7 @@
 				E997238529E02B2600FB64D6 /* ShowSideMenuButton.swift in Sources */,
 				E996A1F229D28F4800DD700D /* Mot.swift in Sources */,
 				E93D515829DAF1CA00AAC780 /* CoreDataEntityType.swift in Sources */,
+				E9FFBAD529F3755C00168F09 /* TraductionEditView.swift in Sources */,
 				E9B1945B29DCF9AD004EF30B /* MetaDataDetailView.swift in Sources */,
 				E9835CC129CC9382008CF340 /* ManagedObjectDebugRowView.swift in Sources */,
 				E9835CB529CC9382008CF340 /* DataController.swift in Sources */,
