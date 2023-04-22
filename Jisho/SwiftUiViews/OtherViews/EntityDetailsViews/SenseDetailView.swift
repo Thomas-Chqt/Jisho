@@ -39,6 +39,7 @@ struct SenseDetailView: View {
     }
 }
 
+
 struct SenseDetailView_Previews: PreviewProvider {
 	
 	static var sense = Sense(.preview)

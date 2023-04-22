@@ -9,23 +9,23 @@ import Foundation
 import SwiftUI
 
 struct ListClickableText: ViewModifier {
-	var action: () -> Void
+	var action: (() -> Void)?
 	
 	func body(content: Content) -> some View {
 		ZStack(alignment: .leading) {
 			content
-				.foregroundColor(.accentColor)
+				.foregroundColor(action == nil ? .primary : .accentColor)
 			Color.clear
 				.contentShape(Rectangle())
 				.onTapGesture {
-					action()
+					action?()
 				}
 		}
 	}
 }
 
 extension Text {
-	func clickable(action: @escaping () -> Void) -> some View {
+	func clickable(action: (() -> Void)?) -> some View {
 		self.modifier(ListClickableText(action: action))
 	}
 }

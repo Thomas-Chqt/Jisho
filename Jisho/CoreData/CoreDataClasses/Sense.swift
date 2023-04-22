@@ -179,7 +179,7 @@ public class Sense: Entity {
 		
 		switch type {
 		case .empty:
-			self.init(context: context)
+			self.init(id: nil, context: context)
 		case .preview:
 			self.init(id: UUID(),
 					  metaDatas: previewMetaData,

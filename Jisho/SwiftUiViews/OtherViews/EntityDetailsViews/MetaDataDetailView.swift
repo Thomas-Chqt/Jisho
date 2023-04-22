@@ -34,7 +34,7 @@ struct MetaDataDetailView: View {
 	var label: some View {
 		HStack(alignment: .top) {
 			Image(systemName: "info.circle")
-			Text(metaData.text)
+			Text(metaData.text ?? "Aucune traduction pour les langues selectioné")
 		}
 	}
 }

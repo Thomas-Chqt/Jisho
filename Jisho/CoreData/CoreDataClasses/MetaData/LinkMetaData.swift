@@ -26,7 +26,7 @@ public class LinkMetaData: MetaData {
 		
 		switch type {
 		case .empty:
-			self.init(context: context)
+			self.init(id: nil, context: context)
 		case .preview:
 			self.init(text: "Link metaData \(Int.random(in: 1...4))", context: context)
 		}

@@ -34,15 +34,20 @@ public class MetaData: Entity {
 		}
 	}
 	
-	var text: String {
+	var text: String? {
 		get {
-			return traductions.firstMatch()?.text ?? ""
+			return traductions.firstMatch()?.text
 		}
 		set {
 			if let traduction = traductions.firstLangue() ?? addTraduction(Traduction(id: UUID(),
 																						 langue: .first,
 																						 context: self.objectContext)) {
-				traduction.text = newValue
+				if let newValue = newValue {
+					traduction.text = newValue
+				}
+				else {
+					removeFromTraductions_atb(traduction)
+				}
 			}
 			else {
 				print("Error, no trad for selected langue and unable to create one")
@@ -85,13 +90,8 @@ public class MetaData: Entity {
 //MARK: Protocole extentions
 extension MetaData: Displayable {
 	var primary: String? {
+		guard let text = text else { return nil }
 		return text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : text
-	}
-}
-
-extension MetaData?: Identifiable {
-	public var id: UUID? {
-		return self?.id
 	}
 }
 

@@ -69,7 +69,7 @@ public class Japonais: Entity {
 		
 		switch type {
 		case .empty:
-			self.init(context: context)
+			self.init(id: nil, context: context)
 		case .preview:
 			self.init(kanjis: previewKanjis.randomElement()!,
 					  kanas: previewKanas.randomElement()!,

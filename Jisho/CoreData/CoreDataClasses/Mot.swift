@@ -135,7 +135,7 @@ public class Mot: Entity {
 		
 		switch type {
 		case .empty:
-			self.init(context: context)
+			self.init(id: nil, context: context)
 		case .preview:
 			self.init(jmDictId: previewJmdictID.randomElement()!,
 					  japonais: previewJaponais,
