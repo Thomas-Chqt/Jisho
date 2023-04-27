@@ -10,19 +10,23 @@ import SwiftUI
 
 struct MetaDataPicker: ViewModifier {
 	
-	@Binding var replacedMetaData: Binding<MetaData?>?
-	var excludedMetaData: [UUID]?
+	@Binding var selectedMetaData: Binding<CommunMetaData?>?
+	var excludedIDs: [UUID]?
 	
 	func body(content: Content) -> some View {
 		content
-			.sheet(item: $replacedMetaData) { binding in
-				MetaDataPickerSheeView(replacedMetaData: binding, excludedMetaData: excludedMetaData)
+			.sheet(item: $selectedMetaData) { binding in
+				MetaDataPickerView(selectedMetaData: binding, excludedIDs: excludedIDs)
 			}
 	}
 }
 
 extension View {
-	func metaDataPicker(replacedMetaData: Binding<Binding<MetaData?>?>, excludedMetaData: [UUID]?) -> some View {
-		self.modifier(MetaDataPicker(replacedMetaData: replacedMetaData, excludedMetaData: excludedMetaData))
+	func metaDataPicker(selectedMetaData: Binding<Binding<CommunMetaData?>?>, excludedIDs: [UUID]? = nil) -> some View {
+		self.modifier(MetaDataPicker(selectedMetaData: selectedMetaData, excludedIDs: excludedIDs))
+	}
+	
+	func metaDataPicker(selectedMetaData: Binding<Binding<CommunMetaData?>?>, inSense: Sense? = nil) -> some View {
+		self.modifier(MetaDataPicker(selectedMetaData: selectedMetaData, excludedIDs: inSense?.communMetaDatas.map { $0.id }))
 	}
 }

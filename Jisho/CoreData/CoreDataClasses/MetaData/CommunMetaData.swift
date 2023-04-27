@@ -19,7 +19,7 @@ public class CommunMetaData: MetaData {
 	}
 	
 	//MARK: NSManaged attributs
-	@NSManaged public var senseIn_atb: NSOrderedSet?
+	@NSManaged private var senseIn_atb: NSOrderedSet?
 	
 	//MARK: EasyInit's init
 	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {
@@ -27,7 +27,7 @@ public class CommunMetaData: MetaData {
 		
 		switch type {
 		case .empty:
-			self.init(context: context)
+			self.init(id: nil, context: context)
 		case .preview:
 			self.init(text: previewTexts.randomElement()!, context: context)
 		}
@@ -45,13 +45,19 @@ public class CommunMetaData: MetaData {
 //MARK: Protocole extentions
 extension CommunMetaData: EasyInit {}
 
+extension CommunMetaData?: Identifiable {
+	public var id: UUID? {
+		return self?.id
+	}
+}
+
 
 //MARK: Array extentions
 extension Array where Element == CommunMetaData {
 	func filter(by filter: String) -> [CommunMetaData] {
 		return self.filter { metaData in
 			if filter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return true }
-			return metaData.text.localizedStandardContains(filter)
+			return metaData.text?.localizedStandardContains(filter) ?? false
 		}
 	}
 }

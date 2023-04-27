@@ -18,14 +18,14 @@ public class UniqueMetaData: MetaData {
 	}
 	
 	//MARK: NSManaged attributs
-	@NSManaged public var parent_atb: Sense?
+	@NSManaged private var parent_atb: Sense?
 	
 	//MARK: EasyInit's init
 	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {
 		
 		switch type {
 		case .empty:
-			self.init(context: context)
+			self.init(id: nil, context: context)
 		case .preview:
 			self.init(text: "Unique metaData \(Int.random(in: 1...4))", context: context)
 		}
