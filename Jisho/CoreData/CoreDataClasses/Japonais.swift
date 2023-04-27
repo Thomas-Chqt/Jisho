@@ -38,6 +38,8 @@ public class Japonais: Entity {
 		}
 	}
 	
+	
+	//MARK: Functions
 	var kanas: [String] {
 		get {
 			guard let kanas_atb = kanas_atb else { return [] }
@@ -50,6 +52,17 @@ public class Japonais: Entity {
 		}
 	}
 	
+	func kanjiBinding(for index: Int) -> Binding<String>? {
+		if !self.kanjis.indices.contains(index) { return nil }
+		return Binding(get: { self.kanjis[index] },
+					   set: { self.kanjis[index] = $0 })
+	}
+	
+	func kanaBinding(for index: Int) -> Binding<String>? {
+		if !self.kanas.indices.contains(index) { return nil }
+		return Binding(get: { self.kanas[index] },
+					   set: { self.kanas[index] = $0 })
+	}
 	
 	//MARK: inits
 	convenience init(id: UUID? = nil,

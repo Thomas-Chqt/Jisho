@@ -34,7 +34,7 @@ struct DebugPageView: View {
 						}
 					}
 					Section("JMdict") {
-						NavigationLink("JMdict settings", value: 1)
+						NavigationLink("JMdict debug", value: 1)
 					}
 				}
 				.navigationDestination(for: CoreDataEntityType.self) { type in

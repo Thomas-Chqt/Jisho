@@ -15,16 +15,16 @@ struct JaponaisEditView: View {
 	var body: some View {
 		List {
 			Section(header: Text("Kanas"), footer: Button("Ajouter", action: addKana)) {
-				ForEach($japonais.kanas, id: \.self) { kanas in
-					TextField("Kana", text: kanas)
+				ForEach(0..<japonais.kanas.count, id: \.self) { index in
+					TextField("Kana", text: japonais.kanaBinding(for: index) ?? .constant("Error"))
 				}
 				.onDelete(perform: deleteKana)
 				.onMove(perform: moveKana)
 			}
 			
 			Section(header: Text("Kanjis"), footer: Button("Ajouter", action: addKanji)) {
-				ForEach($japonais.kanjis, id: \.self) { kanji in
-					TextField("Kanji", text: kanji)
+				ForEach(0..<japonais.kanjis.count, id: \.self) { index in
+					TextField("kanij", text: japonais.kanjiBinding(for: index) ?? .constant("Error"))
 				}
 				.onDelete(perform: deleteKanji)
 				.onMove(perform: moveKanji)

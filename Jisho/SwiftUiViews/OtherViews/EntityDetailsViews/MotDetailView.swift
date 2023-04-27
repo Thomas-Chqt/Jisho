@@ -47,6 +47,9 @@ struct MotDetailView: View {
 				self.showSheet = true
 			}
 		}
+		.sheet(isPresented: $showSheet, onDismiss: DataController.shared.save) {
+			MotEditView(mot: mot)
+		}
     }
 }
 
