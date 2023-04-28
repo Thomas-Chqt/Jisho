@@ -1,5 +1,5 @@
 //
-//  PisplayableProtocol.swift
+//  DisplayableProtocol.swift
 //  Jisho
 //
 //  Created by Thomas Choquet on 2023/03/28.
