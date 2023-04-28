@@ -66,6 +66,7 @@
 		E9B1948029DF02F2004EF30B /* ListClickableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1947F29DF02F2004EF30B /* ListClickableText.swift */; };
 		E9B1948229DF2047004EF30B /* NavBarEditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1948129DF2047004EF30B /* NavBarEditButton.swift */; };
 		E9E1CEBA29FAB4A5005C36C9 /* MotEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E1CEB929FAB4A5005C36C9 /* MotEditView.swift */; };
+		E9E1CEC829FB79D1005C36C9 /* Liste.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E1CEC629FB79D1005C36C9 /* Liste.swift */; };
 		E9F7760429F12AFB00FC11D4 /* MetaDatasFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F7760329F12AFB00FC11D4 /* MetaDatasFile.swift */; };
 		E9FFBAD529F3755C00168F09 /* TraductionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FFBAD429F3755C00168F09 /* TraductionEditView.swift */; };
 		E9FFBAD929F378D800168F09 /* CommunMetaDataEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FFBAD829F378D800168F09 /* CommunMetaDataEditView.swift */; };
@@ -137,6 +138,7 @@
 		E9B1948129DF2047004EF30B /* NavBarEditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarEditButton.swift; sourceTree = "<group>"; };
 		E9E1CEB929FAB4A5005C36C9 /* MotEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotEditView.swift; sourceTree = "<group>"; };
 		E9E1CEBC29FACD2E005C36C9 /* Jisho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Jisho.app; path = "/Users/thomas/Library/Mobile Documents/com~apple~CloudDocs/Xcode/Swift Projects/Crosplatform/Jisho/build/Debug-iphoneos/Jisho.app"; sourceTree = "<absolute>"; };
+		E9E1CEC629FB79D1005C36C9 /* Liste.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Liste.swift; sourceTree = "<group>"; };
 		E9F7760329F12AFB00FC11D4 /* MetaDatasFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDatasFile.swift; sourceTree = "<group>"; };
 		E9FFBAD429F3755C00168F09 /* TraductionEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraductionEditView.swift; sourceTree = "<group>"; };
 		E9FFBAD829F378D800168F09 /* CommunMetaDataEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunMetaDataEditView.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				E909770B29F2C07E000A4CBF /* MetaData */,
 				E9B1945C29DD593B004EF30B /* Traduction.swift */,
 				E9B1946D29DD8B10004EF30B /* Exemple.swift */,
+				E9E1CEC629FB79D1005C36C9 /* Liste.swift */,
 			);
 			path = CoreDataClasses;
 			sourceTree = "<group>";
@@ -571,6 +574,7 @@
 				E93D515329D9A36B00AAC780 /* Japonais.swift in Sources */,
 				E92DE1CA29D1C61600B5CB86 /* MetaData.swift in Sources */,
 				E93D515B29DC0CB400AAC780 /* Sense.swift in Sources */,
+				E9E1CEC829FB79D1005C36C9 /* Liste.swift in Sources */,
 				E997237929E0178800FB64D6 /* CloudStorage.swift in Sources */,
 				E907277329F42C7E00669D4F /* SenseEditView.swift in Sources */,
 				E9835CB429CC9382008CF340 /* AppPage.swift in Sources */,

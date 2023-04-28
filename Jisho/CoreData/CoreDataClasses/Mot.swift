@@ -25,7 +25,8 @@ public class Mot: Entity {
 	@NSManaged private var sense_atb: NSOrderedSet?
 	@NSManaged private var noSenseTrads_atb: NSOrderedSet?
 	@NSManaged private var notes_atb: String?
-	
+	@NSManaged private var listesIn_atb: NSSet?
+
 	
 	//MARK: Computed variables
 	var jmDictId: Int? {
@@ -302,5 +303,22 @@ extension Mot {
 	
 	@objc(removeSense_atb:)
 	@NSManaged public func removeFromSense_atb(_ values: NSOrderedSet)
+	
+}
+
+// MARK: Generated accessors for listesIn_atb
+extension Mot {
+	
+	@objc(addListesIn_atbObject:)
+	@NSManaged public func addToListesIn_atb(_ value: Liste)
+	
+	@objc(removeListesIn_atbObject:)
+	@NSManaged public func removeFromListesIn_atb(_ value: Liste)
+	
+	@objc(addListesIn_atb:)
+	@NSManaged public func addToListesIn_atb(_ values: NSSet)
+	
+	@objc(removeListesIn_atb:)
+	@NSManaged public func removeFromListesIn_atb(_ values: NSSet)
 	
 }
