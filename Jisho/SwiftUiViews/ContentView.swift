@@ -10,34 +10,22 @@ import SwiftUI
 
 struct ContentView: View {
 	
-	@StateObject var vm = ContentViewModel()
-	
-	init() { UITabBar.appearance().isHidden = true }
+	@StateObject var navModel = NavigationModel()
 	
 	var body: some View {
-		TabView(selection: $vm.currentPage) {
-			
-			SearchPageView()
-				.tag(AppPage.searchJap)
-			
-			SearchPageView()
-				.tag(AppPage.searchTrad)
-			
-			SearchPageView()
-				.tag(AppPage.searchExemple)
-			
-//			Text(AppPage.listes.fullName)
-//				.tag(AppPage.listes);
-//
-			SettingsPageView()
-				.tag(AppPage.settings);
-			
-			DebugPageView()
-				.tag(AppPage.debug);
+		NavigationSplitView(columnVisibility: $navModel.columnVisibility) {
+			SideBarView(selection: navModel.sideMenuSelection)
+				.navigationSplitViewColumnWidth(170)
+		} content: {
+			NavigationStack(path: $navModel.contentCollumNavigationPath){
+				navModel.contentCollumRoot?.view(selection: $navModel.detailCollumRoot)
+			}
+			.navigationSplitViewColumnWidth(300)
+		} detail: {
+			NavigationStack(path: $navModel.detailCollumNavigationPath) {
+				navModel.detailCollumRoot?.view
+			}
 		}
-		.sideMenu(isPresented: $vm.sideMenuIsShow, currentPage: $vm.currentPage)
-		.environment(\.toggleSideMenu, vm.toggleSideMenu)
-		.environment(\.switchPage, vm.switchPage)
 	}
 }
 
@@ -45,5 +33,7 @@ struct ContentView_iOS_Previews: PreviewProvider {
     static var previews: some View {
 		ContentView()
 			.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
+			.environmentObject(Settings.shared)
     }
 }
+

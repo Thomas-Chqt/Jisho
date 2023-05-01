@@ -1,5 +1,5 @@
 //
-//  JMdictSettingsView.swift
+//  JMdictDebugView.swift
 //  Jisho
 //
 //  Created by Thomas Choquet on 2023/04/12.
@@ -8,7 +8,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct JMdictSettingsView: View {
+struct JMdictDebugView: View {
 	
 	@State var jmDictFile: JMdictFile? = nil
 	@State var metaDataFile: MetaDatasFile? = nil
@@ -170,8 +170,8 @@ struct JMdictSettingsView: View {
 	
 }
 
-struct JMdictSettingsView_Previews: PreviewProvider {
+struct JMdictDebugView_Previews: PreviewProvider {
     static var previews: some View {
-        JMdictSettingsView()
+		JMdictDebugView()
     }
 }

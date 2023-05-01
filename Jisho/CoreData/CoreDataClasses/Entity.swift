@@ -21,7 +21,11 @@ public class Entity: NSManagedObject, Identifiable {
 	
 	public var id: UUID {
 		get {
-			guard let id_atb = id_atb else { fatalError("nil id") }
+			guard let id_atb = id_atb else {
+				print("nil ID, return random uuid")
+				return UUID()
+//				fatalError("nil id")
+			}
 			return id_atb
 		}
 		set {

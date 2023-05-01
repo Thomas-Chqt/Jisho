@@ -11,7 +11,6 @@ import UniformTypeIdentifiers
 import CoreData
 
 class DebugPageViewModel: ObservableObject {
-	@Published var selection: Entity?
 	@Published var showFileExporter = false
 	
 
