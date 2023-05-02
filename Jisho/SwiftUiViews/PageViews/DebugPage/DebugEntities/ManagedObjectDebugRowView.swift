@@ -26,27 +26,16 @@ struct ManagedObjectDebugRowView<T: NSManagedObject>: View {
 
 struct ManagedObjectDebugRowView_Previews: PreviewProvider {
     static var previews: some View {
-		WrappedView()
-			.navigationSplitViewStyle(.balanced)
-			.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
-    }
-	
-	struct WrappedView: View {
-		
-		@StateObject var navModel = NavigationModel()
-		
-		var body: some View {
-			NavigationSplitView(columnVisibility: .constant(.all)) {
-				EmptyView()
-			} content: {
-				NavigationStack(path: $navModel.contentCollumNavigationPath){
-					NavigationLink(value: 1) {
-						ManagedObjectDebugRowView(Mot.self)
-					}
+		NavigationSplitView(columnVisibility: .constant(.all)) {
+			NavigationStack {
+				NavigationLink(value: 1) {
+					ManagedObjectDebugRowView(Mot.self)
 				}
-			} detail: {
-				EmptyView()
 			}
+		} detail: {
+			EmptyView()
 		}
-	}
+		.navigationSplitViewStyle(.balanced)
+		.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
+    }
 }

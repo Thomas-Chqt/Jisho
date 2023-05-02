@@ -8,25 +8,12 @@
 import Foundation
 import SwiftUI
 
-enum ContentCollumRoot: Identifiable {
+enum AppPages {
 	case search
 	case listes
 	case settings
 	case debug
-	
-	var id: ContentCollumRoot {
-		return self
-	}
-	
-	static var sideMenuList: [ContentCollumRoot] {
-		return [
-			ContentCollumRoot.search,
-			ContentCollumRoot.listes,
-			ContentCollumRoot.settings,
-			ContentCollumRoot.debug
-		]
-	}
-	
+		
 	var fullName: String {
 		switch self {
 		case .search:
@@ -50,20 +37,6 @@ enum ContentCollumRoot: Identifiable {
 			return Image(systemName: "gearshape")
 		case .debug:
 			return Image(systemName: "wrench")
-		}
-	}
-	
-	@ViewBuilder
-	func view(selection: Binding<DetailCollumRoot?>) -> some View {
-		switch self {
-		case .search:
-			Text("Search")
-		case .listes:
-			Text("List")
-		case .settings:
-			SettingsPageView(selection: selection)
-		case .debug:
-			DebugPageView(selection: selection)
 		}
 	}
 	

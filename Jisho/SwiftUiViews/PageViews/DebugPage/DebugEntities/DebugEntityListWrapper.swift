@@ -13,10 +13,10 @@ struct DebugEntityListWrapper<T: Entity>: View where T: Displayable, T: EasyInit
 	
 	@FetchRequest(sortDescriptors: []) var entities: FetchedResults<T>
 	
-	@Binding var selection: DetailCollumRoot?
+	@Binding var selection: DebugPageSelection?
 	
 	
-	init(type: T.Type, selection: Binding<DetailCollumRoot?>) {
+	init(type: T.Type, selection: Binding<DebugPageSelection?>) {
 		self._selection = selection
 		let request = NSFetchRequest<T>(entityName: T.description())
 		request.fetchLimit = 1000
@@ -27,7 +27,7 @@ struct DebugEntityListWrapper<T: Entity>: View where T: Displayable, T: EasyInit
     var body: some View {
 		List(selection: $selection) {
 			ForEach(entities) { entity in
-				NavigationLink(value: DetailCollumRoot.entity(entity)) {
+				NavigationLink(value: DebugPageSelection.entity(entity)) {
 					VStack(alignment: .leading) {
 						Text(entity.primary ?? "")
 						Text(entity.secondary ?? " ")
@@ -62,7 +62,7 @@ struct DebugEntityListWrapper<T: Entity>: View where T: Displayable, T: EasyInit
 	
 	func delete(_ indexSet: IndexSet) {
 		indexSet.forEach { index in
-//			if selection == DetailCollumRoot.entity(entities[index]) { selection = nil }
+			if selection == DebugPageSelection.entity(entities[index]) { selection = nil }
 			selection = nil
 			entities[index].delete()
 		}
@@ -73,26 +73,15 @@ struct DebugEntityListWrapper<T: Entity>: View where T: Displayable, T: EasyInit
 struct DebugEntityListWrapper_Previews: PreviewProvider {
 	
     static var previews: some View {
-		WrappedView()
+		NavigationSplitView(columnVisibility: .constant(.all)) {
+			NavigationStack {
+				DebugEntityListWrapper(type: Mot.self, selection: .constant(nil))
+			}
+		} detail: {
+			EmptyView()
+		}
 			.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
 			.environmentObject(Settings.shared)
 
     }
-	
-	struct WrappedView: View {
-		
-		@StateObject var navModel = NavigationModel()
-		
-		var body: some View {
-			NavigationSplitView(columnVisibility: .constant(.all)) {
-				EmptyView()
-			} content: {
-				NavigationStack {
-					DebugEntityListWrapper(type: Mot.self, selection: $navModel.detailCollumRoot)
-				}
-			} detail: {
-				EmptyView()
-			}
-		}
-	}
 }

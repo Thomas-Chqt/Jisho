@@ -10,22 +10,17 @@ import SwiftUI
 
 struct ContentView: View {
 	
-	@StateObject var navModel = NavigationModel()
+	@State var sideMenuIsShow = false
+	@State var currentPage: AppPages = .debug
+	
+	init() { UITabBar.appearance().isHidden = true }
 	
 	var body: some View {
-		NavigationSplitView(columnVisibility: $navModel.columnVisibility) {
-			SideBarView(selection: navModel.sideMenuSelection)
-				.navigationSplitViewColumnWidth(170)
-		} content: {
-			NavigationStack(path: $navModel.contentCollumNavigationPath){
-				navModel.contentCollumRoot?.view(selection: $navModel.detailCollumRoot)
-			}
-			.navigationSplitViewColumnWidth(300)
-		} detail: {
-			NavigationStack(path: $navModel.detailCollumNavigationPath) {
-				navModel.detailCollumRoot?.view
-			}
+		TabView(selection: $currentPage) {
+			SettingsPageView().tag(AppPages.settings)
+			DebugPageView().tag(AppPages.debug)
 		}
+		.sideMenu(currentPage: $currentPage, isPresented: $sideMenuIsShow)
 	}
 }
 
