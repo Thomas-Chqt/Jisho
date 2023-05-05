@@ -24,6 +24,7 @@ struct DebugPageView: View {
 						NavigationLink(value: 3) { ManagedObjectDebugRowView(Sense.self) }
 						NavigationLink(value: 4) { ManagedObjectDebugRowView(Traduction.self) }
 						NavigationLink(value: 5) { ManagedObjectDebugRowView(CommunMetaData.self) }
+						NavigationLink(value: 6) { ManagedObjectDebugRowView(Liste.self) }
 					}
 					Section("JMdict") {
 						NavigationLink("JMdict debug", value: DebugPageSelection.JMdictDebug)
@@ -39,12 +40,18 @@ struct DebugPageView: View {
 				.listStyle(.plain)
 				.navigationDestination(for: Int.self) { nbr in
 					switch nbr {
-						case 1:	DebugEntityListWrapper(type: Mot.self, 				selection: $navModel.selection).showSideMenuButton()
-						case 2: DebugEntityListWrapper(type: Japonais.self, 		selection: $navModel.selection).showSideMenuButton()
-						case 3: DebugEntityListWrapper(type: Sense.self, 			selection: $navModel.selection).showSideMenuButton()
-						case 4:	DebugEntityListWrapper(type: Traduction.self, 		selection: $navModel.selection).showSideMenuButton()
-						case 5: DebugEntityListWrapper(type: CommunMetaData.self,	selection: $navModel.selection).showSideMenuButton()
-						case 6: JMdictDebugView()
+						case 1:	DebugEntityListWrapper(type: Mot.self, selection: $navModel.selection)
+							.showSideMenuButton()
+						case 2: DebugEntityListWrapper(type: Japonais.self, selection: $navModel.selection)
+							.showSideMenuButton()
+						case 3: DebugEntityListWrapper(type: Sense.self, selection: $navModel.selection)
+							.showSideMenuButton()
+						case 4:	DebugEntityListWrapper(type: Traduction.self, selection: $navModel.selection)
+							.showSideMenuButton()
+						case 5: DebugEntityListWrapper(type: CommunMetaData.self, selection: $navModel.selection)
+							.showSideMenuButton()
+						case 6: DebugEntityListWrapper(type: Liste.self, selection: $navModel.selection)
+							.showSideMenuButton()
 						default: EmptyView()
 					}
 				}

@@ -9,6 +9,9 @@
 import Foundation
 import CoreData
 import Combine
+import SwiftUI
+import UniformTypeIdentifiers
+
 
 @objc(Traduction)
 public class Traduction: Entity {
@@ -98,6 +101,68 @@ extension Traduction: Displayable {
 }
 
 extension Traduction: EasyInit { }
+
+
+//MARK: Protocole extentions
+extension Traduction: Transferable {
+	static public var transferRepresentation: some TransferRepresentation {
+		DataRepresentation(contentType: .traduction) { entity in
+			let context = DataController.shared.privateQueueManagedObjectContext
+			if entity.objectID.isTemporaryID {
+				try await context.perform {
+					try context.obtainPermanentIDs(for: [entity])
+				}
+			}
+			let URI = entity.objectID.uriRepresentation()
+			return try JSONEncoder().encode(URI)
+			
+		} importing: { data in
+			let URI = try JSONDecoder().decode(URL.self, from: data)
+			let context = DataController.shared.mainQueueManagedObjectContext
+			guard let persistentStoreCoordinator = context.persistentStoreCoordinator else { throw DataRepError.NilPersStoreCoor }
+			guard let ObjID = persistentStoreCoordinator.managedObjectID(forURIRepresentation: URI) else { throw DataRepError.ObjIDNotFound }
+			
+			return try await context.perform {
+				guard let entity = context.object(with: ObjID) as? Self else { throw DataRepError.ObjNotFound }
+				return entity
+			}
+		}
+		
+	}
+}
+
+extension Traduction: NSItemProviderWriting {
+	public static var writableTypeIdentifiersForItemProvider: [String] {
+		return [ UTType.traduction.identifier ]
+	}
+	
+	public func loadData(withTypeIdentifier typeIdentifier: String,
+						 forItemProviderCompletionHandler completionHandler: @escaping @Sendable (Data?, Error?) -> Void) -> Progress? {
+		let progress = Progress(totalUnitCount: 100)
+		do {
+			let context = DataController.shared.privateQueueManagedObjectContext
+			if self.objectID.isTemporaryID {
+				context.perform {
+					do {
+						try context.obtainPermanentIDs(for: [self])
+					}
+					catch {
+						completionHandler(nil, error)
+					}
+				}
+			}
+			let URI = self.objectID.uriRepresentation()
+			let data = try JSONEncoder().encode(URI)
+			completionHandler(data, nil)
+		}
+		catch {
+			completionHandler(nil, error)
+		}
+		return progress
+	}
+	
+	
+}
 
 
 //MARK: Array extentions

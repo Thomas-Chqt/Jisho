@@ -24,6 +24,7 @@
     </entity>
     <entity name="Liste" representedClassName="Liste" parentEntity="Entity" syncable="YES">
         <attribute name="name_atb" optional="YES" attributeType="String"/>
+        <attribute name="order_atb" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="mots_atb" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Mot" inverseName="listesIn_atb" inverseEntity="Mot"/>
         <relationship name="parent_atb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Liste" inverseName="subListes_atb" inverseEntity="Liste"/>
         <relationship name="subListes_atb" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Liste" inverseName="parent_atb" inverseEntity="Liste"/>

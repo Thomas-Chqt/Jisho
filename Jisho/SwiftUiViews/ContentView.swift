@@ -17,6 +17,7 @@ struct ContentView: View {
 	
 	var body: some View {
 		TabView(selection: $currentPage) {
+			RootListePageView().tag(AppPages.listes)
 			SettingsPageView().tag(AppPages.settings)
 			DebugPageView().tag(AppPages.debug)
 		}

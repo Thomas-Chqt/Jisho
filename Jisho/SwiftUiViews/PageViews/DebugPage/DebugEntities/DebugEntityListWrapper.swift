@@ -44,12 +44,7 @@ struct DebugEntityListWrapper<T: Entity>: View where T: Displayable, T: EasyInit
 			Button("Add 1000")	{ add(1000)
 			}
 		}
-		.toolbar {
-			ToolbarItem(placement: .navigationBarTrailing) {
-				Button(action: 	{ add(1) },
-					   label: 	{ Image(systemName: "plus") })
-			}
-		}
+		.addButton(add)
 		.navigationTitle("All \(T.description())")
     }
 	
@@ -76,12 +71,11 @@ struct DebugEntityListWrapper_Previews: PreviewProvider {
 		NavigationSplitView(columnVisibility: .constant(.all)) {
 			NavigationStack {
 				DebugEntityListWrapper(type: Mot.self, selection: .constant(nil))
+					.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
+					.environmentObject(Settings.shared)
 			}
 		} detail: {
 			EmptyView()
 		}
-			.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
-			.environmentObject(Settings.shared)
-
     }
 }

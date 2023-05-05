@@ -16,8 +16,7 @@ struct LanguesSettingsView: View {
 			ForEach(settings.langueOrder, id: \.self) { langue in
 				Text("\(langue.flag) \(langue.fullName)")
 			}
-			.onMove(perform: move)
-			
+			.onMove(perform: move)			
 		}
 		.environment(\.editMode, .constant(.active))
 		.navigationTitle("Langues")

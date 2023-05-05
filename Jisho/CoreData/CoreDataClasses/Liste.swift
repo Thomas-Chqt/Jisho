@@ -8,6 +8,8 @@
 
 import Foundation
 import CoreData
+import SwiftUI
+import UniformTypeIdentifiers
 
 @objc(Liste)
 public class Liste: Entity {
@@ -17,17 +19,34 @@ public class Liste: Entity {
 		return NSFetchRequest<Liste>(entityName: "Liste")
 	}
 	
+	@nonobjc public class func rootListesFetchRequest() -> NSFetchRequest<Liste> {
+		let request:NSFetchRequest<Liste> = self.fetchRequest()
+		request.predicate = NSPredicate(format: "parent_atb == nil")
+		request.sortDescriptors = [ NSSortDescriptor(key: "order_atb", ascending: true) ]
+		return request
+	}
+	
 	//MARK: NSManaged attributs
 	@NSManaged private var name_atb: String?
 	@NSManaged private var subListes_atb: NSOrderedSet?
 	@NSManaged private var mots_atb: NSOrderedSet?
 	@NSManaged private var parent_atb: Liste?
+	@NSManaged private var order_atb: Int32
 	
 	
 	//MARK: Computed variables
 	var name: String {
 		get { return name_atb ?? "Pas de nom" }
 		set { name_atb = newValue }
+	}
+	
+	var parent: Liste? {
+		get {
+			parent_atb
+		}
+		set {
+			parent_atb = newValue
+		}
 	}
 	
 	var subListes: [Liste] {
@@ -54,6 +73,26 @@ public class Liste: Entity {
 		}
 	}
 	
+	var order: Int? {
+		get {
+			if order_atb >= 0 {
+				return Int(order_atb)
+			}
+			else {
+				return nil
+			}
+		}
+		set {
+			if let newValue = newValue {
+				if newValue >= 0 {
+					order_atb = Int32(newValue)
+					return
+				}
+			}
+			order_atb = -1
+		}
+	}
+	
 	
 	//MARK: Functions
 	func toggleMot(_ mot: Mot) {
@@ -64,10 +103,197 @@ public class Liste: Entity {
 			self.mots.append(mot)
 		}
 	}
+	
+	func removeFromParent() -> Liste {
+		self.parent = nil
+		return self
+	}
+	
+	
+	//MARK: inits
+	convenience init(id: UUID? = nil,
+					 name: String? = nil,
+					 subListes: [Liste]? = nil,
+					 mots: [Mot]? = nil,
+					 order: Int? = nil,
+					 context: NSManagedObjectContext? = nil) {
+		self.init(id: id, context: context)
+		
+		
+		self.name = name ?? ""
+		self.subListes = subListes ?? []
+		self.mots = mots ?? []
+		self.order = order
+	}
+	
+	//MARK: EasyInit's init
+	convenience required init(_ type: InitType, context: NSManagedObjectContext? = nil) {
+		
+		let previewName = ["Liste A", "Liste Test", "Liste"]
+		
+		switch type {
+		case .empty:
+			self.init(id: nil, name: nil, context: context)
+		case .preview:
+			self.init(id: nil,
+					  name: previewName.randomElement()!,
+					  context: context)
+		}
+	}
+
+}
+
+//MARK: Protocole extentions
+extension Liste: Displayable {
+	var primary: String? {
+		name
+	}
+}
+
+extension Liste: EasyInit { }
+
+extension Liste: Transferable {
+	static public var transferRepresentation: some TransferRepresentation {
+		DataRepresentation(contentType: .liste) { entity in
+			let context = DataController.shared.privateQueueManagedObjectContext
+			if entity.objectID.isTemporaryID {
+				try await context.perform {
+					try context.obtainPermanentIDs(for: [entity])
+				}
+			}
+			let URI = entity.objectID.uriRepresentation()
+			return try JSONEncoder().encode(URI)
+			
+		} importing: { data in
+			let URI = try JSONDecoder().decode(URL.self, from: data)
+			let context = DataController.shared.mainQueueManagedObjectContext
+			guard let persistentStoreCoordinator = context.persistentStoreCoordinator else { throw DataRepError.NilPersStoreCoor }
+			guard let ObjID = persistentStoreCoordinator.managedObjectID(forURIRepresentation: URI) else { throw DataRepError.ObjIDNotFound }
+			
+			return try await context.perform {
+				guard let entity = context.object(with: ObjID) as? Self else { throw DataRepError.ObjNotFound }
+				return entity
+			}
+		}
+		
+	}
+}
+
+extension Liste: NSItemProviderWriting {
+	public static var writableTypeIdentifiersForItemProvider: [String] {
+		return [ UTType.liste.identifier ]
+	}
+	
+	public func loadData(withTypeIdentifier typeIdentifier: String,
+						 forItemProviderCompletionHandler completionHandler: @escaping @Sendable (Data?, Error?) -> Void) -> Progress? {
+		let progress = Progress(totalUnitCount: 100)
+		do {
+			let context = DataController.shared.privateQueueManagedObjectContext
+			if self.objectID.isTemporaryID {
+				context.perform {
+					do {
+						try context.obtainPermanentIDs(for: [self])
+					}
+					catch {
+						completionHandler(nil, error)
+					}
+				}
+			}
+			let URI = self.objectID.uriRepresentation()
+			let data = try JSONEncoder().encode(URI)
+			completionHandler(data, nil)
+		}
+		catch {
+			completionHandler(nil, error)
+		}
+		return progress
+	}
+	
+	
 }
 
 
+//MARK: Array extentions
+extension [Liste] {
+	mutating func moveIn(_ liste: Liste) {
+		self.append(liste.removeFromParent())
+	}
+	
+	mutating func moveIn(_ liste: Liste, at index: Int) {
+		self.insert(liste.removeFromParent(), at: index)
+	}
+	
+	mutating func moveIn(_ listes: [Liste]) {
+		for liste in listes {
+			self.moveIn(liste)
+		}
+	}
+	
+	mutating func moveIn(_ listes: [Liste], _ position: CGPoint) -> Bool {
+		self.moveIn(listes)
+		return true
+	}
+	
+	mutating func moveIn(_ listes: [Liste], at index: Int) {
+		var index = index
+		for liste in listes {
+			self.insert(liste.removeFromParent(), at: index)
+			index += 1
+		}
+	}
+	
+	mutating func moveIn(_ listes: [Liste], at index: Int? = nil) {
+		if let index = index {
+			self.moveIn(listes, at: index)
+		}
+		else {
+			self.moveIn(listes)
+		}
+	}
+}
 
+
+//MARK: Other extentions
+extension Liste {
+	func moveIn(_ liste: Liste) {
+		if liste.isLooping(ifInsertIn: self) { return }
+		self.subListes.moveIn(liste)
+	}
+	
+	func moveIn(_ listes: [Liste]) {
+		self.subListes.moveIn(listes.filter{ $0.isLooping(ifInsertIn: self) == false })
+	}
+	
+	func moveIn(_ liste: Liste, at index: Int) {
+		if liste.isLooping(ifInsertIn: self) { return }
+		self.subListes.moveIn(liste, at: index)
+	}
+	
+	func moveIn(_ listes: [Liste], at index: Int) {
+		self.subListes.moveIn(listes.filter{ $0.isLooping(ifInsertIn: self) == false }, at: index)
+	}
+	
+	func moveIn(_ listes: [Liste], at index: Int? = nil) {
+		if let index = index {
+			self.moveIn(listes, at: index)
+		}
+		else {
+			self.moveIn(listes)
+		}
+	}
+}
+
+extension Liste {
+	func isLooping(ifInsertIn liste: Liste) -> Bool {
+		if self.id == liste.id { return true }
+		var parent = liste.parent
+		while let unWrappParent = parent {
+			if self.id == unWrappParent.id { return true }
+			parent = unWrappParent.parent
+		}
+		return false
+	}
+}
 
 // MARK: Generated accessors for subListes_atb
 extension Liste {

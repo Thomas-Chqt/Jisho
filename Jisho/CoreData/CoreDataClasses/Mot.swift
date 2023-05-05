@@ -217,6 +217,12 @@ extension Mot: Displayable {
 
 extension Mot: EasyInit {}
 
+extension Mot: SplitViewSelection {
+	var view: some View {
+		return MotEditView(mot: self)
+	}
+}
+
 
 
 // MARK: Generated accessors for japonais_atb
