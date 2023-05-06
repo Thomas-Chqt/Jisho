@@ -26,6 +26,14 @@ public class Liste: Entity {
 		return request
 	}
 	
+	@nonobjc public class func allListesFetchRequest() -> NSFetchRequest<Liste> {
+		let request:NSFetchRequest<Liste> = self.fetchRequest()
+		request.sortDescriptors = [ NSSortDescriptor(key: "editTime_atb", ascending: false) ]
+		return request
+	}
+
+	
+	
 	//MARK: NSManaged attributs
 	@NSManaged private var name_atb: String?
 	@NSManaged private var subListes_atb: NSOrderedSet?
@@ -37,7 +45,10 @@ public class Liste: Entity {
 	//MARK: Computed variables
 	var name: String {
 		get { return name_atb ?? "Pas de nom" }
-		set { name_atb = newValue }
+		set {
+			name_atb = newValue
+			editTime = Date()
+		}
 	}
 	
 	var parent: Liste? {
@@ -46,6 +57,7 @@ public class Liste: Entity {
 		}
 		set {
 			parent_atb = newValue
+			editTime = Date()
 		}
 	}
 	
@@ -58,6 +70,7 @@ public class Liste: Entity {
 		set {
 			if newValue.isEmpty { subListes_atb = nil ; return }
 			subListes_atb = NSOrderedSet(array: newValue)
+			editTime = Date()
 		}
 	}
 	
@@ -70,6 +83,7 @@ public class Liste: Entity {
 		set {
 			if newValue.isEmpty { mots_atb = nil ; return }
 			mots_atb = NSOrderedSet(array: newValue)
+			editTime = Date()
 		}
 	}
 	
@@ -95,8 +109,12 @@ public class Liste: Entity {
 	
 	
 	//MARK: Functions
+	func contains(_ mot: Mot) -> Bool {
+		return self.mots.contains(where: { $0.id == mot.id })
+	}
+	
 	func toggleMot(_ mot: Mot) {
-		if self.mots.contains(mot) {
+		if self.contains(mot) {
 			self.removeFromMots_atb(mot)
 		}
 		else {

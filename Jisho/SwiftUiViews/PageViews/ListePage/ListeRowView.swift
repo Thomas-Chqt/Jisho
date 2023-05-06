@@ -21,7 +21,7 @@ struct ListeRowView: View {
 				.onSubmit { editedListe = nil; DataController.shared.save() }
 		}
 		else {
-			NavigationLink("\(liste.name) (\(liste.parent?.name ?? "nil"))", value: liste)
+			NavigationLink("\(liste.name)", value: liste)
 				.contextMenu {
 					Button("Modifier") {
 						editedListe = liste.id

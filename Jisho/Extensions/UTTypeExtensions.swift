@@ -14,4 +14,6 @@ extension UTType {
 	static var liste: UTType { UTType(exportedAs: "jisho.ObjType.Liste") }
 	
 	static var traduction: UTType { UTType(exportedAs: "jisho.ObjType.Traduction") }
+	
+	static var mot: UTType { UTType(exportedAs: "jisho.ObjType.Mot") }
 }

@@ -28,7 +28,7 @@ struct ForEachWithDropDestination<Data: RandomAccessCollection, Content: View, T
 		}
 		.dropDestination(for: T.self) {
 			isDragEnable.wrappedValue = true
-			print("Enable")
+//			print("Enable")
 			myDispatchQueue.removeAllDispatchWorkItem()
 			return action($0, $1)
 		}

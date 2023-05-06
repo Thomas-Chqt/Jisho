@@ -16,8 +16,12 @@ struct ListeView: View {
 	
     var body: some View {
 		Group {
-			if !liste.subListes.isEmpty {
-				List {
+			if liste.subListes.isEmpty && liste.mots.isEmpty {
+				Color.clear.contentShape(Rectangle())
+					.dropDestination(shouldEnableDrag: true, for: Liste.self, action: insertList)
+			}
+			else {
+				List(selection: $selection) {
 					ForEachWithDropDestination(liste.subListes, action: insertList) { liste in
 						ListeRowView(liste: liste, editedListe: $editedListe)
 					}
@@ -29,10 +33,6 @@ struct ListeView: View {
 					}
 				}
 				.listStyle(.plain)
-			}
-			else {
-				Color.clear.contentShape(Rectangle())
-					.dropDestination(shouldEnableDrag: true, for: Liste.self, action: addListes)
 			}
 		}
 		.navigationTitle(liste.name)
@@ -69,11 +69,14 @@ struct ListeView: View {
 		DataController.shared.save()
 	}
 	
-	func addListes(listes: [Liste], pos: CGPoint) -> Bool {
-		liste.moveIn(listes)
+	func insertList(listes: [Liste], pos: CGPoint) -> Bool {
+		self.insertList(listes: listes)
+		
 		DataController.shared.save()
 		return true
 	}
+	
+	
 
 }
 

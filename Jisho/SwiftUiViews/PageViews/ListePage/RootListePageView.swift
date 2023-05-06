@@ -46,7 +46,7 @@ struct RootListePageView: View {
 			.showSideMenuButton()
 			.addButton(createListe)
 		} detail: {
-			
+			navModel.selection?.view
 		}
     }
 	
@@ -95,6 +95,7 @@ struct RootListePageView_Previews: PreviewProvider {
 				.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
 				.environment(\.isDragEnable, $isDragEnable)
 				.environmentObject(myDispatchQueue)
+				.environmentObject(Settings.shared)
 		}
 	}
 }
