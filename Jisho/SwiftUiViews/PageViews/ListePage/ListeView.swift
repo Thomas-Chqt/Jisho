@@ -23,6 +23,10 @@ struct ListeView: View {
 					}
 					.onDelete(perform: deleteListe)
 					.onMove(perform: moveListe)
+					
+					ForEach(liste.mots) { mot in
+						MotRowView(mot: mot)
+					}
 				}
 				.listStyle(.plain)
 			}
@@ -76,6 +80,7 @@ struct ListeView: View {
 struct ListeView_Previews: PreviewProvider {
     static var previews: some View {
 		WrappedView()
+			.environmentObject(Settings.shared)
     }
 	
 	struct WrappedView: View {

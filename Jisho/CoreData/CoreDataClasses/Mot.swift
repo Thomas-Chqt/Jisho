@@ -219,7 +219,7 @@ extension Mot: EasyInit {}
 
 extension Mot: SplitViewSelection {
 	var view: some View {
-		return MotEditView(mot: self)
+		return MotDetailView(self)
 	}
 }
 

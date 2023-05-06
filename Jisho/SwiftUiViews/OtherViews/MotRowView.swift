@@ -12,14 +12,16 @@ struct MotRowView: View {
 	@ObservedObject var mot: Mot
 	
     var body: some View {
-		VStack(alignment: .leading, spacing: 0) {
-			HStack(alignment: .bottom, spacing: 0) {
-				kanji
-				kana
+		NavigationLink(value: mot) {
+			VStack(alignment: .leading, spacing: 0) {
+				HStack(alignment: .bottom, spacing: 0) {
+					kanji
+					kana
+				}
+				traduction
 			}
-			traduction
+			.frame(height: 55)
 		}
-		.frame(height: 55)
     }
 	
 	
