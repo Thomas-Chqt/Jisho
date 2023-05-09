@@ -65,8 +65,8 @@ struct DropDestination<T : Transferable>: ViewModifier {
 extension View {
 	
 	@ViewBuilder
-	func dropDestination<T>(shouldEnableDrag: Bool, for payloadType: T.Type = T.self, action: @escaping ([T], CGPoint) -> Bool, isTargeted: @escaping (Bool) -> Void = { _ in }) -> some View where T : Transferable {
-		if shouldEnableDrag {
+	func dropDestination<T>(shouldReEnableDrag: Bool, for payloadType: T.Type = T.self, action: @escaping ([T], CGPoint) -> Bool, isTargeted: @escaping (Bool) -> Void = { _ in }) -> some View where T : Transferable {
+		if shouldReEnableDrag {
 			self.modifier(DropDestination(for: payloadType, action: action, isTargeted: isTargeted))
 		}
 		else {

@@ -89,7 +89,7 @@ class DataController: ObservableObject {
 	}
 	
 	func save() async throws {
-//		print("Saving...")
+		print("Saving...")
 		try await mainQueueManagedObjectContext.perform {
 			if self.mainQueueManagedObjectContext.hasChanges {
 				try self.mainQueueManagedObjectContext.save()
@@ -101,7 +101,7 @@ class DataController: ObservableObject {
 				try self.privateQueueManagedObjectContext.save()
 			}
 		}
-//		print("Saved!")
+		print("Saved!")
 	}
 	
 }

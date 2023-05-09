@@ -18,7 +18,7 @@ struct ListeView: View {
 		Group {
 			if liste.subListes.isEmpty && liste.mots.isEmpty {
 				Color.clear.contentShape(Rectangle())
-					.dropDestination(shouldEnableDrag: true, for: Liste.self, action: insertList)
+					.dropDestination(shouldReEnableDrag: true, for: Liste.DropableItem.self, action: insertAny)
 			}
 			else {
 				List(selection: $selection) {
@@ -28,9 +28,14 @@ struct ListeView: View {
 					.onDelete(perform: deleteListe)
 					.onMove(perform: moveListe)
 					
-					ForEach(liste.mots) { mot in
+					ForEachWithDropDestination(liste.mots, action: insertMots) { mot in
 						MotRowView(mot: mot)
+							.onDrag(allowMulitpleSelection: false) {
+								NSItemProvider(object: Mot.WithSrcListe(mot: mot, srcListe: self.liste))
+							}
 					}
+					.onDelete(perform: removeMot)
+					.onMove(perform: moveListe)
 				}
 				.listStyle(.plain)
 			}
@@ -41,6 +46,7 @@ struct ListeView: View {
     }
 	
 	
+	//MARK: Listes
 	func createListe() {
 		let newListe = Liste(name: "")
 		self.liste.subListes.append(newListe)
@@ -63,21 +69,75 @@ struct ListeView: View {
 		DataController.shared.save()
 	}
 	
-	func insertList(listes: [Liste], index: Int? = nil) {
-		self.liste.moveIn(listes, at: index)
+	
+	func insertList(anys: [Liste.DropableItem], index: Int) {
+		
+		var index = index
+		
+		for any in anys {
+			if let liste = any.liste {
+				self.liste.moveIn(liste, at: index)
+				index += 1
+			}
+			else if let motWithSrcListe = any.motWithSrcListe {
+				self.liste.moveIn(motWithSrcListe.mot, from: motWithSrcListe.srcListe)
+			}
+		}
+
+		DataController.shared.save()
+	}
+
+	
+	
+	//MARK: Mots
+	func removeMot(indexSet: IndexSet) {
+		for index in indexSet {
+			self.liste.mots.remove(at: index)
+		}
 		
 		DataController.shared.save()
 	}
 	
-	func insertList(listes: [Liste], pos: CGPoint) -> Bool {
-		self.insertList(listes: listes)
+	func moveMot(from src: IndexSet, to dest: Int) {
+		self.liste.mots.move(fromOffsets: src, toOffset: dest)
+		
+		DataController.shared.save()
+	}
+	
+	
+	func insertMots(anys: [Liste.DropableItem], index: Int) {
+		
+		var index = index
+		
+		for any in anys {
+			if let liste = any.liste {
+				self.liste.moveIn(liste)
+				
+			}
+			else if let motWithSrcListe = any.motWithSrcListe {
+				self.liste.moveIn(motWithSrcListe.mot, from: motWithSrcListe.srcListe, at: index)
+				index += 1
+			}
+		}
+		
+		DataController.shared.save()
+	}
+		
+	
+	//MARK: Anys
+	func insertAny(anys: [Liste.DropableItem], pos: CGPoint) -> Bool {
+		for any in anys {
+			if let liste = any.liste {
+				self.liste.moveIn(liste)
+			}
+			else if let motWithSrcListe = any.motWithSrcListe {
+				self.liste.moveIn(motWithSrcListe.mot, from: motWithSrcListe.srcListe)
+			}
+		}
 		
 		DataController.shared.save()
 		return true
 	}
-	
-	
-
 }
 
 struct ListeView_Previews: PreviewProvider {

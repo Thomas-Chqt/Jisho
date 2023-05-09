@@ -127,6 +127,15 @@ public class Liste: Entity {
 		return self
 	}
 	
+	func remove(_ mot: Mot) -> Mot {
+		if let index = self.mots.firstIndex(of: mot) {
+			return self.mots.remove(at: index)
+		}
+		else {
+			return mot
+		}
+	}
+	
 	
 	//MARK: inits
 	convenience init(id: UUID? = nil,
@@ -237,42 +246,32 @@ extension [Liste] {
 		self.append(liste.removeFromParent())
 	}
 	
+	mutating func moveIn(_ listes: [Liste]) {
+		self.append(contentsOf: listes.map{ $0.removeFromParent() })
+	}
+	
 	mutating func moveIn(_ liste: Liste, at index: Int) {
 		self.insert(liste.removeFromParent(), at: index)
 	}
 	
-	mutating func moveIn(_ listes: [Liste]) {
-		for liste in listes {
-			self.moveIn(liste)
-		}
-	}
-	
-	mutating func moveIn(_ listes: [Liste], _ position: CGPoint) -> Bool {
-		self.moveIn(listes)
-		return true
-	}
-	
 	mutating func moveIn(_ listes: [Liste], at index: Int) {
-		var index = index
-		for liste in listes {
-			self.insert(liste.removeFromParent(), at: index)
-			index += 1
-		}
-	}
-	
-	mutating func moveIn(_ listes: [Liste], at index: Int? = nil) {
-		if let index = index {
-			self.moveIn(listes, at: index)
-		}
-		else {
-			self.moveIn(listes)
-		}
+		self.insert(contentsOf: listes.map{ $0.removeFromParent() }, at: index)
 	}
 }
 
 
 //MARK: Other extentions
 extension Liste {
+	func isLooping(ifInsertIn liste: Liste) -> Bool {
+		if self.id == liste.id { return true }
+		var parent = liste.parent
+		while let unWrappParent = parent {
+			if self.id == unWrappParent.id { return true }
+			parent = unWrappParent.parent
+		}
+		return false
+	}
+	
 	func moveIn(_ liste: Liste) {
 		if liste.isLooping(ifInsertIn: self) { return }
 		self.subListes.moveIn(liste)
@@ -290,28 +289,55 @@ extension Liste {
 	func moveIn(_ listes: [Liste], at index: Int) {
 		self.subListes.moveIn(listes.filter{ $0.isLooping(ifInsertIn: self) == false }, at: index)
 	}
+}
 	
-	func moveIn(_ listes: [Liste], at index: Int? = nil) {
-		if let index = index {
-			self.moveIn(listes, at: index)
+extension Liste {
+	func moveIn(_ mot: Mot, from liste: Liste) {
+		self.mots.append(liste.remove(mot))
+	}
+	
+	func moveIn(_ motsWithListeSrc: [Mot.WithSrcListe]) {
+		for (mot, srcListe) in motsWithListeSrc.map({ ($0.mot, $0.srcListe) }) {
+			self.moveIn(mot, from: srcListe)
 		}
-		else {
-			self.moveIn(listes)
-		}
+	}
+	
+	func moveIn(_ mot: Mot, from liste: Liste, at index: Int) {
+		self.mots.insert(liste.remove(mot), at: index)
+	}
+	
+	func moveIn(_ motsWithListeSrc: [Mot.WithSrcListe], at index: Int) {
+		self.mots.insert(contentsOf: motsWithListeSrc.map{ $0.srcListe.remove($0.mot) }, at: index)
 	}
 }
 
 extension Liste {
-	func isLooping(ifInsertIn liste: Liste) -> Bool {
-		if self.id == liste.id { return true }
-		var parent = liste.parent
-		while let unWrappParent = parent {
-			if self.id == unWrappParent.id { return true }
-			parent = unWrappParent.parent
+	enum DropableItem: Transferable {
+		
+		case liste(Liste)
+		case motWithSrcListe(Mot.WithSrcListe)
+		
+		static public var transferRepresentation: some TransferRepresentation {
+			ProxyRepresentation { DropableItem.liste($0) }
+			ProxyRepresentation { DropableItem.motWithSrcListe($0) }
 		}
-		return false
+		
+		var liste: Liste? {
+			switch self {
+				case .liste(let liste): return liste
+				default: return nil
+			}
+		}
+		
+		var motWithSrcListe: Mot.WithSrcListe? {
+			switch self {
+			case .motWithSrcListe(let motWithSrcListe): return motWithSrcListe
+			default: return nil
+			}
+		}
 	}
 }
+
 
 // MARK: Generated accessors for subListes_atb
 extension Liste {

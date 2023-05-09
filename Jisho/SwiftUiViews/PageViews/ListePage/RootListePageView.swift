@@ -73,7 +73,8 @@ struct RootListePageView: View {
 		DataController.shared.save()
 	}
 	
-	func insertList(listes: [Liste], index: Int? = nil) {
+	
+	func insertList(listes: [Liste], index: Int) {
 		self.rootLists.moveIn(listes, at: index)
 		
 		DataController.shared.save()

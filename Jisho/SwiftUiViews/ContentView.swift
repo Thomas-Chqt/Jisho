@@ -11,7 +11,7 @@ import SwiftUI
 struct ContentView: View {
 	
 	@State var sideMenuIsShow = false
-	@State var currentPage: AppPages = .debug
+	@State var currentPage: AppPages = .listes
 	
 	init() { UITabBar.appearance().isHidden = true }
 	
@@ -25,11 +25,24 @@ struct ContentView: View {
 	}
 }
 
-struct ContentView_iOS_Previews: PreviewProvider {
+struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-		ContentView()
-			.environment(\.managedObjectContext, DataController.shared.mainQueueManagedObjectContext)
-			.environmentObject(Settings.shared)
+		WrappedView()
     }
+	
+	struct WrappedView: View {
+		
+		@StateObject private var dataController = DataController.shared
+		@StateObject private var settings = Settings.shared
+		@State var isDragEnable = true
+		@StateObject var myDispatchQueue = MyDispatchQueue()
+		
+		var body: some View {
+			ContentView()
+				.environment(\.managedObjectContext, dataController.mainQueueManagedObjectContext)
+				.environmentObject(settings)
+				.environment(\.isDragEnable, $isDragEnable)
+				.environmentObject(myDispatchQueue)
+		}
+	}
 }
-

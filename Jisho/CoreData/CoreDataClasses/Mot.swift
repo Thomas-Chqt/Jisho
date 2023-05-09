@@ -236,66 +236,111 @@ extension Mot: SplitViewSelection {
 	}
 }
 
-extension Mot: Transferable {
-	static public var transferRepresentation: some TransferRepresentation {
-		DataRepresentation(contentType: .mot) { entity in
-			let context = DataController.shared.privateQueueManagedObjectContext
-			if entity.objectID.isTemporaryID {
-				try await context.perform {
-					try context.obtainPermanentIDs(for: [entity])
+extension Mot {
+	class WithSrcListe: NSObject, Transferable, NSItemProviderWriting {
+		var mot: Mot
+		var srcListe: Liste
+		
+		init(mot: Mot, srcListe: Liste) {
+			self.mot = mot
+			self.srcListe = srcListe
+		}
+		
+		//Transferable
+		static public var transferRepresentation: some TransferRepresentation {
+			DataRepresentation(contentType: .motWithSrcListe) { tuple in
+				let mot = tuple.mot
+				let srcListe = tuple.srcListe
+				
+				let context = DataController.shared.privateQueueManagedObjectContext
+				
+				if mot.objectID.isTemporaryID {
+					try await context.perform {
+						try context.obtainPermanentIDs(for: [mot])
+					}
 				}
-			}
-			let URI = entity.objectID.uriRepresentation()
-			return try JSONEncoder().encode(URI)
-			
-		} importing: { data in
-			let URI = try JSONDecoder().decode(URL.self, from: data)
-			let context = DataController.shared.mainQueueManagedObjectContext
-			guard let persistentStoreCoordinator = context.persistentStoreCoordinator else { throw DataRepError.NilPersStoreCoor }
-			guard let ObjID = persistentStoreCoordinator.managedObjectID(forURIRepresentation: URI) else { throw DataRepError.ObjIDNotFound }
-			
-			return try await context.perform {
-				guard let entity = context.object(with: ObjID) as? Self else { throw DataRepError.ObjNotFound }
-				return entity
+				if srcListe.objectID.isTemporaryID {
+					try await context.perform {
+						try context.obtainPermanentIDs(for: [srcListe])
+					}
+				}
+				
+				let URI_mot = mot.objectID.uriRepresentation()
+				let URI_srcListe = srcListe.objectID.uriRepresentation()
+				
+				return try JSONEncoder().encode([URI_mot, URI_srcListe])
+				
+			} importing: { data in
+				let URIs = try JSONDecoder().decode([URL].self, from: data)
+				
+				let URI_mot = URIs[0]
+				let URI_srcListe = URIs[1]
+				
+				let context = DataController.shared.mainQueueManagedObjectContext
+				guard let persistentStoreCoordinator = context.persistentStoreCoordinator else { throw DataRepError.NilPersStoreCoor }
+				
+				guard let ObjID_mot = persistentStoreCoordinator.managedObjectID(forURIRepresentation: URI_mot) else { throw DataRepError.ObjIDNotFound }
+				
+				guard let ObjID_srcListe = persistentStoreCoordinator.managedObjectID(forURIRepresentation: URI_srcListe) else { throw DataRepError.ObjIDNotFound }
+				
+				return try await context.perform {
+					guard let mot = context.object(with: ObjID_mot) as? Mot else { throw DataRepError.ObjNotFound }
+					guard let srcListe = context.object(with: ObjID_srcListe) as? Liste else { throw DataRepError.ObjNotFound }
+					
+					return WithSrcListe(mot: mot, srcListe: srcListe)
+				}
 			}
 		}
 		
-	}
-}
-
-extension Mot: NSItemProviderWriting {
-	public static var writableTypeIdentifiersForItemProvider: [String] {
-		return [ UTType.mot.identifier ]
-	}
-	
-	public func loadData(withTypeIdentifier typeIdentifier: String,
-						 forItemProviderCompletionHandler completionHandler: @escaping @Sendable (Data?, Error?) -> Void) -> Progress? {
-		let progress = Progress(totalUnitCount: 100)
-		do {
-			let context = DataController.shared.privateQueueManagedObjectContext
-			if self.objectID.isTemporaryID {
-				context.perform {
-					do {
-						try context.obtainPermanentIDs(for: [self])
-					}
-					catch {
-						completionHandler(nil, error)
+		
+		//NSItemProviderWriting
+		public static var writableTypeIdentifiersForItemProvider: [String] {
+			return [ UTType.motWithSrcListe.identifier ]
+		}
+		
+		public func loadData(withTypeIdentifier typeIdentifier: String,
+							 forItemProviderCompletionHandler completionHandler: @escaping @Sendable (Data?, Error?) -> Void) -> Progress? {
+			let progress = Progress(totalUnitCount: 100)
+			do {
+				let mot = self.mot
+				let srcListe = self.srcListe
+				
+				let context = DataController.shared.privateQueueManagedObjectContext
+				
+				if mot.objectID.isTemporaryID {
+					context.perform {
+						do {
+							try context.obtainPermanentIDs(for: [mot])
+						}
+						catch {
+							completionHandler(nil, error)
+						}
 					}
 				}
+				if srcListe.objectID.isTemporaryID {
+					context.perform {
+						do {
+							try context.obtainPermanentIDs(for: [srcListe])
+						}
+						catch {
+							completionHandler(nil, error)
+						}
+					}
+				}
+				
+				let URI_mot = mot.objectID.uriRepresentation()
+				let URI_srcListe = srcListe.objectID.uriRepresentation()
+				
+				let data = try JSONEncoder().encode([URI_mot, URI_srcListe])
+				completionHandler(data, nil)
 			}
-			let URI = self.objectID.uriRepresentation()
-			let data = try JSONEncoder().encode(URI)
-			completionHandler(data, nil)
+			catch {
+				completionHandler(nil, error)
+			}
+			return progress
 		}
-		catch {
-			completionHandler(nil, error)
-		}
-		return progress
 	}
-	
-	
 }
-
 
 
 // MARK: Generated accessors for japonais_atb
